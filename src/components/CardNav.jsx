@@ -23,9 +23,14 @@ const CardNav = ({
 
   const calculateHeight = () => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const numItems = items?.length || 0;
+    
     if (isMobile) {
-      return 280; // Adjusted for mobile
+      // For mobile, each card has a fixed height plus padding
+      return 60 + (numItems * 80); // 60px for header + height per card
     }
+    
+    // For desktop, cards are displayed in a row
     return 240; // Fixed height for desktop
   };
 
@@ -33,21 +38,17 @@ const CardNav = ({
     const navEl = navRef.current;
     if (!navEl) return null;
 
-    gsap.set(navEl, { height: 60 });
-    gsap.set(cardsRef.current, { y: 30, opacity: 0 });
+    // We're now using an absolute positioned dropdown
+    // So we don't need to change the height of the nav
+    gsap.set(cardsRef.current, { y: 15, opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
 
-    tl.to(navEl, {
-      height: calculateHeight,
-      duration: 0.4,
-      ease
-    });
-
+    // We don't need to change the nav height anymore
     tl.to(
       cardsRef.current,
-      { y: 0, opacity: 1, duration: 0.3, ease, stagger: 0.08 },
-      '-=0.2'
+      { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 },
+      0
     );
 
     return tl;
@@ -137,7 +138,7 @@ const CardNav = ({
             className="card-nav-cta-button"
             style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}>
             <GoDownload className="download-icon" />
-            Download
+            <span className="button-text">Download</span>
           </button>
         </div>
 

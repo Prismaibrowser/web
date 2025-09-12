@@ -1,12 +1,31 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import LaserFlow from "@/components/LaserFlow";
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
+import CustomCursor from "@/components/CustomCursor";
 
 function LaserFlowBoxExample() {
   const revealImgRef = useRef(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const navItems = [
     {
@@ -40,16 +59,15 @@ function LaserFlowBoxExample() {
   ];
 
   return (
-    <div 
-      style={{ 
-        height: '100vh', 
-        width: '100vw',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        overflow: 'hidden',
-        backgroundColor: '#060010'
-      }}
+    <>
+      <CustomCursor />
+      <div 
+        style={{ 
+          minHeight: '100vh',
+          width: '100%',
+          position: 'relative',
+          backgroundColor: '#060010'
+        }}
       onMouseMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -68,18 +86,27 @@ function LaserFlowBoxExample() {
         }
       }}
     >
-      <CardNav
-        logo="/nav-logo.png"
-        logoAlt="Prism Web Logo"
-        items={navItems}
-        baseColor="rgba(255, 255, 255, 0.1)"
-        menuColor="#88E755"
-        buttonBgColor="#88E755"
-        buttonTextColor="#000"
-        ease="power3.out"
-      />
+      <header style={{ 
+        position: 'sticky', 
+        top: 0, 
+        zIndex: 100,
+        backgroundColor: 'rgba(6, 0, 16, 0.95)',
+        backdropFilter: 'blur(8px)',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
+      }}>
+        <CardNav
+          logo="/nav-logo.png"
+          logoAlt="Prism Web Logo"
+          items={navItems}
+          baseColor="rgba(255, 255, 255, 0.1)"
+          menuColor="#88E755"
+          buttonBgColor="#88E755"
+          buttonTextColor="#000"
+          ease="power3.out"
+        />
+      </header>
       
-      <div style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', minHeight: '100vh', width: '100%' }}>
         <LaserFlow
           horizontalBeamOffset={0}
           verticalBeamOffset={-0.13}
@@ -99,7 +126,8 @@ function LaserFlowBoxExample() {
             objectFit: 'contain',
             borderRadius: '18px',
             border: '2px solid #88E755',
-            zIndex: 6
+            zIndex: 6,
+            maxWidth: '1200px'
           }}
         />
 
@@ -164,9 +192,87 @@ function LaserFlowBoxExample() {
           }}
         />
       </div>
-    </div>
-  );
-}
+      
+      {/* Additional content sections for scrolling */}
+      <div style={{ 
+        padding: '80px 20px',
+        backgroundColor: '#0D0716',
+        color: '#fff',
+        textAlign: 'center'
+      }}>
+        <h2 style={{ 
+          fontSize: '2.5rem',
+          marginBottom: '20px',
+          color: '#88E755'
+        }}>
+          Scroll With Ease
+        </h2>
+        <p style={{ 
+          fontSize: '1.2rem',
+          maxWidth: '800px',
+          margin: '0 auto',
+          lineHeight: 1.6
+        }}>
+          Explore the seamless vertical scrolling experience of Prism Web. Our interface is designed to provide 
+          fluid navigation through content without any overflow issues.
+        </p>
+      </div>
+      
+       <div style={{ 
+         padding: '80px 20px',
+         backgroundColor: '#0D0716',
+         color: '#fff',
+         textAlign: 'center'
+       }}>
+        <h2 style={{ 
+          fontSize: '2.5rem',
+          marginBottom: '20px',
+          color: '#88E755'
+        }}>
+          Advanced Features
+        </h2>
+        <p style={{ 
+          fontSize: '1.2rem',
+          maxWidth: '800px',
+          margin: '0 auto',
+          lineHeight: 1.6
+        }}>
+          Discover the powerful capabilities of our platform, designed to enhance your browsing experience.
+        </p>
+      </div>
+      
+      {/* Scroll to top button */}
+      {showScrollTop && (
+        <button 
+          onClick={scrollToTop}
+          style={{
+            position: 'fixed',
+            bottom: '30px',
+            right: '30px',
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            backgroundColor: '#88E755',
+            color: '#000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(136, 231, 85, 0.3)',
+            zIndex: 999,
+            fontSize: '24px',
+            transition: 'all 0.3s ease'
+          }}
+          aria-label="Scroll to top"
+        >
+          ↑
+         </button>
+       )}
+      </div>
+    </>
+    );
+  }
 
 export default function Home() {
   return (
