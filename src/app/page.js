@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import LaserFlow from "@/components/LaserFlow";
 import CardNav from "@/components/CardNav";
+import Shuffle from "@/components/Shuffle";
 
 function LaserFlowBoxExample() {
   const revealImgRef = useRef(null);
@@ -41,11 +42,12 @@ function LaserFlowBoxExample() {
   return (
     <div 
       style={{ 
-        minHeight: '100vh', 
+        height: '100vh', 
         width: '100vw',
-        position: 'relative',
-        overflowX: 'hidden',
-        overflowY: 'auto',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        overflow: 'hidden',
         backgroundColor: '#060010'
       }}
       onMouseMove={(e) => {
@@ -77,9 +79,9 @@ function LaserFlowBoxExample() {
         ease="power3.out"
       />
       
-      <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <div style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden' }}>
         <LaserFlow
-          horizontalBeamOffset={0.1}
+          horizontalBeamOffset={0}
           verticalBeamOffset={-0.13}
           color="#88E755"
         />
@@ -114,6 +116,30 @@ function LaserFlowBoxExample() {
             zIndex: 4,
             filter: 'drop-shadow(0 12px 28px rgba(136, 231, 85, 0.45))',
             pointerEvents: 'none'
+          }}
+        />
+
+        <Shuffle
+          text="Where AI Meets Browser"
+          shuffleDirection="right"
+          duration={0.35}
+          animationMode="evenodd"
+          shuffleTimes={1}
+          ease="power3.out"
+          stagger={0.03}
+          threshold={0.1}
+          triggerOnce={true}
+          triggerOnHover={true}
+          respectReducedMotion={true}
+          style={{
+            position: 'absolute',
+            top: '25%',
+            right: '5%',
+            color: '#88E755',
+            fontSize: '2.5rem',
+            fontFamily: 'Space Grotesk, sans-serif',
+            zIndex: 8,
+            textShadow: '0 0 20px rgba(136, 231, 85, 0.5)'
           }}
         />
 
