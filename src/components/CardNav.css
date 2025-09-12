@@ -6,6 +6,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  padding-left: 5.2rem; /* Added padding to position the navbar more to the right */
   z-index: 999;
   box-sizing: border-box;
   overflow: visible;
@@ -123,7 +124,9 @@
 }
 
 .card-nav-cta-button:hover {
-  background-color: #333;
+  background-color: #2a2a2a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .card-nav-content {
