@@ -6,6 +6,8 @@ import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
 import CustomCursor from "@/components/CustomCursor";
 import StarBorder from "@/components/StarBorder";
+import TextPressure from "@/components/TextPressure";
+import MagicBento from "@/components/MagicBento";
 
 function LaserFlowBoxExample() {
   const revealImgRef = useRef(null);
@@ -480,6 +482,102 @@ function LaserFlowBoxExample() {
           ↑
           </button>
         )}      
+      {/* TextPressure Component */}
+      <div style={{
+        position: 'absolute',
+        top: isMobile ? '110%' : '88%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: isMobile ? '90%' : '80%',
+        height: '200px',
+        zIndex: 7
+      }}>
+        <TextPressure
+          text="Prism Mode"
+          flex={true}
+          alpha={false}
+          stroke={false}
+          width={true}
+          weight={true}
+          italic={true}
+          textColor="#88E755"
+          strokeColor="#ff0000"
+          minFontSize={isMobile ? 48 : 72}
+        />
+      </div>
+      
+      {/* TextPressure Component - Features */}
+      <div style={{
+        position: 'absolute',
+        top: isMobile ? '130%' : '100%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: isMobile ? '90%' : '80%',
+        height: '200px',
+        zIndex: 7
+      }}>
+        <TextPressure
+          text="Features"
+          flex={true}
+          alpha={false}
+          stroke={false}
+          width={true}
+          weight={true}
+          italic={true}
+          textColor="#88E755"
+          strokeColor="#ff0000"
+          minFontSize={isMobile ? 36 : 56}
+        />
+      </div>
+      
+      {/* MagicBento Component */}
+      <div style={{
+        position: 'absolute',
+        top: isMobile ? '200%' : '120%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '100%',
+        maxWidth: '1200px',
+        zIndex: 6
+      }}>
+        <MagicBento 
+          textAutoHide={true}
+          enableStars={true}
+          enableSpotlight={true}
+          enableBorderGlow={true}
+          enableTilt={true}
+          enableMagnetism={true}
+          clickEffect={true}
+          spotlightRadius={300}
+          particleCount={12}
+          glowColor="136, 231, 85"
+        />
+      </div>
+      
+      {/* TextPressure Component - Dev Space */}
+      <div style={{
+        position: 'absolute',
+        top: isMobile ? '280%' : '160%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: isMobile ? '90%' : '80%',
+        height: '200px',
+        zIndex: 7
+      }}>
+        <TextPressure
+          text="Dev Space"
+          flex={true}
+          alpha={false}
+          stroke={false}
+          width={true}
+          weight={true}
+          italic={true}
+          textColor="#88E755"
+          strokeColor="#ff0000"
+          minFontSize={isMobile ? 42 : 64}
+        />
+      </div>
+      
       {/* Footer section to prevent white space */}
       <div style={{ 
         minHeight: '50vh',

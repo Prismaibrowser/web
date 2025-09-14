@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 const TextPressure = ({
-  text = 'Compressa',
+  text = 'Prism Mode',
   fontFamily = 'Compressa VF',
   // This font is just an example, you should not use it in commercial projects.
   fontUrl = 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
@@ -154,7 +154,8 @@ const TextPressure = ({
         width: '100%',
         height: '100%',
         background: 'transparent'
-      }}>
+      }}
+    >
       <style>{`
         @font-face {
           font-family: '${fontFamily}';
@@ -186,6 +187,7 @@ const TextPressure = ({
           color: ${textColor};
         }
       `}</style>
+
       <h1
         ref={titleRef}
         className={`text-pressure-title ${dynamicClassName}`}
@@ -202,7 +204,8 @@ const TextPressure = ({
           whiteSpace: 'nowrap',
           fontWeight: 100,
           width: '100%'
-        }}>
+        }}
+      >
         {chars.map((char, i) => (
           <span
             key={i}
@@ -211,7 +214,8 @@ const TextPressure = ({
             style={{
               display: 'inline-block',
               color: stroke ? undefined : textColor
-            }}>
+            }}
+          >
             {char}
           </span>
         ))}
