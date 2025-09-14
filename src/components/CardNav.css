@@ -7,7 +7,7 @@
   margin: 0 auto;
   padding: 1rem;
   padding-left: 5.2rem; /* Added padding to position the navbar more to the right */
-  z-index: 999;
+  z-index: 1000;
   box-sizing: border-box;
   overflow: visible;
 }
@@ -140,7 +140,7 @@
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-20px);
   transition: all 0.4s ease;
   min-height: 180px;
   width: 100%;
@@ -148,10 +148,21 @@
   position: absolute;
   top: 70px;
   left: 0;
-  background-color: rgba(29, 24, 38, 0.95);
+  background-color: rgba(6, 0, 16, 0.98);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(136, 231, 85, 0.2);
   border-radius: 0.75rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  z-index: -1;
+}
+
+/* Explicitly define closed state */
+.card-nav:not(.open) .card-nav-content {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-20px);
   z-index: -1;
 }
 
@@ -160,7 +171,7 @@
   pointer-events: auto;
   opacity: 1;
   transform: translateY(0);
-  z-index: 10;
+  z-index: 999;
 }
 
 .nav-card {
@@ -176,8 +187,9 @@
   user-select: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   margin: 4px;
-  background-color: rgba(23, 18, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(17, 17, 17, 0.95);
+  border: 1px solid rgba(136, 231, 85, 0.1);
+  backdrop-filter: blur(5px);
 }
 
 .nav-card-label {

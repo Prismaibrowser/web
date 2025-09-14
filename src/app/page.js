@@ -5,7 +5,6 @@ import LaserFlow from "@/components/LaserFlow";
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
 import CustomCursor from "@/components/CustomCursor";
-import StarBorder from "@/components/StarBorder";
 import TextPressure from "@/components/TextPressure";
 import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
@@ -74,29 +73,33 @@ function LaserFlowBoxExample() {
   const navItems = [
     {
       label: "About",
-      bgColor: "#0D0716",
-      textColor: "#fff",
+      bgColor: "#010710",
+      textColor: "#88E755",
       links: [
-        { label: "Company", ariaLabel: "About Company" },
-        { label: "Careers", ariaLabel: "About Careers" }
-      ]
+        { label: "Team", ariaLabel: "About Team" },
+          { label: "Documentation", ariaLabel: "Documentation" },
+          { label: "GitHub", ariaLabel: "GitHub" }
+        ]
     },
     {
-      label: "Projects", 
-      bgColor: "#170D27",
-      textColor: "#fff",
+      label: "Useful Links", 
+      bgColor: "#F2FFEB",
+      textColor: "#88E755",
       links: [
-        { label: "Featured", ariaLabel: "Featured Projects" },
-        { label: "Case Studies", ariaLabel: "Project Case Studies" }
+        { label: "Changelog", ariaLabel: "Changelog" },
+        { label: "Donate Us", ariaLabel: "Donate Us" },
+        { label: "Discord", ariaLabel: "Discord Community"},
+        { label: "Report Bugs", ariaLabel: "GitHub Issues"}
       ]
     },
     {
       label: "Contact",
-      bgColor: "#271E37", 
-      textColor: "#fff",
+      bgColor: "#88E755", 
+      textColor: "#010710",
       links: [
         { label: "Email", ariaLabel: "Email us" },
-        { label: "Twitter", ariaLabel: "Twitter" },
+        { label: "X", ariaLabel: "X" },
+        { label: "Reddit", ariaLabel: "Reddit" },
         { label: "LinkedIn", ariaLabel: "LinkedIn" }
       ]
     }
@@ -586,10 +589,34 @@ function LaserFlowBoxExample() {
             />
           </div>
           
-          {/* Footer Component - Placed under Dev Space Text */}
+          {/* Second MagicBento Component - Under Dev Space */}
           <div style={{
             position: 'absolute',
-            top: isMobile ? '320%' : '180%',
+            top: isMobile ? '300%' : '175%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '100%',
+            maxWidth: '1200px',
+            zIndex: 6
+          }}>
+            <MagicBento 
+              textAutoHide={true}
+              enableStars={true}
+              enableSpotlight={true}
+              enableBorderGlow={true}
+              enableTilt={true}
+              enableMagnetism={true}
+              clickEffect={true}
+              spotlightRadius={300}
+              particleCount={12}
+              glowColor="136, 231, 85"
+            />
+          </div>
+          
+          {/* Footer Component - Placed under Second MagicBento */}
+          <div style={{
+            position: 'absolute',
+            top: isMobile ? '380%' : '220%',
             left: '50%',
             transform: 'translateX(-50%)',
             width: '100%',

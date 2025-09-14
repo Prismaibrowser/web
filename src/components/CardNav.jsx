@@ -36,17 +36,18 @@ const CardNav = ({
 
   const createTimeline = () => {
     const navEl = navRef.current;
-    if (!navEl) return null;
+    const cards = cardsRef.current.filter(Boolean); // Filter out null/undefined refs
+    
+    if (!navEl || cards.length === 0) return null;
 
-    // We're now using an absolute positioned dropdown
-    // So we don't need to change the height of the nav
-    gsap.set(cardsRef.current, { y: 15, opacity: 0 });
+    // Initialize cards to be hidden
+    gsap.set(cards, { y: 15, opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
 
-    // We don't need to change the nav height anymore
+    // Animate cards in
     tl.to(
-      cardsRef.current,
+      cards,
       { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 },
       0
     );
@@ -96,13 +97,20 @@ const CardNav = ({
   const toggleMenu = () => {
     const tl = tlRef.current;
     if (!tl) return;
+    
     if (!isExpanded) {
       setIsHamburgerOpen(true);
       setIsExpanded(true);
       tl.play(0);
     } else {
       setIsHamburgerOpen(false);
-      tl.eventCallback('onReverseComplete', () => setIsExpanded(false));
+      // Ensure cards are properly hidden when closing
+      tl.eventCallback('onReverseComplete', () => {
+        setIsExpanded(false);
+        // Force reset cards to hidden state
+        const cards = cardsRef.current.filter(Boolean);
+        gsap.set(cards, { y: 15, opacity: 0 });
+      });
       tl.reverse();
     }
   };

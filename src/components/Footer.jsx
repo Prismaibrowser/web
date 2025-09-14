@@ -59,6 +59,45 @@ const SocialButton = ({ children, label, href }) => {
 };
 
 const Footer = () => {
+  const [selectedPlatform, setSelectedPlatform] = useState('Windows');
+  const [isMobile, setIsMobile] = useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Initial check
+    handleResize();
+    
+    // Detect OS and set default platform
+    const detectOS = () => {
+      const userAgent = window.navigator.userAgent;
+      const platform = window.navigator.platform;
+      
+      if (userAgent.includes('Windows') || platform.includes('Win')) {
+        return 'Windows';
+      } else if (userAgent.includes('Linux') || platform.includes('Linux')) {
+        return 'Linux';
+      } else if (userAgent.includes('Mac') || platform.includes('Mac')) {
+        return 'Linux'; // Default to Linux for Mac users
+      } else {
+        return 'Windows'; // Default fallback
+      }
+    };
+    
+    setSelectedPlatform(detectOS());
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleDownload = () => {
+    console.log(`Downloading for ${selectedPlatform}`);
+    // Add actual download logic here based on selectedPlatform
+  };
 
   return (
     <footer className="footer-new">
@@ -98,6 +137,189 @@ const Footer = () => {
         {/* Divider */}
         <div className="footer-divider"></div>
 
+        {/* Experience AI Agentic browsing Text */}
+        <div style={{
+          margin: '1.5rem 0',
+          display: 'flex',
+          justifyContent: 'center',
+          position: 'relative',
+          zIndex: 20,
+          minHeight: '60px',
+          alignItems: 'center'
+        }}>
+          <h2 style={{
+            color: '#88E755',
+            fontSize: isMobile ? '1.4rem' : '1.8rem',
+            fontFamily: 'Space Grotesk, sans-serif',
+            textShadow: '0 0 20px rgba(136, 231, 85, 0.8)',
+            textAlign: 'center',
+            position: 'relative',
+            zIndex: 21,
+            fontWeight: '600',
+            letterSpacing: '0.5px',
+            textTransform: 'uppercase',
+            margin: 0,
+            padding: 0
+          }}>
+            Experience AI Agentic browsing
+          </h2>
+        </div>
+
+        {/* Download Section */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '20px',
+          margin: '2rem 0'
+        }}>
+          <button
+            onClick={handleDownload}
+            style={{
+              padding: isMobile ? '12px 24px' : '14px 28px',
+              backgroundColor: '#88E755',
+              color: '#000',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: isMobile ? '16px' : '18px',
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              transition: 'all 0.3s ease',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#000';
+              e.target.style.color = '#88E755';
+              e.target.style.borderRadius = '20px';
+              e.target.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#88E755';
+              e.target.style.color = '#000';
+              e.target.style.borderRadius = '8px';
+              e.target.style.transform = 'scale(1)';
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M7.47 10.78a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 8.439V1.75a.75.75 0 0 0-1.5 0v6.689L4.78 5.97a.749.749 0 1 0-1.06 1.06l3.75 3.75Z" />
+              <path d="M3.75 13a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
+            </svg>
+            Download Prism Browser
+          </button>
+
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            alignItems: 'center'
+          }}>
+            <div style={{
+              color: '#88E755',
+              fontSize: '14px',
+              fontWeight: '500',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              fontFamily: 'Space Grotesk, sans-serif',
+              textAlign: 'center'
+            }}>
+              Choose Your Platform
+            </div>
+            <div style={{
+              display: 'flex',
+              gap: isMobile ? '15px' : '12px',
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}>
+              <button
+                onClick={() => setSelectedPlatform('Windows')}
+                style={{
+                  padding: isMobile ? '10px 18px' : '10px 20px',
+                  backgroundColor: selectedPlatform === 'Windows' ? '#88E755' : 'transparent',
+                  color: selectedPlatform === 'Windows' ? '#000' : '#88E755',
+                  border: '2px solid #88E755',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: isMobile ? '14px' : '16px',
+                  fontWeight: '500',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  minWidth: isMobile ? '120px' : '130px',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedPlatform !== 'Windows') {
+                    e.target.style.color = '#000';
+                    e.target.style.backgroundColor = '#88E755';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedPlatform !== 'Windows') {
+                    e.target.style.color = '#88E755';
+                    e.target.style.backgroundColor = 'transparent';
+                  }
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91v-6.84l10 .15z"/>
+                </svg>
+                Windows
+              </button>
+              <button
+                onClick={() => setSelectedPlatform('Linux')}
+                style={{
+                  padding: isMobile ? '10px 18px' : '10px 20px',
+                  backgroundColor: selectedPlatform === 'Linux' ? '#88E755' : 'transparent',
+                  color: selectedPlatform === 'Linux' ? '#000' : '#88E755',
+                  border: '2px solid #88E755',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: isMobile ? '14px' : '16px',
+                  fontWeight: '500',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  minWidth: isMobile ? '120px' : '130px',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  if (selectedPlatform !== 'Linux') {
+                    e.target.style.color = '#000';
+                    e.target.style.backgroundColor = '#88E755';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (selectedPlatform !== 'Linux') {
+                    e.target.style.color = '#88E755';
+                    e.target.style.backgroundColor = 'transparent';
+                  }
+                }}
+              >
+                <svg width="18" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.5 2c-.8 0-1.5.3-2 .8-.6.5-.9 1.2-.9 2v.7c-.2-.1-.4-.1-.6-.1-1.1 0-2 .9-2 2s.9 2 2 2c.2 0 .4 0 .6-.1v1.2c0 1.7 1.3 3 3 3s3-1.3 3-3V7.5c.2.1.4.1.6.1 1.1 0 2-.9 2-2s-.9-2-2-2c-.2 0-.4 0-.6.1V4.8c0-.8-.3-1.5-.9-2-.5-.5-1.2-.8-2-.8zM9 6.5c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm6 0c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm-3 9c-2.2 0-4 1.8-4 4v3h8v-3c0-2.2-1.8-4-4-4z"/>
+                </svg>
+                Linux
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Shuffle Text Component */}
         <div className="shuffle-section">
           <Shuffle
@@ -117,7 +339,9 @@ const Footer = () => {
               fontSize: '2rem',
               fontFamily: 'Space Grotesk, sans-serif',
               textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
-              textAlign: 'center'
+              textAlign: 'center',
+              position: 'relative',
+              zIndex: 15
             }}
           />
         </div>
