@@ -5,6 +5,7 @@ import LaserFlow from "@/components/LaserFlow";
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
 
+import TargetCursor from "@/components/TargetCursor";
 import TextPressure from "@/components/TextPressure";
 import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
@@ -110,6 +111,10 @@ function LaserFlowBoxExample() {
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       {!isLoading && (
         <div style={{ position: 'relative', backgroundColor: '#060010', minHeight: '200vh', width: '100%' }}>
+          <TargetCursor 
+            spinDuration={2}
+            hideDefaultCursor={true}
+          />
 
           <div 
             style={{ 
@@ -261,6 +266,7 @@ function LaserFlowBoxExample() {
                 gap: '15px'
               }}>
                 <button
+                  className="cursor-target"
                   onClick={handleDownload}
                   style={{
                     padding: isMobile ? '10px 20px' : '12px 24px',
@@ -360,6 +366,7 @@ function LaserFlowBoxExample() {
                     width: '100%'
                   }}>
                     <button
+                      className="cursor-target"
                       onClick={() => setSelectedPlatform('Windows')}
                       style={{
                         padding: isMobile ? '8px 16px' : '8px 16px',
@@ -399,6 +406,7 @@ function LaserFlowBoxExample() {
                       Windows
                     </button>
                     <button
+                      className="cursor-target"
                       onClick={() => setSelectedPlatform('Linux')}
                       style={{
                         padding: isMobile ? '8px 16px' : '8px 16px',
@@ -467,6 +475,7 @@ function LaserFlowBoxExample() {
           {/* Scroll to top button */}
           {showScrollTop && (
             <button 
+              className="cursor-target"
               onClick={scrollToTop}
               style={{
                 position: 'fixed',
