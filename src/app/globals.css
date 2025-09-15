@@ -47,10 +47,7 @@ a {
     font-size: 14px;
   }
   
-  /* Hide custom cursor on mobile */
-  .custom-cursor {
-    display: none;
-  }
+
   
   /* Ensure mobile-friendly touch targets */
   button, [role="button"] {

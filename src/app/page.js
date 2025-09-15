@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import LaserFlow from "@/components/LaserFlow";
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
-import CustomCursor from "@/components/CustomCursor";
+
 import TextPressure from "@/components/TextPressure";
 import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
@@ -110,7 +110,7 @@ function LaserFlowBoxExample() {
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       {!isLoading && (
         <div style={{ position: 'relative', backgroundColor: '#060010', minHeight: '200vh', width: '100%' }}>
-          <CustomCursor />
+
           <div 
             style={{ 
               minHeight: '100vh',
