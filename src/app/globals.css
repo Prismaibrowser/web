@@ -41,6 +41,35 @@ a {
   text-decoration: none;
 }
 
+/* Custom cursor global styles - hide default cursor completely */
+body.custom-cursor-active,
+body.custom-cursor-active *,
+body.custom-cursor-active *:before,
+body.custom-cursor-active *:after {
+  cursor: none !important;
+}
+
+/* Ensure cursor is hidden on all interactive elements */
+body.custom-cursor-active a,
+body.custom-cursor-active button,
+body.custom-cursor-active input,
+body.custom-cursor-active textarea,
+body.custom-cursor-active select,
+body.custom-cursor-active [role="button"],
+body.custom-cursor-active [tabindex],
+body.custom-cursor-active .cursor-target {
+  cursor: none !important;
+}
+
+/* Hide cursor during text selection */
+body.custom-cursor-active ::selection {
+  cursor: none !important;
+}
+
+body.custom-cursor-active ::-moz-selection {
+  cursor: none !important;
+}
+
 /* Responsive adjustments for mobile devices */
 @media (max-width: 768px) {
   html, body {

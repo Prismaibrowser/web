@@ -114,6 +114,7 @@ function LaserFlowBoxExample() {
           <TargetCursor 
             spinDuration={2}
             hideDefaultCursor={true}
+            performanceMode={false} // Set to true for low-end devices
           />
 
           <div 

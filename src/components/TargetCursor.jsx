@@ -1,37 +1,100 @@
-import { useEffect, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { gsap } from 'gsap';
 import './TargetCursor.css';
 
-const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hideDefaultCursor = true }) => {
+const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hideDefaultCursor = true, performanceMode = false }) => {
   const cursorRef = useRef(null);
   const cornersRef = useRef(null);
   const spinTl = useRef(null);
   const dotRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const lastMoveTime = useRef(0);
+  const [isLowPerformance, setIsLowPerformance] = useState(performanceMode);
   const constants = useMemo(
     () => ({
       borderWidth: 3,
       cornerSize: 12,
-      parallaxStrength: 0.00005
+      parallaxStrength: isLowPerformance ? 0 : 0.00005,
+      throttleMs: isLowPerformance ? 32 : 16, // 30fps vs 60fps
+      reducedAnimations: isLowPerformance
     }),
-    []
+    [isLowPerformance]
   );
 
+  // Performance detection
+  useEffect(() => {
+    if (!performanceMode) {
+      const detectPerformance = () => {
+        const start = performance.now();
+        let frames = 0;
+        
+        const checkFrame = () => {
+          frames++;
+          if (frames < 60) {
+            requestAnimationFrame(checkFrame);
+          } else {
+            const duration = performance.now() - start;
+            const fps = (frames * 1000) / duration;
+            
+            // If FPS is below 45, enable performance mode
+            if (fps < 45) {
+              setIsLowPerformance(true);
+            }
+          }
+        };
+        
+        requestAnimationFrame(checkFrame);
+      };
+      
+      // Delay performance detection to avoid interference
+      setTimeout(detectPerformance, 1000);
+    }
+  }, [performanceMode]);
+
   const moveCursor = useCallback((x, y) => {
+    const now = performance.now();
+    if (now - lastMoveTime.current < constants.throttleMs) {
+      return;
+    }
+    lastMoveTime.current = now;
+    
     if (!cursorRef.current) return;
-    gsap.to(cursorRef.current, {
-      x,
-      y,
-      duration: 0.1,
-      ease: 'power3.out'
-    });
-  }, []);
+    
+    if (constants.reducedAnimations) {
+      // Use transform instead of GSAP for better performance
+      cursorRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+    } else {
+      gsap.to(cursorRef.current, {
+        x,
+        y,
+        duration: 0.1,
+        ease: 'power3.out'
+      });
+    }
+  }, [constants.throttleMs, constants.reducedAnimations]);
 
   useEffect(() => {
     if (!cursorRef.current) return;
 
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor) {
+      // Force hide cursor on all elements
       document.body.style.cursor = 'none';
+      document.documentElement.style.cursor = 'none';
+      document.body.classList.add('custom-cursor-active');
+      
+      // Add global style to hide cursor on all elements
+      const style = document.createElement('style');
+      style.id = 'target-cursor-global';
+      style.textContent = `
+        *, *:before, *:after {
+          cursor: none !important;
+        }
+        a, button, input, textarea, select, [role="button"], [tabindex] {
+          cursor: none !important;
+        }
+      `;
+      document.head.appendChild(style);
     }
 
     const cursor = cursorRef.current;
@@ -65,18 +128,34 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       if (spinTl.current) {
         spinTl.current.kill();
       }
-      spinTl.current = gsap
-        .timeline({ repeat: -1 })
-        .to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' });
+      
+      if (constants.reducedAnimations) {
+        // Use CSS animation for spinning in performance mode
+        if (cursorRef.current) {
+          cursorRef.current.style.animation = `spin ${spinDuration}s linear infinite`;
+        }
+      } else {
+        spinTl.current = gsap
+          .timeline({ repeat: -1 })
+          .to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' });
+      }
     };
 
     createSpinTimeline();
 
-    const moveHandler = e => moveCursor(e.clientX, e.clientY);
+    const moveHandler = e => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      
+      animationFrameRef.current = requestAnimationFrame(() => {
+        moveCursor(e.clientX, e.clientY);
+      });
+    };
     window.addEventListener('mousemove', moveHandler);
 
     const scrollHandler = () => {
-      if (!activeTarget || !cursorRef.current) return;
+      if (!activeTarget || !cursorRef.current || constants.reducedAnimations) return;
 
       const mouseX = gsap.getProperty(cursorRef.current, 'x');
       const mouseY = gsap.getProperty(cursorRef.current, 'y');
@@ -95,21 +174,30 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
     window.addEventListener('scroll', scrollHandler, { passive: true });
 
-    //---------------------------------------------------------------
-    // This code for onclick animation
-
-    window.addEventListener('mousemove', moveHandler);
+    // Optimized click animations
     const mouseDownHandler = () => {
       if (!dotRef.current) return;
-      gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 });
-      gsap.to(cursorRef.current, { scale: 0.9, duration: 0.2 });
+      
+      if (constants.reducedAnimations) {
+        // Use CSS transforms for better performance
+        dotRef.current.style.transform = 'translate(-50%, -50%) scale(0.7)';
+        cursorRef.current.style.transform += ' scale(0.9)';
+      } else {
+        gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 });
+        gsap.to(cursorRef.current, { scale: 0.9, duration: 0.2 });
+      }
     };
 
-    // Animate it back to its original size
     const mouseUpHandler = () => {
       if (!dotRef.current) return;
-      gsap.to(dotRef.current, { scale: 1, duration: 0.3 });
-      gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
+      
+      if (constants.reducedAnimations) {
+        dotRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursorRef.current.style.transform = cursorRef.current.style.transform.replace(' scale(0.9)', '');
+      } else {
+        gsap.to(dotRef.current, { scale: 1, duration: 0.3 });
+        gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
+      }
     };
 
     window.addEventListener('mousedown', mouseDownHandler);
@@ -154,6 +242,11 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       gsap.set(cursorRef.current, { rotation: 0 });
 
       const updateCorners = (mouseX, mouseY) => {
+        if (constants.reducedAnimations) {
+          // Skip complex corner animations in performance mode
+          return;
+        }
+        
         const rect = target.getBoundingClientRect();
         const cursorRect = cursorRef.current.getBoundingClientRect();
 
@@ -181,7 +274,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
           y: rect.bottom - cursorCenterY + borderWidth - cornerSize
         };
 
-        if (mouseX !== undefined && mouseY !== undefined) {
+        if (mouseX !== undefined && mouseY !== undefined && parallaxStrength > 0) {
           const targetCenterX = rect.left + rect.width / 2;
           const targetCenterY = rect.top + rect.height / 2;
           const mouseOffsetX = (mouseX - targetCenterX) * parallaxStrength;
@@ -225,6 +318,12 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       let moveThrottle = null;
       const targetMove = ev => {
         if (moveThrottle || isAnimatingToTarget) return;
+        
+        if (constants.reducedAnimations) {
+          // Skip mousemove animations in performance mode
+          return;
+        }
+        
         moveThrottle = requestAnimationFrame(() => {
           const mouseEvent = ev;
           updateCorners(mouseEvent.clientX, mouseEvent.clientY);
@@ -264,7 +363,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         }
 
         resumeTimeout = setTimeout(() => {
-          if (!activeTarget && cursorRef.current && spinTl.current) {
+          if (!activeTarget && cursorRef.current && spinTl.current && !constants.reducedAnimations) {
             const currentRotation = gsap.getProperty(cursorRef.current, 'rotation');
             const normalizedRotation = currentRotation % 360;
 
@@ -281,6 +380,9 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
                 spinTl.current?.restart();
               }
             });
+          } else if (constants.reducedAnimations && cursorRef.current) {
+            // Re-enable CSS animation
+            cursorRef.current.style.animation = `spin ${spinDuration}s linear infinite`;
           }
           resumeTimeout = null;
         }, 50);
@@ -298,9 +400,15 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
     window.addEventListener('mouseover', enterHandler, { passive: true });
 
     return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      
       window.removeEventListener('mousemove', moveHandler);
       window.removeEventListener('mouseover', enterHandler);
       window.removeEventListener('scroll', scrollHandler);
+      window.removeEventListener('mousedown', mouseDownHandler);
+      window.removeEventListener('mouseup', mouseUpHandler);
 
       if (activeTarget) {
         cleanupTarget(activeTarget);
@@ -309,20 +417,40 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       console.log('Cleaning up TargetCursor');
 
       spinTl.current?.kill();
+      
+      if (cursorRef.current) {
+        cursorRef.current.style.animation = '';
+      }
+      
+      // Restore original cursor
       document.body.style.cursor = originalCursor;
+      document.documentElement.style.cursor = '';
+      document.body.classList.remove('custom-cursor-active');
+      
+      // Remove global cursor hiding styles
+      const globalStyle = document.getElementById('target-cursor-global');
+      if (globalStyle) {
+        globalStyle.remove();
+      }
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor]);
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isLowPerformance]);
 
   useEffect(() => {
-    if (!cursorRef.current || !spinTl.current) return;
+    if (!cursorRef.current) return;
 
-    if (spinTl.current.isActive()) {
+    if (constants.reducedAnimations) {
+      // Use CSS animation for better performance
+      cursorRef.current.style.animation = `spin ${spinDuration}s linear infinite`;
+      if (spinTl.current) {
+        spinTl.current.kill();
+      }
+    } else if (spinTl.current && spinTl.current.isActive()) {
       spinTl.current.kill();
       spinTl.current = gsap
         .timeline({ repeat: -1 })
         .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
     }
-  }, [spinDuration]);
+  }, [spinDuration, constants.reducedAnimations]);
 
   return (
     <div ref={cursorRef} className="target-cursor-wrapper">

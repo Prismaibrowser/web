@@ -88,10 +88,11 @@
   flex: 1;
   margin: 0 1rem;
   z-index: 5;
+  left: 15px;
 }
 
 .logo {
-  height: 28px;
+  height: 36px;
   max-width: 100%;
 }
 

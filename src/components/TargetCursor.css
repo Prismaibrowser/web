@@ -8,6 +8,22 @@
   z-index: 9999;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Ensure no default cursor shows anywhere */
+.target-cursor-wrapper ~ * {
+  cursor: none !important;
+}
+
+/* CSS animation for performance mode */
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .target-cursor-dot {
@@ -20,6 +36,7 @@
   border-radius: 50%;
   transform: translate(-50%, -50%);
   will-change: transform;
+  transition: transform 0.1s ease-out;
 }
 
 .target-cursor-corner {
@@ -30,6 +47,7 @@
   height: 12px;
   border: 3px solid #fff;
   will-change: transform;
+  transition: transform 0.2s ease-out;
 }
 
 .corner-tl {
@@ -56,9 +74,43 @@
   border-top: none;
 }
 
+/* Performance optimizations */
+.target-cursor-wrapper.performance-mode {
+  mix-blend-mode: normal;
+}
+
+.target-cursor-wrapper.performance-mode .target-cursor-corner {
+  transition: none;
+}
+
+.target-cursor-wrapper.performance-mode .target-cursor-dot {
+  transition: none;
+}
+
+/* Hide default cursor completely when custom cursor is active */
+.custom-cursor-active,
+.custom-cursor-active *,
+.custom-cursor-active *:hover,
+.custom-cursor-active *:active,
+.custom-cursor-active *:focus {
+  cursor: none !important;
+}
+
 /* Responsive adjustments for mobile devices */
 @media (max-width: 768px) {
   .target-cursor-wrapper {
     display: none;
+  }
+}
+
+/* Reduce animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .target-cursor-wrapper {
+    animation: none !important;
+  }
+  
+  .target-cursor-corner,
+  .target-cursor-dot {
+    transition: none !important;
   }
 }
