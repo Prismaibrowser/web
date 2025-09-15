@@ -149,19 +149,11 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
     }
 
     const createSpinTimeline = () => {
+      // Rotation/spinning animation removed
+      // Only keep the corner bracket animations for target framing
       if (spinTl.current) {
         spinTl.current.kill();
-      }
-      
-      if (constants.reducedAnimations) {
-        // Use CSS animation for spinning in performance mode
-        if (cursorRef.current) {
-          cursorRef.current.style.animation = `spin ${spinDuration}s linear infinite`;
-        }
-      } else {
-        spinTl.current = gsap
-          .timeline({ repeat: -1 })
-          .to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' });
+        spinTl.current = null;
       }
     };
 
@@ -295,9 +287,16 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       });
 
       gsap.killTweensOf(cursorRef.current, 'rotation');
-      spinTl.current?.pause();
+      if (spinTl.current) {
+        spinTl.current.pause();
+      }
 
-      gsap.set(cursorRef.current, { rotation: 0 });
+      // Remove any existing rotation and keep cursor at 0 rotation
+      if (constants.reducedAnimations) {
+        cursorRef.current.style.transform = `translate(-50%, -50%)`;
+      } else {
+        gsap.set(cursorRef.current, { rotation: 0 });
+      }
 
       const updateCorners = (mouseX, mouseY) => {
         if (constants.reducedAnimations) {
@@ -421,27 +420,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         }
 
         resumeTimeout = setTimeout(() => {
-          if (!activeTarget && cursorRef.current && spinTl.current && !constants.reducedAnimations) {
-            const currentRotation = gsap.getProperty(cursorRef.current, 'rotation');
-            const normalizedRotation = currentRotation % 360;
-
-            spinTl.current.kill();
-            spinTl.current = gsap
-              .timeline({ repeat: -1 })
-              .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
-
-            gsap.to(cursorRef.current, {
-              rotation: normalizedRotation + 360,
-              duration: spinDuration * (1 - normalizedRotation / 360),
-              ease: 'none',
-              onComplete: () => {
-                spinTl.current?.restart();
-              }
-            });
-          } else if (constants.reducedAnimations && cursorRef.current) {
-            // Re-enable CSS animation
-            cursorRef.current.style.animation = `spin ${spinDuration}s linear infinite`;
-          }
+          // No rotation resumption - rotation animation permanently removed
           resumeTimeout = null;
         }, 50);
 
@@ -477,7 +456,9 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       spinTl.current?.kill();
       
       if (cursorRef.current) {
+        // Remove any rotation styles and animations
         cursorRef.current.style.animation = '';
+        cursorRef.current.style.transform = cursorRef.current.style.transform.replace(/rotate\([^)]*\)/g, '');
       }
       
       // Restore original cursor
@@ -538,18 +519,12 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   useEffect(() => {
     if (!cursorRef.current) return;
 
-    if (constants.reducedAnimations) {
-      // Use CSS animation for better performance
-      cursorRef.current.style.animation = `spin ${spinDuration}s linear infinite`;
+    // No spinning animation - removed rotation completely
+    return () => {
       if (spinTl.current) {
         spinTl.current.kill();
       }
-    } else if (spinTl.current && spinTl.current.isActive()) {
-      spinTl.current.kill();
-      spinTl.current = gsap
-        .timeline({ repeat: -1 })
-        .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
-    }
+    };
   }, [spinDuration, constants.reducedAnimations]);
 
   return (

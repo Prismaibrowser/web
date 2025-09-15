@@ -25,16 +25,6 @@
   cursor: none !important;
 }
 
-/* CSS animation for performance mode */
-@keyframes spin {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
 .target-cursor-dot {
   position: absolute;
   left: 50%;
