@@ -311,9 +311,10 @@ const Footer = () => {
                   }
                 }}
               >
-                <svg width="18" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.5 2c-.8 0-1.5.3-2 .8-.6.5-.9 1.2-.9 2v.7c-.2-.1-.4-.1-.6-.1-1.1 0-2 .9-2 2s.9 2 2 2c.2 0 .4 0 .6-.1v1.2c0 1.7 1.3 3 3 3s3-1.3 3-3V7.5c.2.1.4.1.6.1 1.1 0 2-.9 2-2s-.9-2-2-2c-.2 0-.4 0-.6.1V4.8c0-.8-.3-1.5-.9-2-.5-.5-1.2-.8-2-.8zM9 6.5c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm6 0c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm-3 9c-2.2 0-4 1.8-4 4v3h8v-3c0-2.2-1.8-4-4-4z"/>
-                </svg>
+                <img src="/linux.png" alt="Linux" width="18" height="20" style={{ 
+                  filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(59%) sepia(93%) saturate(318%) hue-rotate(81deg) brightness(119%) contrast(119%)', 
+                  transition: 'filter 0.3s ease' 
+                }} />
                 Linux
               </button>
             </div>

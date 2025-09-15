@@ -70,6 +70,22 @@ body.custom-cursor-active ::-moz-selection {
   cursor: none !important;
 }
 
+/* Download button hover animation */
+.download-button {
+  transition: all 0.3s ease !important;
+}
+
+.download-button:hover {
+  background-color: #000 !important;
+  color: #88E755 !important;
+  border-radius: 20px !important;
+  transform: scale(1.05) !important;
+}
+
+.download-button:hover .morph-bg {
+  opacity: 1 !important;
+}
+
 /* Responsive adjustments for mobile devices */
 @media (max-width: 768px) {
   html, body {

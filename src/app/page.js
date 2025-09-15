@@ -267,7 +267,7 @@ function LaserFlowBoxExample() {
                 gap: '15px'
               }}>
                 <button
-                  className="cursor-target"
+                  className="cursor-target download-button"
                   onClick={handleDownload}
                   style={{
                     padding: isMobile ? '10px 20px' : '12px 24px',
@@ -290,26 +290,28 @@ function LaserFlowBoxExample() {
                   }}
                   onMouseEnter={(e) => {
                     // Morph effect - change background and text color
-                    e.target.style.backgroundColor = '#000';
-                    e.target.style.color = '#88E755';
-                    e.target.style.borderRadius = '20px';
-                    e.target.style.transform = 'scale(1.05)';
+                    const button = e.currentTarget;
+                    button.style.backgroundColor = '#000';
+                    button.style.color = '#88E755';
+                    button.style.borderRadius = '20px';
+                    button.style.transform = 'scale(1.05)';
                     
                     // Add morphing background effect
-                    const morphBg = e.target.querySelector('.morph-bg');
+                    const morphBg = button.querySelector('.morph-bg');
                     if (morphBg) {
                       morphBg.style.opacity = '1';
                     }
                   }}
                   onMouseLeave={(e) => {
                     // Revert morph effect
-                    e.target.style.backgroundColor = '#88E755';
-                    e.target.style.color = '#000';
-                    e.target.style.borderRadius = '8px';
-                    e.target.style.transform = 'scale(1)';
+                    const button = e.currentTarget;
+                    button.style.backgroundColor = '#88E755';
+                    button.style.color = '#000';
+                    button.style.borderRadius = '8px';
+                    button.style.transform = 'scale(1)';
                     
                     // Hide morphing background
-                    const morphBg = e.target.querySelector('.morph-bg');
+                    const morphBg = button.querySelector('.morph-bg');
                     if (morphBg) {
                       morphBg.style.opacity = '0';
                     }
@@ -441,9 +443,10 @@ function LaserFlowBoxExample() {
                         }
                       }}
                     >
-                      <svg width="16" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12.5 2c-.8 0-1.5.3-2 .8-.6.5-.9 1.2-.9 2v.7c-.2-.1-.4-.1-.6-.1-1.1 0-2 .9-2 2s.9 2 2 2c.2 0 .4 0 .6-.1v1.2c0 1.7 1.3 3 3 3s3-1.3 3-3V7.5c.2.1.4.1.6.1 1.1 0 2-.9 2-2s-.9-2-2-2c-.2 0-.4 0-.6.1V4.8c0-.8-.3-1.5-.9-2-.5-.5-1.2-.8-2-.8zM9 6.5c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm6 0c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm-3 9c-2.2 0-4 1.8-4 4v3h8v-3c0-2.2-1.8-4-4-4z"/>
-                      </svg>
+                      <img src="/linux.png" alt="Linux" width="16" height="18" style={{ 
+                        filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)', 
+                        transition: 'filter 0.3s ease' 
+                      }} />
                       Linux
                     </button>
                   </div>

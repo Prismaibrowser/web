@@ -13,8 +13,8 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   const [isLowPerformance, setIsLowPerformance] = useState(performanceMode);
   const constants = useMemo(
     () => ({
-      borderWidth: 3,
-      cornerSize: 12,
+      borderWidth: 4,
+      cornerSize: 16,
       parallaxStrength: isLowPerformance ? 0 : 0.00005,
       throttleMs: isLowPerformance ? 32 : 16, // 30fps vs 60fps
       reducedAnimations: isLowPerformance
@@ -299,11 +299,6 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       }
 
       const updateCorners = (mouseX, mouseY) => {
-        if (constants.reducedAnimations) {
-          // Skip complex corner animations in performance mode
-          return;
-        }
-        
         const rect = target.getBoundingClientRect();
         const cursorRect = cursorRef.current.getBoundingClientRect();
 
@@ -376,11 +371,6 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       const targetMove = ev => {
         if (moveThrottle || isAnimatingToTarget) return;
         
-        if (constants.reducedAnimations) {
-          // Skip mousemove animations in performance mode
-          return;
-        }
-        
         moveThrottle = requestAnimationFrame(() => {
           const mouseEvent = ev;
           updateCorners(mouseEvent.clientX, mouseEvent.clientY);
@@ -398,10 +388,10 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
           const { cornerSize } = constants;
           const positions = [
-            { x: -cornerSize * 1.5, y: -cornerSize * 1.5 },
-            { x: cornerSize * 0.5, y: -cornerSize * 1.5 },
-            { x: cornerSize * 0.5, y: cornerSize * 0.5 },
-            { x: -cornerSize * 1.5, y: cornerSize * 0.5 }
+            { x: -cornerSize * 1.2, y: -cornerSize * 1.2 },
+            { x: cornerSize * 0.2, y: -cornerSize * 1.2 },
+            { x: cornerSize * 0.2, y: cornerSize * 0.2 },
+            { x: -cornerSize * 1.2, y: cornerSize * 0.2 }
           ];
 
           const tl = gsap.timeline();
