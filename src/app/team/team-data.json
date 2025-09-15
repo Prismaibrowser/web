@@ -1,0 +1,123 @@
+[
+  {
+    "image": "/team/nobin.jpg",
+    "title": "Nobin Sijo",
+    "subtitle": "CEO & Founder",
+    "handle": "@nobinsijo360t",
+    "email": "nobinsijo360t@gmail.com",
+     "borderColor": "#10B981" ,
+    "gradient": "linear-gradient(180deg, #10B981, #000)",
+     "url": "https://www.linkedin.com/in/nobin-sijo-n77t/"
+  },
+  {
+    "image": "/team/prashant.jpg",
+    "title": "Prasanth P",
+    "subtitle": "CTO & Co-Founder",
+    "handle": "@prasanth",
+    "email": "programmerprasanth@proton.me",
+    "borderColor": "#3B82F6",
+    "gradient": "linear-gradient(145deg, #3B82F6, #000)",
+    "url": "https://www.linkedin.com/in/prasanth1010000"
+  },
+  {
+    "image": "/team/sankar.jpg",
+    "title": "Sankar Narayan",
+    "subtitle": "CMO & Co-Founder",
+    "handle": "@sankarnarayan",
+    "email": "sankarxe@gmail.com",
+    "borderColor": "#4F46E5",
+    "gradient": "linear-gradient(165deg, #4F46E5, #000)",
+    "url": "https://www.linkedin.com/in/sankar-narayan-s-502925291?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+  },
+  {
+    "image": "/team/pranav.jpg",
+    "title": "Pranav P",
+    "subtitle": "CPO & Co-Founder",
+    "handle": "@pranavp",
+    "email": "pranavctk2023@gmail.com",
+    "borderColor": "#F59E0B",
+    "gradient": "linear-gradient(195deg, #F59E0B, #000)",
+    "url": "https://www.linkedin.com/in/pranav2109/"
+  },
+  {
+    "image": "/team/adith.jpg",
+    "title": "Adith K.P",
+    "subtitle": "COO",
+    "handle": "@adithkp",
+    "email": "adithkp000@gmail.com",
+    "borderColor": "#EF4444",
+    "gradient": "linear-gradient(225deg, #EF4444, #000)",
+    "url": "https://www.linkedin.com/in/adith-kp-660488239"
+  },
+  {
+    "image": "/team/abhimanyu.jpg",
+    "title": "Abhimanyu R.B",
+    "subtitle": "Lead DevOps Engineer (Cloud & Infra)",
+    "handle": "@abhimanyurb",
+    "email": "abhimanyurbsa@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "https://www.linkedin.com/in/abhimanyurb"
+  },
+ {
+    "image": "/team/johan.jpg",
+    "title": "Johan George",
+    "subtitle": "Developer Space Engineer",
+    "handle": "@johangeorge",
+    "email": "johangeorge201203@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "https://www.linkedin.com/in/johan-george-"
+  },
+ {
+    "image": "/team/aljo.jpg",
+    "title": "Aljo",
+    "subtitle": "Lead Product Manager",
+    "handle": "@aljo",
+    "email": "aljojaisonk1@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "https://www.linkedin.com/in/aljo-kj"
+  },
+ {
+    "image": "/team/nazeem.jpg",
+    "title": "Nazeem Mohammad Basheer",
+    "subtitle": "Systems & Cross Platform Engineer",
+    "handle": "@nazeem",
+    "email": "nazeemmohammedbasheer@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "https://www.linkedin.com/in/nazeemmohammedbasheer?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+  },
+   {
+    "image": "/team/rohith.jpg",
+    "title": "Rohith",
+    "subtitle": "AI-Research Engineer",
+    "handle": "@rohith",
+    "email": "rohithchandran0011@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "http://www.linkedin.com/in/rohith-chandran-aprl"
+  },
+  {
+    "image": "/team/nasih.jpg",
+    "title": "Muhammed Nasih KP",
+    "subtitle": "Operations and Documentation Lead",
+    "handle": "@samrodriguez",
+    "email": "nasihkp0271@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "https://www.linkedin.com/in/nasihkp"
+  },
+   {
+    "image": "/team/abhijith.jpg",
+    "title": "Abhijith",
+    "subtitle": "Extension Ecosystem Engineer",
+    "handle": "@abhijith",
+    "email": "babhijith58@gmail.com",
+    "borderColor": "#8B5CF6",
+    "gradient": "linear-gradient(135deg, #8B5CF6, #000)",
+    "url": "https://linkedin.com/in/abhi-jithb"
+  }
+
+]

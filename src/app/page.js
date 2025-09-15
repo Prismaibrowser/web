@@ -77,7 +77,7 @@ function LaserFlowBoxExample() {
       bgColor: "#010710",
       textColor: "#88E755",
       links: [
-        { label: "Team", ariaLabel: "About Team" },
+        { label: "Team", ariaLabel: "About Team", href: "/team" },
           { label: "Documentation", ariaLabel: "Documentation" },
           { label: "GitHub", ariaLabel: "GitHub" }
         ]

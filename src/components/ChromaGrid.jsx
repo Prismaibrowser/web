@@ -121,6 +121,13 @@ export const ChromaGrid = ({
     }
   };
 
+  const handleEmailClick = (email, event) => {
+    event.stopPropagation();
+    if (email) {
+      window.location.href = `mailto:${email}`;
+    }
+  };
+
   const handleCardMove = e => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -157,7 +164,26 @@ export const ChromaGrid = ({
           </div>
           <footer className="chroma-info">
             <h3 className="name">{c.title}</h3>
-            {c.handle && <span className="handle">{c.handle}</span>}
+            {c.handle && (
+              <span 
+                className="handle" 
+                onClick={(e) => handleEmailClick(c.email, e)}
+                style={{
+                  cursor: c.email ? 'pointer' : 'default',
+                  transition: 'color 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  if (c.email) {
+                    e.target.style.color = '#88E755';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = '#aaa';
+                }}
+              >
+                {c.handle}
+              </span>
+            )}
             <p className="role">{c.subtitle}</p>
             {c.location && <span className="location">{c.location}</span>}
           </footer>
