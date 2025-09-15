@@ -9,6 +9,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   const dotRef = useRef(null);
   const animationFrameRef = useRef(null);
   const lastMoveTime = useRef(0);
+  const lastMousePosition = useRef({ x: 0, y: 0 }); // Track last known position
   const [isLowPerformance, setIsLowPerformance] = useState(performanceMode);
   const constants = useMemo(
     () => ({
@@ -58,11 +59,20 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
     }
     lastMoveTime.current = now;
     
+    // Store last known mouse position
+    lastMousePosition.current = { x, y };
+    
     if (!cursorRef.current) return;
     
     if (constants.reducedAnimations) {
-      // Use transform instead of GSAP for better performance
-      cursorRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      // Use direct style manipulation with proper positioning for performance mode
+      const cursor = cursorRef.current;
+      cursor.style.left = x + 'px';
+      cursor.style.top = y + 'px';
+      cursor.style.transform = 'translate(-50%, -50%)';
+      
+      // Add performance mode class for CSS optimization
+      cursor.classList.add('performance-mode');
     } else {
       gsap.to(cursorRef.current, {
         x,
@@ -70,6 +80,9 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         duration: 0.1,
         ease: 'power3.out'
       });
+      
+      // Remove performance mode class
+      cursorRef.current.classList.remove('performance-mode');
     }
   }, [constants.throttleMs, constants.reducedAnimations]);
 
@@ -117,12 +130,23 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       currentLeaveHandler = null;
     };
 
-    gsap.set(cursor, {
-      xPercent: -50,
-      yPercent: -50,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2
-    });
+    // Initial cursor positioning - ensure cursor starts at center, not top-left
+    const initialX = window.innerWidth / 2;
+    const initialY = window.innerHeight / 2;
+    
+    if (constants.reducedAnimations) {
+      // Set initial position using direct styles for performance mode
+      cursor.style.left = initialX + 'px';
+      cursor.style.top = initialY + 'px';
+      cursor.style.transform = 'translate(-50%, -50%)';
+    } else {
+      gsap.set(cursor, {
+        xPercent: -50,
+        yPercent: -50,
+        x: initialX,
+        y: initialY
+      });
+    }
 
     const createSpinTimeline = () => {
       if (spinTl.current) {
@@ -148,17 +172,35 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         cancelAnimationFrame(animationFrameRef.current);
       }
       
-      animationFrameRef.current = requestAnimationFrame(() => {
-        moveCursor(e.clientX, e.clientY);
-      });
+      // Store mouse coordinates for immediate use in performance mode
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      
+      if (constants.reducedAnimations) {
+        // Direct update without requestAnimationFrame for better responsiveness
+        moveCursor(mouseX, mouseY);
+      } else {
+        animationFrameRef.current = requestAnimationFrame(() => {
+          moveCursor(mouseX, mouseY);
+        });
+      }
     };
     window.addEventListener('mousemove', moveHandler);
 
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current || constants.reducedAnimations) return;
 
-      const mouseX = gsap.getProperty(cursorRef.current, 'x');
-      const mouseY = gsap.getProperty(cursorRef.current, 'y');
+      let mouseX, mouseY;
+      
+      if (constants.reducedAnimations) {
+        // Get position from style properties in performance mode
+        const cursor = cursorRef.current;
+        mouseX = parseFloat(cursor.style.left) || 0;
+        mouseY = parseFloat(cursor.style.top) || 0;
+      } else {
+        mouseX = gsap.getProperty(cursorRef.current, 'x');
+        mouseY = gsap.getProperty(cursorRef.current, 'y');
+      }
 
       const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
       const isStillOverTarget =
@@ -174,14 +216,22 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
     window.addEventListener('scroll', scrollHandler, { passive: true });
 
-    // Optimized click animations
+    // Enhanced click animations with better performance mode handling
     const mouseDownHandler = () => {
-      if (!dotRef.current) return;
+      if (!dotRef.current || !cursorRef.current) return;
       
       if (constants.reducedAnimations) {
-        // Use CSS transforms for better performance
+        // Use CSS transforms with proper positioning for better performance
+        const cursor = cursorRef.current;
+        const currentLeft = parseFloat(cursor.style.left) || 0;
+        const currentTop = parseFloat(cursor.style.top) || 0;
+        
         dotRef.current.style.transform = 'translate(-50%, -50%) scale(0.7)';
-        cursorRef.current.style.transform += ' scale(0.9)';
+        cursor.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        
+        // Ensure position is maintained during scaling
+        cursor.style.left = currentLeft + 'px';
+        cursor.style.top = currentTop + 'px';
       } else {
         gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 });
         gsap.to(cursorRef.current, { scale: 0.9, duration: 0.2 });
@@ -189,11 +239,19 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
     };
 
     const mouseUpHandler = () => {
-      if (!dotRef.current) return;
+      if (!dotRef.current || !cursorRef.current) return;
       
       if (constants.reducedAnimations) {
+        const cursor = cursorRef.current;
+        const currentLeft = parseFloat(cursor.style.left) || 0;
+        const currentTop = parseFloat(cursor.style.top) || 0;
+        
         dotRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursorRef.current.style.transform = cursorRef.current.style.transform.replace(' scale(0.9)', '');
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        
+        // Ensure position is maintained during scaling
+        cursor.style.left = currentLeft + 'px';
+        cursor.style.top = currentTop + 'px';
       } else {
         gsap.to(dotRef.current, { scale: 1, duration: 0.3 });
         gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
@@ -434,6 +492,48 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       }
     };
   }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isLowPerformance]);
+
+  // Add a position recovery mechanism for low-end devices
+  useEffect(() => {
+    if (!constants.reducedAnimations || !cursorRef.current) return;
+    
+    const checkCursorPosition = () => {
+      const cursor = cursorRef.current;
+      if (!cursor) return;
+      
+      const rect = cursor.getBoundingClientRect();
+      const isStuckAtOrigin = rect.left <= 10 && rect.top <= 10;
+      const isOutOfBounds = rect.left < -50 || rect.top < -50 || 
+                           rect.left > window.innerWidth + 50 || 
+                           rect.top > window.innerHeight + 50;
+      
+      if (isStuckAtOrigin || isOutOfBounds) {
+        // Use last known position or center as fallback
+        const fallbackX = lastMousePosition.current.x || window.innerWidth / 2;
+        const fallbackY = lastMousePosition.current.y || window.innerHeight / 2;
+        
+        cursor.style.left = fallbackX + 'px';
+        cursor.style.top = fallbackY + 'px';
+        cursor.style.transform = 'translate(-50%, -50%)';
+        
+        console.log('Cursor position recovered:', { x: fallbackX, y: fallbackY });
+      }
+    };
+    
+    // Check cursor position more frequently in performance mode
+    const intervalId = setInterval(checkCursorPosition, 500);
+    
+    // Also check on window resize
+    const handleResize = () => {
+      setTimeout(checkCursorPosition, 100);
+    };
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [constants.reducedAnimations]);
 
   useEffect(() => {
     if (!cursorRef.current) return;

@@ -8,7 +8,16 @@
   z-index: 9999;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  will-change: transform;
+  will-change: transform, left, top;
+  /* Ensure cursor doesn't get clipped or hidden */
+  overflow: visible;
+}
+
+/* Performance mode specific styles */
+.target-cursor-wrapper.performance-mode {
+  /* Use left/top positioning instead of transform in performance mode */
+  transform: none;
+  will-change: left, top;
 }
 
 /* Ensure no default cursor shows anywhere */
