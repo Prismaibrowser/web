@@ -3,21 +3,13 @@
   position: relative;
   padding: 2rem 2.5rem 4rem;
   width: 100%;
-  background-color: #060010; /* Dark background for PrismaticBurst */
+  background-color: #060010; /* Dark background */
   color: #ffffff; /* White text for dark background */
   font-family: 'Space Grotesk', sans-serif;
   overflow: hidden;
 }
 
-.footer-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.6;
-  z-index: 1;
-}
+
 
 .footer-container {
   position: relative;

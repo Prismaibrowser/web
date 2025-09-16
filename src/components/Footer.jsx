@@ -10,8 +10,8 @@ import { TbCube3dSphere } from 'react-icons/tb';
 import Shuffle from './Shuffle';
 import './Footer.css';
 
-// Dynamically import PrismaticBurst to avoid SSR issues
-const PrismaticBurst = dynamic(() => import('./PrismaticBurst'), { ssr: false });
+
+
 
 const solutions = [
   {
@@ -101,23 +101,7 @@ const Footer = () => {
 
   return (
     <footer className="footer-new">
-      {/* PrismaticBurst Background */}
-      <div className="footer-background">
-        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-          <PrismaticBurst
-            animationType="rotate3d"
-            intensity={2}
-            speed={0.5}
-            distort={1.0}
-            paused={false}
-            offset={{ x: 0, y: 0 }}
-            hoverDampness={0.25}
-            rayCount={24}
-            mixBlendMode="lighten"
-            colors={['#88E755', '#60D394', '#ffffff']}
-          />
-        </div>
-      </div>
+
 
       <div className="footer-container">
         {/* Brand and Logo Section */}
