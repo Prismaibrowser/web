@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import './LaserFlow.css';
 
@@ -254,18 +254,62 @@ export const LaserFlow = ({
   decay = 1.1,
   falloffStart = 1.2,
   fogFallSpeed = 0.6,
-  color = '#FF79C6'
+  color = '#FF79C6',
+  performanceMode = false
 }) => {
   const mountRef = useRef(null);
   const hasFadedRef = useRef(false);
+  const [isLowPerformance, setIsLowPerformance] = useState(performanceMode);
+  const constants = useMemo(
+    () => ({
+      pixelRatio: isLowPerformance ? 1 : Math.min(dpr ?? window.devicePixelRatio ?? 1, 2),
+      wispDensity: isLowPerformance ? wispDensity * 0.5 : wispDensity,
+      fogIntensity: isLowPerformance ? fogIntensity * 0.3 : fogIntensity,
+      fogScale: isLowPerformance ? fogScale * 0.5 : fogScale,
+      flowSpeed: isLowPerformance ? flowSpeed * 0.5 : flowSpeed,
+      wispSpeed: isLowPerformance ? wispSpeed * 0.5 : wispSpeed,
+      verticalSizing: isLowPerformance ? verticalSizing * 0.7 : verticalSizing,
+      horizontalSizing: isLowPerformance ? horizontalSizing * 0.7 : horizontalSizing
+    }),
+    [isLowPerformance, dpr, wispDensity, fogIntensity, fogScale, flowSpeed, wispSpeed, verticalSizing, horizontalSizing]
+  );
 
   useEffect(() => {
+    if (performanceMode && !isLowPerformance) {
+      // Performance detection for automatic mode
+      const detectPerformance = () => {
+        const start = performance.now();
+        let frames = 0;
+        
+        const checkFrame = () => {
+          frames++;
+          if (frames < 60) {
+            requestAnimationFrame(checkFrame);
+          } else {
+            const duration = performance.now() - start;
+            const fps = (frames * 1000) / duration;
+            
+            // If FPS is below 45, enable low performance mode
+            if (fps < 45) {
+              setIsLowPerformance(true);
+            }
+          }
+        };
+        
+        // Delay performance detection to avoid interference
+        setTimeout(detectPerformance, 1000);
+      };
+      
+      detectPerformance();
+    }
+    
     const mount = mountRef.current;
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !isLowPerformance,
       alpha: false,
       powerPreference: 'high-performance',
-      premultipliedAlpha: false
+      premultipliedAlpha: false,
+      logarithmicDepthBuffer: false
     });
     renderer.setClearColor(0x000000, 1);
     renderer.domElement.style.width = '100%';
@@ -330,10 +374,9 @@ export const LaserFlow = ({
 
     const setSize = () => {
       const { clientWidth: w, clientHeight: h } = mount;
-      const pixelRatio = Math.min(dpr ?? window.devicePixelRatio ?? 1, 2);
-      renderer.setPixelRatio(pixelRatio);
+      renderer.setPixelRatio(constants.pixelRatio);
       renderer.setSize(w, h, false);
-      uniforms.iResolution.value.set(w * pixelRatio, h * pixelRatio, pixelRatio);
+      uniforms.iResolution.value.set(w * constants.pixelRatio, h * constants.pixelRatio, constants.pixelRatio);
     };
 
     setSize();
@@ -365,15 +408,15 @@ export const LaserFlow = ({
       prevTime = t;
       uniforms.iTime.value = t;
       uniforms.uTiltScale.value = mouseTiltStrength;
-      uniforms.uWispDensity.value = wispDensity;
+      uniforms.uWispDensity.value = constants.wispDensity;
       uniforms.uBeamXFrac.value = horizontalBeamOffset;
       uniforms.uBeamYFrac.value = verticalBeamOffset;
-      uniforms.uFlowSpeed.value = flowSpeed;
-      uniforms.uVLenFactor.value = verticalSizing;
-      uniforms.uHLenFactor.value = horizontalSizing;
-      uniforms.uFogIntensity.value = fogIntensity;
-      uniforms.uFogScale.value = fogScale;
-      uniforms.uWSpeed.value = wispSpeed;
+      uniforms.uFlowSpeed.value = constants.flowSpeed;
+      uniforms.uVLenFactor.value = constants.verticalSizing;
+      uniforms.uHLenFactor.value = constants.horizontalSizing;
+      uniforms.uFogIntensity.value = constants.fogIntensity;
+      uniforms.uFogScale.value = constants.fogScale;
+      uniforms.uWSpeed.value = constants.wispSpeed;
       uniforms.uWIntensity.value = wispIntensity;
       uniforms.uFlowStrength.value = flowStrength;
       uniforms.uDecay.value = decay;
@@ -451,13 +494,16 @@ export const LaserFlow = ({
     decay,
     falloffStart,
     fogFallSpeed,
-    color
+    color,
+    performanceMode,
+    isLowPerformance,
+    constants
   ]);
 
   return (
     <div
       ref={mountRef}
-      className={`laser-flow-container ${className}`}
+      className={`laser-flow-container ${className} ${isLowPerformance ? 'performance-mode' : ''}`}
       style={style} />
   );
 };
