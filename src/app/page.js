@@ -30,10 +30,18 @@ function LaserFlowBoxExample() {
       setIsMobile(window.innerWidth <= 768);
     };
     
+    // Enhanced scroll behavior setup
+    document.documentElement.style.scrollBehavior = 'smooth';
+    document.body.style.scrollBehavior = 'smooth';
+    
+    // Prevent scroll lag and ensure smooth scrolling
+    document.documentElement.style.overflowX = 'hidden';
+    document.documentElement.style.overflowY = 'auto';
+    
     // Initial check
     handleResize();
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -62,7 +70,35 @@ function LaserFlowBoxExample() {
   }, []);
   
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Enhanced scroll to top with better performance
+    try {
+      // Method 1: Instant scroll first to prevent lag
+      window.scrollTo(0, 0);
+      
+      // Method 2: Then apply smooth scroll for better UX
+      setTimeout(() => {
+        window.scrollTo({ 
+          top: 0, 
+          left: 0,
+          behavior: 'smooth' 
+        });
+      }, 10);
+      
+      // Method 3: Ensure we're at the top
+      setTimeout(() => {
+        if (window.scrollY > 0) {
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+      }, 100);
+      
+    } catch (error) {
+      // Emergency fallback
+      console.warn('Scroll to top error:', error);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
+    }
   };
 
   const handleDownload = () => {
@@ -97,7 +133,7 @@ function LaserFlowBoxExample() {
       bgColor: "#88E755", 
       textColor: "#010710",
       links: [
-        { label: "Email", ariaLabel: "Email us" },
+        { label: "Email", ariaLabel: "Email us", href: "mailto:prismaibrowser@gmail.com" },
         { label: "X", ariaLabel: "X" },
         { label: "Reddit", ariaLabel: "Reddit" },
         { label: "LinkedIn", ariaLabel: "LinkedIn" }
@@ -110,7 +146,7 @@ function LaserFlowBoxExample() {
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       <CustomScrollbar />
       {!isLoading && (
-        <div style={{ position: 'relative', backgroundColor: '#060010', minHeight: '200vh', width: '100%' }}>
+        <div style={{ position: 'relative', backgroundColor: '#060010', width: '100%', overflow: 'hidden' }}>
           {/* Background Video */}
           <video
             autoPlay
@@ -162,35 +198,43 @@ function LaserFlowBoxExample() {
             performanceMode={isMobile} // Enable performance mode on mobile devices
           />
 
-          <div 
-            style={{ 
-              minHeight: '100vh',
-              width: '100%',
-              position: 'relative',
-              backgroundColor: 'transparent',
-              zIndex: 5,
-              paddingTop: '80px'
-            }}
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              const el = revealImgRef.current;
-              if (el) {
-                el.style.setProperty('--mx', `${x}px`);
-                el.style.setProperty('--my', `${y + rect.height * 0.5}px`);
-              }
-            }}
-            onMouseLeave={() => {
-              const el = revealImgRef.current;
-              if (el) {
-                el.style.setProperty('--mx', '-9999px');
-                el.style.setProperty('--my', '-9999px');
-              }
-            }}
-          >
+          {/* Main Content Container - Using proper document flow */}
+          <main style={{ 
+            position: 'relative',
+            width: '100%',
+            backgroundColor: 'transparent',
+            zIndex: 5,
+            paddingTop: '80px'
+          }}>
             
-            <div style={{ position: 'relative', minHeight: '100vh', width: '100%', backgroundColor: 'transparent', paddingBottom: '50vh', zIndex: 10 }}>
+            {/* Hero Section */}
+            <section 
+              style={{ 
+                minHeight: '100vh',
+                width: '100%',
+                position: 'relative',
+                backgroundColor: 'transparent',
+                zIndex: 10,
+                paddingBottom: '10vh'
+              }}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const el = revealImgRef.current;
+                if (el) {
+                  el.style.setProperty('--mx', `${x}px`);
+                  el.style.setProperty('--my', `${y + rect.height * 0.5}px`);
+                }
+              }}
+              onMouseLeave={() => {
+                const el = revealImgRef.current;
+                if (el) {
+                  el.style.setProperty('--mx', '-9999px');
+                  el.style.setProperty('--my', '-9999px');
+                }
+              }}
+            >
               <div style={{
                 position: 'relative',
                 top: isMobile ? '5vh' : '0',
@@ -205,7 +249,7 @@ function LaserFlowBoxExample() {
                 alt="Prism Preview"
                 style={{ 
                   position: 'absolute',
-                  top: isMobile ? '30%' : '35%',
+                  top: isMobile ? '30%' : '42%',
                   left: '50%',
                   transform: 'translateX(-50%)',
                   width: isMobile ? '90%' : '86%',
@@ -280,7 +324,7 @@ function LaserFlowBoxExample() {
 
               <div style={{
                 position: 'absolute',
-                top: isMobile ? '95%' : '22%',
+                top: isMobile ? '95%' : '25%',
                 right: isMobile ? 'auto' : '15%',
                 left: isMobile ? '50%' : 'auto',
                 transform: isMobile ? 'translateX(-50%)' : 'none',
@@ -497,180 +541,207 @@ function LaserFlowBoxExample() {
                   }}
                 />
               </div>
-            </div>
-          </div>
+            </section>
           
           {/* Scroll to top button */}
           {showScrollTop && (
             <button 
               className="cursor-target"
-              onClick={scrollToTop}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Scroll to top button clicked'); // Debug log
+                scrollToTop();
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#66CC44';
+                e.target.style.transform = 'translateY(-2px) scale(1.05)';
+                e.target.style.boxShadow = '0 8px 20px rgba(136, 231, 85, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#88E755';
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 4px 12px rgba(136, 231, 85, 0.3)';
+              }}
               style={{
                 position: 'fixed',
                 bottom: isMobile ? '20px' : '30px',
                 right: isMobile ? '20px' : '30px',
-                width: isMobile ? '45px' : '50px',
-                height: isMobile ? '45px' : '50px',
+                width: isMobile ? '50px' : '55px',
+                height: isMobile ? '50px' : '55px',
                 borderRadius: '50%',
                 backgroundColor: '#88E755',
                 color: '#000',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: 'none',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
                 cursor: 'pointer',
                 boxShadow: '0 4px 12px rgba(136, 231, 85, 0.3)',
                 zIndex: 9998,
-                fontSize: isMobile ? '20px' : '24px',
-                transition: 'all 0.3s ease'
+                fontSize: isMobile ? '22px' : '26px',
+                fontWeight: 'bold',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                userSelect: 'none',
+                outline: 'none',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
               }}
               aria-label="Scroll to top"
+              title="Back to top"
             >
               ↑
             </button>
           )}      
           
-          {/* TextPressure Component */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '110%' : '88%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: isMobile ? '90%' : '80%',
-            height: '200px',
-            zIndex: 2
-          }}>
-            <TextPressure
-              text="Prism Mode"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#88E755"
-              strokeColor="#ff0000"
-              minFontSize={isMobile ? 48 : 72}
-            />
-          </div>
+            {/* Prism Mode Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              zIndex: 2
+            }}>
+              <div style={{
+                width: isMobile ? '90%' : '80%',
+                height: '200px',
+                margin: '0 auto'
+              }}>
+                <TextPressure
+                  text="Prism Mode"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={true}
+                  textColor="#88E755"
+                  strokeColor="#ff0000"
+                  minFontSize={isMobile ? 48 : 72}
+                />
+              </div>
+            </section>
+            
+            {/* Features Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              zIndex: 2
+            }}>
+              <div style={{
+                width: isMobile ? '90%' : '80%',
+                height: '200px',
+                margin: '0 auto'
+              }}>
+                <TextPressure
+                  text="Features"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={true}
+                  textColor="#88E755"
+                  strokeColor="#ff0000"
+                  minFontSize={isMobile ? 36 : 56}
+                />
+              </div>
+            </section>
+            
+            {/* Features Bento Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isMobile ? '15vh 0' : '15vh 0',
+              zIndex: 6
+            }}>
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+              }}>
+                <MagicBento 
+                  textAutoHide={true}
+                  enableStars={true}
+                  enableSpotlight={true}
+                  enableBorderGlow={true}
+                  enableTilt={true}
+                  enableMagnetism={true}
+                  clickEffect={true}
+                  spotlightRadius={300}
+                  particleCount={12}
+                  glowColor="136, 231, 85"
+                />
+              </div>
+            </section>
+            
+            {/* Dev Space Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              zIndex: 2
+            }}>
+              <div style={{
+                width: isMobile ? '90%' : '80%',
+                height: '200px',
+                margin: '0 auto'
+              }}>
+                <TextPressure
+                  text="Dev Space"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={true}
+                  textColor="#88E755"
+                  strokeColor="#ff0000"
+                  minFontSize={isMobile ? 42 : 64}
+                />
+              </div>
+            </section>
+            
+            {/* Dev Space Bento Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isMobile ? '15vh 0' : '15vh 0',
+              zIndex: 6
+            }}>
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+              }}>
+                <MagicBento 
+                  textAutoHide={true}
+                  enableStars={true}
+                  enableSpotlight={true}
+                  enableBorderGlow={true}
+                  enableTilt={true}
+                  enableMagnetism={true}
+                  clickEffect={true}
+                  spotlightRadius={300}
+                  particleCount={12}
+                  glowColor="136, 231, 85"
+                />
+              </div>
+            </section>
+            
+          </main>
           
-          {/* TextPressure Component - Features */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '130%' : '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: isMobile ? '90%' : '80%',
-            height: '200px',
-            zIndex: 2
-          }}>
-            <TextPressure
-              text="Features"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#88E755"
-              strokeColor="#ff0000"
-              minFontSize={isMobile ? 36 : 56}
-            />
-          </div>
-          
-          {/* MagicBento Component */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '200%' : '120%',
-            left: '50%',
-            transform: 'translateX(-50%)',
+          {/* Footer Section - At the utmost bottom using proper document flow */}
+          <footer style={{
+            position: 'relative',
             width: '100%',
-            maxWidth: '1200px',
-            zIndex: 6
-          }}>
-            <MagicBento 
-              textAutoHide={true}
-              enableStars={true}
-              enableSpotlight={true}
-              enableBorderGlow={true}
-              enableTilt={true}
-              enableMagnetism={true}
-              clickEffect={true}
-              spotlightRadius={300}
-              particleCount={12}
-              glowColor="136, 231, 85"
-            />
-          </div>
-          
-          {/* TextPressure Component - Dev Space */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '280%' : '160%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: isMobile ? '90%' : '80%',
-            height: '200px',
-            zIndex: 2
-          }}>
-            <TextPressure
-              text="Dev Space"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#88E755"
-              strokeColor="#ff0000"
-              minFontSize={isMobile ? 42 : 64}
-            />
-          </div>
-          
-          {/* Second MagicBento Component - Under Dev Space */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '300%' : '175%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '100%',
-            maxWidth: '1200px',
-            zIndex: 6
-          }}>
-            <MagicBento 
-              textAutoHide={true}
-              enableStars={true}
-              enableSpotlight={true}
-              enableBorderGlow={true}
-              enableTilt={true}
-              enableMagnetism={true}
-              clickEffect={true}
-              spotlightRadius={300}
-              particleCount={12}
-              glowColor="136, 231, 85"
-            />
-          </div>
-          
-          {/* Footer Component - Placed under Second MagicBento */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '380%' : '220%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '100%',
-            zIndex: 3
+            zIndex: 3,
+            marginTop: isMobile ? '5vh' : '8vh',
+            paddingTop: isMobile ? '8vh' : '10vh',
+            paddingBottom: '0'
           }}>
             <Footer />
-          </div>
-          
-          {/* Footer section to prevent white space */}
-          <div style={{ 
-            minHeight: '50vh',
-            backgroundColor: '#060010',
-            width: '100%',
-            position: 'relative'
-          }}>
-            {/* This ensures no white space appears when scrolling on both mobile and desktop */}
-          </div>
+          </footer>
           
         </div>
       )}
