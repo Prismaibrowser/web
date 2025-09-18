@@ -118,7 +118,6 @@ function PrismWebApp() {
             playsInline
             style={{
               position: 'absolute',
-              //marginTop: '-170px',
               top: '-100px',
               left: '245px',
               width: '70%',
