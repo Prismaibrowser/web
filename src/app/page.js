@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import LaserFlow from "@/components/LaserFlow";
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
 
@@ -169,11 +168,7 @@ function LaserFlowBoxExample() {
                 transform: isMobile ? 'scale(1.3)' : 'scale(1)',
                 transformOrigin: 'center'
               }}>
-                <LaserFlow
-                  horizontalBeamOffset={0}
-                  verticalBeamOffset={-0.13}
-                  color="#88E755"
-                />
+                {/* LaserFlow component removed */}
               </div>
 
               <img 
