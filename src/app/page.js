@@ -113,9 +113,10 @@ function PrismWebApp() {
       textColor: "#88E755",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
-          { label: "Documentation", ariaLabel: "Documentation" },
-          { label: "GitHub", ariaLabel: "GitHub" }
-        ]
+        { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
+        { label: "Documentation", ariaLabel: "Documentation" },
+        { label: "GitHub", ariaLabel: "GitHub", href: "https://github.com/Prismaibrowser" }
+      ]
     },
     {
       label: "Useful Links", 
@@ -195,7 +196,7 @@ function PrismWebApp() {
           </header>
           <TargetCursor 
             spinDuration={2}
-            hideDefaultCursor={true}
+            hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
             performanceMode={isMobile} // Enable performance mode on mobile devices
           />
 
@@ -245,7 +246,7 @@ function PrismWebApp() {
               </div>
 
               <img 
-                src="/prism-preview.png" 
+                src="/prism-preview.webp" 
                 alt="Prism Preview"
                 style={{ 
                   position: 'absolute',
@@ -506,12 +507,22 @@ function PrismWebApp() {
                         if (selectedPlatform !== 'Linux') {
                           e.target.style.color = '#000';
                           e.target.style.backgroundColor = '#88E755';
+                          // Change Linux logo to black on hover
+                          const img = e.target.querySelector('img');
+                          if (img) {
+                            img.style.filter = 'brightness(0) saturate(100%)';
+                          }
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedPlatform !== 'Linux') {
                           e.target.style.color = '#88E755';
                           e.target.style.backgroundColor = 'transparent';
+                          // Change Linux logo back to green when not hovering
+                          const img = e.target.querySelector('img');
+                          if (img) {
+                            img.style.filter = 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)';
+                          }
                         }
                       }}
                     >
@@ -526,7 +537,7 @@ function PrismWebApp() {
 
                 <img
                   ref={revealImgRef}
-                  src="/prism-preview.png"
+                  src="/prism-preview.webp"
                   alt="Reveal effect"
                   style={{
                     position: 'absolute',

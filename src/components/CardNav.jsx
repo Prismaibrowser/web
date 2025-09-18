@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
 // use your own icon import if react-icons is not available
@@ -18,9 +18,11 @@ const CardNav = ({
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const navRef = useRef(null);
   const cardsRef = useRef([]);
   const tlRef = useRef(null);
+  const scrollTimeoutRef = useRef(null);
 
   const calculateHeight = () => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -28,11 +30,11 @@ const CardNav = ({
     
     if (isMobile) {
       // For mobile, each card has a fixed height plus padding
-      return 60 + (numItems * 80); // 60px for header + height per card
+      return 60 + (numItems * 100); // Increased height per card for mobile
     }
     
     // For desktop, cards are displayed in a row
-    return 240; // Fixed height for desktop
+    return 280; // Increased height for better card visibility
   };
 
   const createTimeline = () => {
@@ -41,20 +43,95 @@ const CardNav = ({
     
     if (!navEl || cards.length === 0) return null;
 
-    // Initialize cards to be hidden
-    gsap.set(cards, { y: 15, opacity: 0 });
+    // Initialize cards to be hidden with proper starting positions
+    gsap.set(cards, { 
+      y: 20, 
+      opacity: 0, 
+      visibility: 'hidden',
+      pointerEvents: 'none'
+    });
 
-    const tl = gsap.timeline({ paused: true });
+    const tl = gsap.timeline({ 
+      paused: true,
+      onComplete: () => {
+        // Ensure cards are fully visible and interactive after animation
+        cards.forEach(card => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 1, 
+              y: 0, 
+              visibility: 'visible',
+              pointerEvents: 'auto'
+            });
+          }
+        });
+      },
+      onReverseComplete: () => {
+        // Ensure cards are properly hidden after reverse animation
+        cards.forEach(card => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 0, 
+              y: 20, 
+              visibility: 'hidden',
+              pointerEvents: 'none'
+            });
+          }
+        });
+      }
+    });
 
-    // Animate cards in
+    // Animate cards in with staggered timing
     tl.to(
       cards,
-      { y: 0, opacity: 1, duration: 0.4, ease, stagger: 0.08 },
+      { 
+        y: 0, 
+        opacity: 1, 
+        visibility: 'visible',
+        pointerEvents: 'auto',
+        duration: 0.5, 
+        ease, 
+        stagger: 0.1 
+      },
       0
     );
 
     return tl;
   };
+
+  // Prevent menu from disappearing during scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      // Do nothing during scroll when menu is open
+      // Just prevent any interference
+    };
+
+    // Only add scroll listener when menu is expanded
+    if (isExpanded) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      // Ensure cards remain visible and stable during scroll
+      const cards = cardsRef.current.filter(Boolean);
+      cards.forEach(card => {
+        if (card) {
+          gsap.set(card, { 
+            opacity: 1, 
+            y: 0, 
+            visibility: 'visible',
+            pointerEvents: 'auto'
+          });
+        }
+      });
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = null;
+      }
+    };
+  }, [isExpanded]);
 
   useLayoutEffect(() => {
     const tl = createTimeline();
@@ -75,18 +152,21 @@ const CardNav = ({
         const newHeight = calculateHeight();
         gsap.set(navRef.current, { height: newHeight });
 
-        tlRef.current.kill();
-        const newTl = createTimeline();
-        if (newTl) {
-          newTl.progress(1);
-          tlRef.current = newTl;
-        }
-      } else {
-        tlRef.current.kill();
-        const newTl = createTimeline();
-        if (newTl) {
-          tlRef.current = newTl;
-        }
+        // Ensure cards remain visible during resize
+        const cards = cardsRef.current.filter(Boolean);
+        cards.forEach(card => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 1, 
+              y: 0, 
+              visibility: 'visible',
+              pointerEvents: 'auto'
+            });
+          }
+        });
+
+        // Don't kill timeline when menu is open, just adjust height
+        // Timeline should remain intact to prevent card disappearing
       }
     };
 
@@ -100,18 +180,53 @@ const CardNav = ({
     if (!tl) return;
     
     if (!isExpanded) {
+      // Opening menu
       setIsHamburgerOpen(true);
       setIsExpanded(true);
+      
+      // Set proper height for the nav container
+      const newHeight = calculateHeight();
+      gsap.set(navRef.current, { height: newHeight });
+      
+      // Play the timeline to show cards
       tl.play(0);
+      
+      // Ensure cards stay visible after opening
+      tl.eventCallback('onComplete', () => {
+        const cards = cardsRef.current.filter(Boolean);
+        cards.forEach(card => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 1, 
+              y: 0, 
+              visibility: 'visible',
+              pointerEvents: 'auto'
+            });
+          }
+        });
+      });
     } else {
+      // Closing menu
       setIsHamburgerOpen(false);
-      // Ensure cards are properly hidden when closing
+      
+      // Clear any scroll timeouts to prevent interference
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = null;
+      }
+      setIsScrolling(false);
+      
+      // Set up reverse complete callback
       tl.eventCallback('onReverseComplete', () => {
         setIsExpanded(false);
-        // Force reset cards to hidden state
-        const cards = cardsRef.current.filter(Boolean);
-        gsap.set(cards, { y: 15, opacity: 0 });
+        // Reset nav height
+        gsap.set(navRef.current, { height: 60 });
       });
+      
+      // Clear any previous callbacks to prevent conflicts
+      tl.eventCallback('onComplete', null);
+      
+      // Reverse the timeline to hide cards
       tl.reverse();
     }
   };

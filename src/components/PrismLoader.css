@@ -23,6 +23,9 @@
   align-items: center;
   gap: 2rem;
   text-align: center;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
 }
 
 /* Logo Container */
@@ -31,6 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  order: 1; /* Ensure logo comes first on mobile */
 }
 
 .logo-glow {
@@ -55,6 +59,7 @@
   position: relative;
   width: 100px;
   height: 100px;
+  order: 2; /* Place loading animation after logo */
 }
 
 .loading-ring {
@@ -100,6 +105,7 @@
   align-items: center;
   gap: 0.5rem;
   width: 250px;
+  order: 3; /* Progress bar comes third */
 }
 
 .progress-bar {
@@ -136,6 +142,7 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   animation: textPulse 2s ease-in-out infinite;
+  order: 4; /* Loading text comes last */
 }
 
 /* Animations */
@@ -169,6 +176,12 @@
   .modern-loader-content {
     gap: 1.5rem;
     padding: 1rem;
+    justify-content: center;
+  }
+  
+  .logo-container {
+    order: 1; /* Logo at the top on mobile */
+    margin-bottom: 1rem;
   }
   
   .logo-glow {
@@ -183,21 +196,34 @@
   .loading-animation {
     width: 80px;
     height: 80px;
+    order: 2;
   }
   
   .progress-container {
     width: 200px;
+    order: 3;
   }
   
   .modern-loading-text {
     font-size: 1rem;
     letter-spacing: 1px;
+    order: 4;
   }
 }
 
 @media (max-width: 480px) {
   .modern-loader-content {
     gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+    height: auto;
+    min-height: 70vh;
+  }
+  
+  .logo-container {
+    order: 1; /* Ensure logo stays at top */
+    margin-bottom: 1.5rem;
+    align-self: center;
   }
   
   .logo-glow {
@@ -212,13 +238,20 @@
   .loading-animation {
     width: 60px;
     height: 60px;
+    order: 2;
+    align-self: center;
   }
   
   .progress-container {
     width: 180px;
+    order: 3;
+    align-self: center;
   }
   
   .modern-loading-text {
     font-size: 0.9rem;
+    order: 4;
+    align-self: center;
+    text-align: center;
   }
 }
