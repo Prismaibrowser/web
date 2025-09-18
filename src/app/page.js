@@ -10,7 +10,7 @@ import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
 import PrismLoader from "@/components/PrismLoader";
 
-function LaserFlowBoxExample() {
+function PrismWebApp() {
   const revealImgRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState('');
@@ -117,12 +117,14 @@ function LaserFlowBoxExample() {
             loop
             playsInline
             style={{
-              position: 'fixed',
-              top: '50px',
-              left: '-245px',
-              width: '100%',
-              height: '100%',
+              position: 'absolute',
+              //marginTop: '-170px',
+              top: '-100px',
+              left: '245px',
+              width: '70%',
+              height: '35%',
               objectFit: 'cover',
+              alignContent: 'center',
               zIndex: 1,
              
             }}
@@ -192,7 +194,6 @@ function LaserFlowBoxExample() {
                 transform: isMobile ? 'scale(1.3)' : 'scale(1)',
                 transformOrigin: 'center'
               }}>
-                {/* LaserFlow component removed */}
               </div>
 
               <img 
@@ -209,13 +210,15 @@ function LaserFlowBoxExample() {
                   borderRadius: isMobile ? '12px' : '18px',
                   border: '2px solid #88E755',
                   zIndex: 6,
-                  maxWidth: isMobile ? '500px' : '1200px'
+                  maxWidth: isMobile ? '500px' : '1200px',
+                  marginTop: '7px'
                 }}
               />
 
               <img
                 src={isMobile ? "/PRISM3DMODEL(mobile).png" : "/prism-logo-3d.png"}
                 alt="Prism 3D Logo"
+                className="logo-hover-rotate"
                 style={{
                   position: 'absolute',
                   top: isMobile ? '20%' : '25%',
@@ -225,7 +228,9 @@ function LaserFlowBoxExample() {
                   height: 'auto',
                   zIndex: 4,
                   filter: 'drop-shadow(0 12px 28px rgba(136, 231, 85, 0.45))',
-                  pointerEvents: 'none'
+                  pointerEvents: 'auto',
+                  cursor: 'pointer',
+                  transition: 'transform 0.5s ease-in-out'
                 }}
               />
 
@@ -478,7 +483,6 @@ function LaserFlowBoxExample() {
                   style={{
                     position: 'absolute',
                     width: '100%',
-                    top: '-50%',
                     zIndex: 5,
                     mixBlendMode: 'lighten',
                     opacity: 0.3,
@@ -675,6 +679,6 @@ function LaserFlowBoxExample() {
 
 export default function Home() {
   return (
-    <LaserFlowBoxExample />
+    <PrismWebApp />
   );
 }
