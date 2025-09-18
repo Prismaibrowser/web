@@ -13,11 +13,15 @@ import CustomScrollbar from "@/components/CustomScrollbar";
 function PrismWebApp() {
   const revealImgRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [selectedPlatform, setSelectedPlatform] = useState('');
+  const [selectedPlatform, setSelectedPlatform] = useState('Windows'); // Default to prevent hydration mismatch
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false); // Track client-side hydration
   
   useEffect(() => {
+    // Mark that we're on the client side
+    setIsClient(true);
+    
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowScrollTop(true);
@@ -38,7 +42,7 @@ function PrismWebApp() {
     document.documentElement.style.overflowX = 'hidden';
     document.documentElement.style.overflowY = 'auto';
     
-    // Initial check
+    // Initial check after hydration
     handleResize();
     
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -50,24 +54,26 @@ function PrismWebApp() {
   }, []);
 
   useEffect(() => {
-    // Detect OS and set default platform
-    const detectOS = () => {
-      const userAgent = window.navigator.userAgent;
-      const platform = window.navigator.platform;
+    // Only detect OS after client-side hydration to prevent mismatch
+    if (isClient) {
+      const detectOS = () => {
+        const userAgent = window.navigator.userAgent;
+        const platform = window.navigator.platform;
+        
+        if (userAgent.includes('Windows') || platform.includes('Win')) {
+          return 'Windows';
+        } else if (userAgent.includes('Linux') || platform.includes('Linux')) {
+          return 'Linux';
+        } else if (userAgent.includes('Mac') || platform.includes('Mac')) {
+          return 'Linux'; // Default to Linux for Mac users
+        } else {
+          return 'Windows'; // Default fallback
+        }
+      };
       
-      if (userAgent.includes('Windows') || platform.includes('Win')) {
-        return 'Windows';
-      } else if (userAgent.includes('Linux') || platform.includes('Linux')) {
-        return 'Linux';
-      } else if (userAgent.includes('Mac') || platform.includes('Mac')) {
-        return 'Linux'; // Default to Linux for Mac users
-      } else {
-        return 'Windows'; // Default fallback
-      }
-    };
-    
-    setSelectedPlatform(detectOS());
-  }, []);
+      setSelectedPlatform(detectOS());
+    }
+  }, [isClient]);
   
   const scrollToTop = () => {
     // Enhanced scroll to top with better performance
@@ -155,10 +161,10 @@ function PrismWebApp() {
             playsInline
             style={{
               position: 'absolute',
-              top: '-100px',
+              top: '-70px',
               left: '245px',
               width: '70%',
-              height: '35%',
+              height: '14%',
               objectFit: 'cover',
               alignContent: 'center',
               zIndex: 1,
@@ -238,8 +244,8 @@ function PrismWebApp() {
             >
               <div style={{
                 position: 'relative',
-                top: isMobile ? '5vh' : '0',
-                transform: isMobile ? 'scale(1.3)' : 'scale(1)',
+                top: isClient && isMobile ? '5vh' : '0',
+                transform: isClient && isMobile ? 'scale(1.3)' : 'scale(1)',
                 transformOrigin: 'center'
               }}>
               </div>
@@ -249,30 +255,30 @@ function PrismWebApp() {
                 alt="Prism Preview"
                 style={{ 
                   position: 'absolute',
-                  top: isMobile ? '30%' : '42%',
+                  top: isClient && isMobile ? '30%' : '42%',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  width: isMobile ? '90%' : '86%',
+                  width: isClient && isMobile ? '90%' : '86%',
                   height: 'auto',
                   objectFit: 'contain',
-                  borderRadius: isMobile ? '12px' : '18px',
+                  borderRadius: isClient && isMobile ? '12px' : '18px',
                   border: '2px solid #88E755',
                   zIndex: 6,
-                  maxWidth: isMobile ? '500px' : '1200px',
-                  marginTop: '7px'
+                  maxWidth: isClient && isMobile ? '500px' : '1200px',
+                  marginTop: '-30px'
                 }}
               />
 
               <img
-                src={isMobile ? "/PRISM3DMODEL(mobile).png" : "/prism-logo-3d.png"}
+                src={isClient && isMobile ? "/PRISM3DMODEL(mobile).png" : "/prism-logo-3d.png"}
                 alt="Prism 3D Logo"
                 className="logo-hover-rotate"
                 style={{
                   position: 'absolute',
-                  top: isMobile ? '20%' : '25%',
-                  left: isMobile ? '20%' : '22%',
-                  transform: isMobile ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) rotate(-15deg)',
-                  width: isMobile ? '200px' : '703.03px',
+                  top: isClient && isMobile ? '20%' : '25%',
+                  left: isClient && isMobile ? '20%' : '22%',
+                  transform: isClient && isMobile ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) rotate(-15deg)',
+                  width: isClient && isMobile ? '200px' : '703.03px',
                   height: 'auto',
                   zIndex: 4,
                   filter: 'drop-shadow(0 12px 28px rgba(136, 231, 85, 0.45))',
@@ -282,24 +288,27 @@ function PrismWebApp() {
                 }}
               />
 
-              {isMobile ? (
-                <div style={{
-                  position: 'absolute',
-                  top: '15%',
-                  right: '5%',
-                  transform: 'none',
-                  color: '#88E755',
-                  fontSize: '1.6rem',
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  zIndex: 8,
-                  textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
-                  textAlign: 'right',
-                  lineHeight: 1.2
-                }}>
-                  <div>Where AI</div>
-                  <div>Meets Browser</div>
-                </div>
-              ) : (
+              {/* Mobile text version */}
+              <div style={{
+                display: isClient && isMobile ? 'block' : 'none',
+                position: 'absolute',
+                top: '15%',
+                right: '5%',
+                transform: 'none',
+                color: '#88E755',
+                fontSize: '1.6rem',
+                fontFamily: 'Space Grotesk, sans-serif',
+                zIndex: 8,
+                textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
+                textAlign: 'right',
+                lineHeight: 1.2
+              }}>
+                <div>Where AI</div>
+                <div>Meets Browser</div>
+              </div>
+              
+              {/* Desktop text version */}
+              <div style={{ display: isClient && isMobile ? 'none' : 'block' }}>
                 <Shuffle
                   text="Where AI Meets Browser"
                   shuffleDirection="right"
@@ -324,14 +333,14 @@ function PrismWebApp() {
                     textAlign: 'left'
                   }}
                 />
-              )}
+              </div>
 
               <div style={{
                 position: 'absolute',
-                top: isMobile ? '95%' : '25%',
-                right: isMobile ? 'auto' : '15%',
-                left: isMobile ? '50%' : 'auto',
-                transform: isMobile ? 'translateX(-50%)' : 'none',
+                top: isClient && isMobile ? '95%' : '25%',
+                right: isClient && isMobile ? 'auto' : '15%',
+                left: isClient && isMobile ? '50%' : 'auto',
+                transform: isClient && isMobile ? 'translateX(-50%)' : 'none',
                 zIndex: 8,
                 display: 'flex',
                 flexDirection: 'column',
@@ -342,14 +351,14 @@ function PrismWebApp() {
                   className="cursor-target download-button"
                   onClick={handleDownload}
                   style={{
-                    padding: isMobile ? '10px 20px' : '12px 24px',
+                    padding: isClient && isMobile ? '10px 20px' : '12px 24px',
                     backgroundColor: '#88E755',
                     color: '#000',
                     border: 'none',
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: isMobile ? '14px' : '16px',
+                    fontSize: isClient && isMobile ? '14px' : '16px',
                     fontWeight: '600',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
@@ -434,7 +443,7 @@ function PrismWebApp() {
                   </div>
                   <div style={{
                     display: 'flex',
-                    gap: isMobile ? '12px' : '10px',
+                    gap: isClient && isMobile ? '12px' : '10px',
                     alignItems: 'center',
                     flexDirection: 'row',
                     justifyContent: 'center',
@@ -444,14 +453,14 @@ function PrismWebApp() {
                       className="cursor-target"
                       onClick={() => setSelectedPlatform('Windows')}
                       style={{
-                        padding: isMobile ? '8px 16px' : '8px 16px',
+                        padding: isClient && isMobile ? '8px 16px' : '8px 16px',
                         backgroundColor: selectedPlatform === 'Windows' ? '#88E755' : 'transparent',
                         color: selectedPlatform === 'Windows' ? '#000' : '#88E755',
                         border: '2px solid #88E755',
                         borderRadius: '6px',
                         cursor: 'pointer',
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: isMobile ? '13px' : '14px',
+                        fontSize: isClient && isMobile ? '13px' : '14px',
                         fontWeight: '500',
                         transition: 'all 0.3s ease',
                         textTransform: 'uppercase',
@@ -459,7 +468,7 @@ function PrismWebApp() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        minWidth: isMobile ? '110px' : 'auto',
+                        minWidth: isClient && isMobile ? '110px' : 'auto',
                         justifyContent: 'center'
                       }}
                       onMouseEnter={(e) => {
@@ -484,14 +493,14 @@ function PrismWebApp() {
                       className="cursor-target"
                       onClick={() => setSelectedPlatform('Linux')}
                       style={{
-                        padding: isMobile ? '8px 16px' : '8px 16px',
+                        padding: isClient && isMobile ? '8px 16px' : '8px 16px',
                         backgroundColor: selectedPlatform === 'Linux' ? '#88E755' : 'transparent',
                         color: selectedPlatform === 'Linux' ? '#000' : '#88E755',
                         border: '2px solid #88E755',
                         borderRadius: '6px',
                         cursor: 'pointer',
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: isMobile ? '13px' : '14px',
+                        fontSize: isClient && isMobile ? '13px' : '14px',
                         fontWeight: '500',
                         transition: 'all 0.3s ease',
                         textTransform: 'uppercase',
@@ -499,7 +508,7 @@ function PrismWebApp() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        minWidth: isMobile ? '110px' : 'auto',
+                        minWidth: isClient && isMobile ? '110px' : 'auto',
                         justifyContent: 'center'
                       }}
                       onMouseEnter={(e) => {
@@ -568,10 +577,10 @@ function PrismWebApp() {
               }}
               style={{
                 position: 'fixed',
-                bottom: isMobile ? '20px' : '30px',
-                right: isMobile ? '20px' : '30px',
-                width: isMobile ? '50px' : '55px',
-                height: isMobile ? '50px' : '55px',
+                bottom: isClient && isMobile ? '20px' : '30px',
+                right: isClient && isMobile ? '20px' : '30px',
+                width: isClient && isMobile ? '50px' : '55px',
+                height: isClient && isMobile ? '50px' : '55px',
                 borderRadius: '50%',
                 backgroundColor: '#88E755',
                 color: '#000',
@@ -582,7 +591,7 @@ function PrismWebApp() {
                 cursor: 'pointer',
                 boxShadow: '0 4px 12px rgba(136, 231, 85, 0.3)',
                 zIndex: 9998,
-                fontSize: isMobile ? '22px' : '26px',
+                fontSize: isClient && isMobile ? '22px' : '26px',
                 fontWeight: 'bold',
                 transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 userSelect: 'none',
@@ -601,11 +610,11 @@ function PrismWebApp() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              padding: isClient && isMobile ? '15vh 5%' : '15vh 10%',
               zIndex: 2
             }}>
               <div style={{
-                width: isMobile ? '90%' : '80%',
+                width: isClient && isMobile ? '90%' : '80%',
                 height: '200px',
                 margin: '0 auto'
               }}>
@@ -619,7 +628,7 @@ function PrismWebApp() {
                   italic={true}
                   textColor="#88E755"
                   strokeColor="#ff0000"
-                  minFontSize={isMobile ? 48 : 72}
+                  minFontSize={isClient && isMobile ? 48 : 72}
                 />
               </div>
             </section>
@@ -628,11 +637,11 @@ function PrismWebApp() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              padding: isClient && isMobile ? '15vh 5%' : '15vh 10%',
               zIndex: 2
             }}>
               <div style={{
-                width: isMobile ? '90%' : '80%',
+                width: isClient && isMobile ? '90%' : '80%',
                 height: '200px',
                 margin: '0 auto'
               }}>
@@ -646,7 +655,7 @@ function PrismWebApp() {
                   italic={true}
                   textColor="#88E755"
                   strokeColor="#ff0000"
-                  minFontSize={isMobile ? 36 : 56}
+                  minFontSize={isClient && isMobile ? 36 : 56}
                 />
               </div>
             </section>
@@ -655,7 +664,7 @@ function PrismWebApp() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 0' : '15vh 0',
+              padding: isClient && isMobile ? '15vh 0' : '15vh 0',
               zIndex: 6
             }}>
               <div style={{
@@ -682,11 +691,11 @@ function PrismWebApp() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              padding: isClient && isMobile ? '15vh 5%' : '15vh 10%',
               zIndex: 2
             }}>
               <div style={{
-                width: isMobile ? '90%' : '80%',
+                width: isClient && isMobile ? '90%' : '80%',
                 height: '200px',
                 margin: '0 auto'
               }}>
@@ -700,7 +709,7 @@ function PrismWebApp() {
                   italic={true}
                   textColor="#88E755"
                   strokeColor="#ff0000"
-                  minFontSize={isMobile ? 42 : 64}
+                  minFontSize={isClient && isMobile ? 42 : 64}
                 />
               </div>
             </section>
@@ -709,7 +718,7 @@ function PrismWebApp() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 0' : '15vh 0',
+              padding: isClient && isMobile ? '15vh 0' : '15vh 0',
               zIndex: 6
             }}>
               <div style={{
@@ -739,8 +748,8 @@ function PrismWebApp() {
             position: 'relative',
             width: '100%',
             zIndex: 3,
-            marginTop: isMobile ? '5vh' : '8vh',
-            paddingTop: isMobile ? '8vh' : '10vh',
+            marginTop: isClient && isMobile ? '5vh' : '8vh',
+            paddingTop: isClient && isMobile ? '8vh' : '10vh',
             paddingBottom: '0'
           }}>
             <Footer />

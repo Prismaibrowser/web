@@ -91,7 +91,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor) {
-      // Force hide cursor on all elements
+      // Force hide cursor on all elements for custom pointer
       document.body.style.cursor = 'none';
       document.documentElement.style.cursor = 'none';
       document.body.classList.add('custom-cursor-active');
@@ -529,3 +529,4 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 };
 
 export default TargetCursor;
+
