@@ -7,7 +7,7 @@
   margin: 0 auto;
   padding: 1rem;
   padding-left: 5.2rem; /* Added padding to position the navbar more to the right */
-  z-index: 1000;
+  z-index: inherit;
   box-sizing: border-box;
   overflow: visible;
 }

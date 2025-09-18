@@ -50,7 +50,7 @@ const SocialButton = ({ children, label, href }) => {
   return (
     <a
       href={href}
-      className="social-button"
+      className="social-button cursor-target"
       aria-label={label}
     >
       {children}
@@ -158,6 +158,7 @@ const Footer = () => {
           margin: '2rem 0'
         }}>
           <button
+            className="cursor-target"
             onClick={handleDownload}
             style={{
               padding: isMobile ? '12px 24px' : '14px 28px',
@@ -223,6 +224,7 @@ const Footer = () => {
               justifyContent: 'center'
             }}>
               <button
+                className="cursor-target"
                 onClick={() => setSelectedPlatform('Windows')}
                 style={{
                   padding: isMobile ? '10px 18px' : '10px 20px',
@@ -262,6 +264,7 @@ const Footer = () => {
                 Windows
               </button>
               <button
+                className="cursor-target"
                 onClick={() => setSelectedPlatform('Linux')}
                 style={{
                   padding: isMobile ? '10px 18px' : '10px 20px',
@@ -336,7 +339,7 @@ const Footer = () => {
           {/* Contact Section */}
           <div className="footer-column">
             <p className="column-title">GET IN TOUCH</p>
-            <div className="contact-item">
+            <div className="contact-item cursor-target">
               <FaArrowRightLong className="contact-icon" />
               <span>hey@prismai.browser</span>
             </div>
@@ -360,7 +363,7 @@ const Footer = () => {
             {solutions.map((solution, index) => {
               const IconComponent = solution.icon;
               return (
-                <div key={index} className="solution-item">
+                <div key={index} className="solution-item cursor-target">
                   <IconComponent className="solution-icon" />
                   <div className="solution-content">
                     <p className="solution-label">{solution.label}</p>
@@ -375,7 +378,7 @@ const Footer = () => {
           <div className="footer-column">
             <p className="column-title">RESOURCES</p>
             {resources.map((resource, index) => (
-              <div key={index} className="resource-item">
+              <div key={index} className="resource-item cursor-target">
                 <p className="resource-label">{resource.label}</p>
                 <p className="resource-description">{resource.description}</p>
               </div>

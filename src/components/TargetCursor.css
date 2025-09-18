@@ -6,49 +6,31 @@
   height: 0;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: normal;
+  mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  will-change: transform, left, top;
-  /* Ensure cursor doesn't get clipped or hidden */
-  overflow: visible;
-}
-
-/* Performance mode specific styles */
-.target-cursor-wrapper.performance-mode {
-  /* Use left/top positioning instead of transform in performance mode */
-  transform: none;
-  will-change: left, top;
-}
-
-/* Ensure no default cursor shows anywhere */
-.target-cursor-wrapper ~ * {
-  cursor: none !important;
 }
 
 .target-cursor-dot {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   background: #fff;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   will-change: transform;
-  transition: transform 0.1s ease-out;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .target-cursor-corner {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 16px;
-  height: 16px;
-  border: 4px solid #fff;
-  will-change: transform;
-  transition: transform 0.2s ease-out;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  width: 12px;
+  height: 12px;
+  border: 3px solid #fff;
+  will-change: transform, width, height, border-width;
+  transition: width 0.2s ease, height 0.2s ease, border-width 0.2s ease;
 }
 
 .corner-tl {
@@ -75,43 +57,17 @@
   border-top: none;
 }
 
-/* Performance optimizations */
-.target-cursor-wrapper.performance-mode {
-  mix-blend-mode: normal;
-}
-
-.target-cursor-wrapper.performance-mode .target-cursor-corner {
-  transition: none;
-}
-
-.target-cursor-wrapper.performance-mode .target-cursor-dot {
-  transition: none;
-}
-
-/* Hide default cursor completely when custom cursor is active */
-.custom-cursor-active,
-.custom-cursor-active *,
-.custom-cursor-active *:hover,
-.custom-cursor-active *:active,
-.custom-cursor-active *:focus {
+/* Enhanced cursor hiding for target elements */
+.cursor-target,
+.cursor-target *,
+.cursor-target *:before,
+.cursor-target *:after {
   cursor: none !important;
 }
 
-/* Responsive adjustments for mobile devices */
-@media (max-width: 768px) {
-  .target-cursor-wrapper {
-    display: none;
-  }
-}
-
-/* Reduce animations for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .target-cursor-wrapper {
-    animation: none !important;
-  }
-  
-  .target-cursor-corner,
-  .target-cursor-dot {
-    transition: none !important;
+/* Performance mode optimizations */
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  .target-cursor-corner {
+    transition: none;
   }
 }

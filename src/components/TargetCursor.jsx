@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
+import { useEffect, useRef, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 import './TargetCursor.css';
 
@@ -7,107 +7,33 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   const cornersRef = useRef(null);
   const spinTl = useRef(null);
   const dotRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const lastMoveTime = useRef(0);
-  const lastMousePosition = useRef({ x: 0, y: 0 }); // Track last known position
-  const [isLowPerformance, setIsLowPerformance] = useState(performanceMode);
   const constants = useMemo(
     () => ({
-      borderWidth: 4,
-      cornerSize: 16,
-      parallaxStrength: isLowPerformance ? 0 : 0.00005,
-      throttleMs: isLowPerformance ? 32 : 16, // 30fps vs 60fps
-      reducedAnimations: isLowPerformance
+      borderWidth: 3,
+      cornerSize: 12,
+      parallaxStrength: performanceMode ? 0.00002 : 0.00005,
+      animationSpeed: performanceMode ? 0.3 : 0.2
     }),
-    [isLowPerformance]
+    [performanceMode]
   );
 
-  // Performance detection
-  useEffect(() => {
-    if (!performanceMode) {
-      const detectPerformance = () => {
-        const start = performance.now();
-        let frames = 0;
-        
-        const checkFrame = () => {
-          frames++;
-          if (frames < 60) {
-            requestAnimationFrame(checkFrame);
-          } else {
-            const duration = performance.now() - start;
-            const fps = (frames * 1000) / duration;
-            
-            // If FPS is below 45, enable performance mode
-            if (fps < 45) {
-              setIsLowPerformance(true);
-            }
-          }
-        };
-        
-        requestAnimationFrame(checkFrame);
-      };
-      
-      // Delay performance detection to avoid interference
-      setTimeout(detectPerformance, 1000);
-    }
-  }, [performanceMode]);
-
   const moveCursor = useCallback((x, y) => {
-    const now = performance.now();
-    if (now - lastMoveTime.current < constants.throttleMs) {
-      return;
-    }
-    lastMoveTime.current = now;
-    
-    // Store last known mouse position
-    lastMousePosition.current = { x, y };
-    
     if (!cursorRef.current) return;
-    
-    if (constants.reducedAnimations) {
-      // Use direct style manipulation with proper positioning for performance mode
-      const cursor = cursorRef.current;
-      cursor.style.left = x + 'px';
-      cursor.style.top = y + 'px';
-      cursor.style.transform = 'translate(-50%, -50%)';
-      
-      // Add performance mode class for CSS optimization
-      cursor.classList.add('performance-mode');
-    } else {
-      gsap.to(cursorRef.current, {
-        x,
-        y,
-        duration: 0.1,
-        ease: 'power3.out'
-      });
-      
-      // Remove performance mode class
-      cursorRef.current.classList.remove('performance-mode');
-    }
-  }, [constants.throttleMs, constants.reducedAnimations]);
+    gsap.to(cursorRef.current, {
+      x,
+      y,
+      duration: 0.1,
+      ease: 'power3.out'
+    });
+  }, []);
 
   useEffect(() => {
     if (!cursorRef.current) return;
 
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor) {
-      // Force hide cursor on all elements
       document.body.style.cursor = 'none';
-      document.documentElement.style.cursor = 'none';
       document.body.classList.add('custom-cursor-active');
-      
-      // Add global style to hide cursor on all elements
-      const style = document.createElement('style');
-      style.id = 'target-cursor-global';
-      style.textContent = `
-        *, *:before, *:after {
-          cursor: none !important;
-        }
-        a, button, input, textarea, select, [role="button"], [tabindex] {
-          cursor: none !important;
-        }
-      `;
-      document.head.appendChild(style);
     }
 
     const cursor = cursorRef.current;
@@ -130,69 +56,32 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       currentLeaveHandler = null;
     };
 
-    // Initial cursor positioning - ensure cursor starts at center, not top-left
-    const initialX = window.innerWidth / 2;
-    const initialY = window.innerHeight / 2;
-    
-    if (constants.reducedAnimations) {
-      // Set initial position using direct styles for performance mode
-      cursor.style.left = initialX + 'px';
-      cursor.style.top = initialY + 'px';
-      cursor.style.transform = 'translate(-50%, -50%)';
-    } else {
-      gsap.set(cursor, {
-        xPercent: -50,
-        yPercent: -50,
-        x: initialX,
-        y: initialY
-      });
-    }
+    gsap.set(cursor, {
+      xPercent: -50,
+      yPercent: -50,
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2
+    });
 
     const createSpinTimeline = () => {
-      // Rotation/spinning animation removed
-      // Only keep the corner bracket animations for target framing
       if (spinTl.current) {
         spinTl.current.kill();
-        spinTl.current = null;
       }
+      spinTl.current = gsap
+        .timeline({ repeat: -1 })
+        .to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' });
     };
 
     createSpinTimeline();
 
-    const moveHandler = e => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      
-      // Store mouse coordinates for immediate use in performance mode
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-      
-      if (constants.reducedAnimations) {
-        // Direct update without requestAnimationFrame for better responsiveness
-        moveCursor(mouseX, mouseY);
-      } else {
-        animationFrameRef.current = requestAnimationFrame(() => {
-          moveCursor(mouseX, mouseY);
-        });
-      }
-    };
+    const moveHandler = e => moveCursor(e.clientX, e.clientY);
     window.addEventListener('mousemove', moveHandler);
 
     const scrollHandler = () => {
-      if (!activeTarget || !cursorRef.current || constants.reducedAnimations) return;
+      if (!activeTarget || !cursorRef.current) return;
 
-      let mouseX, mouseY;
-      
-      if (constants.reducedAnimations) {
-        // Get position from style properties in performance mode
-        const cursor = cursorRef.current;
-        mouseX = parseFloat(cursor.style.left) || 0;
-        mouseY = parseFloat(cursor.style.top) || 0;
-      } else {
-        mouseX = gsap.getProperty(cursorRef.current, 'x');
-        mouseY = gsap.getProperty(cursorRef.current, 'y');
-      }
+      const mouseX = gsap.getProperty(cursorRef.current, 'x');
+      const mouseY = gsap.getProperty(cursorRef.current, 'y');
 
       const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
       const isStillOverTarget =
@@ -208,46 +97,21 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
     window.addEventListener('scroll', scrollHandler, { passive: true });
 
-    // Enhanced click animations with better performance mode handling
+    //---------------------------------------------------------------
+    // This code for onclick animation
+
+    window.addEventListener('mousemove', moveHandler);
     const mouseDownHandler = () => {
-      if (!dotRef.current || !cursorRef.current) return;
-      
-      if (constants.reducedAnimations) {
-        // Use CSS transforms with proper positioning for better performance
-        const cursor = cursorRef.current;
-        const currentLeft = parseFloat(cursor.style.left) || 0;
-        const currentTop = parseFloat(cursor.style.top) || 0;
-        
-        dotRef.current.style.transform = 'translate(-50%, -50%) scale(0.7)';
-        cursor.style.transform = 'translate(-50%, -50%) scale(0.9)';
-        
-        // Ensure position is maintained during scaling
-        cursor.style.left = currentLeft + 'px';
-        cursor.style.top = currentTop + 'px';
-      } else {
-        gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 });
-        gsap.to(cursorRef.current, { scale: 0.9, duration: 0.2 });
-      }
+      if (!dotRef.current) return;
+      gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 });
+      gsap.to(cursorRef.current, { scale: 0.9, duration: 0.2 });
     };
 
+    // Animate it back to its original size
     const mouseUpHandler = () => {
-      if (!dotRef.current || !cursorRef.current) return;
-      
-      if (constants.reducedAnimations) {
-        const cursor = cursorRef.current;
-        const currentLeft = parseFloat(cursor.style.left) || 0;
-        const currentTop = parseFloat(cursor.style.top) || 0;
-        
-        dotRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-        
-        // Ensure position is maintained during scaling
-        cursor.style.left = currentLeft + 'px';
-        cursor.style.top = currentTop + 'px';
-      } else {
-        gsap.to(dotRef.current, { scale: 1, duration: 0.3 });
-        gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
-      }
+      if (!dotRef.current) return;
+      gsap.to(dotRef.current, { scale: 1, duration: 0.3 });
+      gsap.to(cursorRef.current, { scale: 1, duration: 0.2 });
     };
 
     window.addEventListener('mousedown', mouseDownHandler);
@@ -287,16 +151,9 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       });
 
       gsap.killTweensOf(cursorRef.current, 'rotation');
-      if (spinTl.current) {
-        spinTl.current.pause();
-      }
+      spinTl.current?.pause();
 
-      // Remove any existing rotation and keep cursor at 0 rotation
-      if (constants.reducedAnimations) {
-        cursorRef.current.style.transform = `translate(-50%, -50%)`;
-      } else {
-        gsap.set(cursorRef.current, { rotation: 0 });
-      }
+      gsap.set(cursorRef.current, { rotation: 0 });
 
       const updateCorners = (mouseX, mouseY) => {
         const rect = target.getBoundingClientRect();
@@ -307,26 +164,34 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
         const [tlc, trc, brc, blc] = Array.from(cornersRef.current);
 
-        const { borderWidth, cornerSize, parallaxStrength } = constants;
+        const { borderWidth, cornerSize, parallaxStrength, animationSpeed } = constants;
+
+        // Adaptive corner size based on target size
+        const targetWidth = rect.width;
+        const targetHeight = rect.height;
+        const adaptiveCornerSize = Math.min(cornerSize + (Math.min(targetWidth, targetHeight) * 0.02), cornerSize * 2);
+        
+        // Dynamic border offset based on target size
+        const adaptiveBorderWidth = Math.max(borderWidth, Math.min(targetWidth, targetHeight) * 0.01);
 
         let tlOffset = {
-          x: rect.left - cursorCenterX - borderWidth,
-          y: rect.top - cursorCenterY - borderWidth
+          x: rect.left - cursorCenterX - adaptiveBorderWidth,
+          y: rect.top - cursorCenterY - adaptiveBorderWidth
         };
         let trOffset = {
-          x: rect.right - cursorCenterX + borderWidth - cornerSize,
-          y: rect.top - cursorCenterY - borderWidth
+          x: rect.right - cursorCenterX + adaptiveBorderWidth - adaptiveCornerSize,
+          y: rect.top - cursorCenterY - adaptiveBorderWidth
         };
         let brOffset = {
-          x: rect.right - cursorCenterX + borderWidth - cornerSize,
-          y: rect.bottom - cursorCenterY + borderWidth - cornerSize
+          x: rect.right - cursorCenterX + adaptiveBorderWidth - adaptiveCornerSize,
+          y: rect.bottom - cursorCenterY + adaptiveBorderWidth - adaptiveCornerSize
         };
         let blOffset = {
-          x: rect.left - cursorCenterX - borderWidth,
-          y: rect.bottom - cursorCenterY + borderWidth - cornerSize
+          x: rect.left - cursorCenterX - adaptiveBorderWidth,
+          y: rect.bottom - cursorCenterY + adaptiveBorderWidth - adaptiveCornerSize
         };
 
-        if (mouseX !== undefined && mouseY !== undefined && parallaxStrength > 0) {
+        if (mouseX !== undefined && mouseY !== undefined) {
           const targetCenterX = rect.left + rect.width / 2;
           const targetCenterY = rect.top + rect.height / 2;
           const mouseOffsetX = (mouseX - targetCenterX) * parallaxStrength;
@@ -347,12 +212,19 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         const offsets = [tlOffset, trOffset, brOffset, blOffset];
 
         corners.forEach((corner, index) => {
+          // Update corner size
+          gsap.set(corner, {
+            width: adaptiveCornerSize,
+            height: adaptiveCornerSize,
+            borderWidth: Math.min(adaptiveBorderWidth, adaptiveCornerSize / 4)
+          });
+          
           tl.to(
             corner,
             {
               x: offsets[index].x,
               y: offsets[index].y,
-              duration: 0.2,
+              duration: animationSpeed,
               ease: 'power2.out'
             },
             0
@@ -370,7 +242,6 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       let moveThrottle = null;
       const targetMove = ev => {
         if (moveThrottle || isAnimatingToTarget) return;
-        
         moveThrottle = requestAnimationFrame(() => {
           const mouseEvent = ev;
           updateCorners(mouseEvent.clientX, mouseEvent.clientY);
@@ -388,10 +259,10 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
 
           const { cornerSize } = constants;
           const positions = [
-            { x: -cornerSize * 1.2, y: -cornerSize * 1.2 },
-            { x: cornerSize * 0.2, y: -cornerSize * 1.2 },
-            { x: cornerSize * 0.2, y: cornerSize * 0.2 },
-            { x: -cornerSize * 1.2, y: cornerSize * 0.2 }
+            { x: -cornerSize * 1.5, y: -cornerSize * 1.5 },
+            { x: cornerSize * 0.5, y: -cornerSize * 1.5 },
+            { x: cornerSize * 0.5, y: cornerSize * 0.5 },
+            { x: -cornerSize * 1.5, y: cornerSize * 0.5 }
           ];
 
           const tl = gsap.timeline();
@@ -410,7 +281,24 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         }
 
         resumeTimeout = setTimeout(() => {
-          // No rotation resumption - rotation animation permanently removed
+          if (!activeTarget && cursorRef.current && spinTl.current) {
+            const currentRotation = gsap.getProperty(cursorRef.current, 'rotation');
+            const normalizedRotation = currentRotation % 360;
+
+            spinTl.current.kill();
+            spinTl.current = gsap
+              .timeline({ repeat: -1 })
+              .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
+
+            gsap.to(cursorRef.current, {
+              rotation: normalizedRotation + 360,
+              duration: spinDuration * (1 - normalizedRotation / 360),
+              ease: 'none',
+              onComplete: () => {
+                spinTl.current?.restart();
+              }
+            });
+          }
           resumeTimeout = null;
         }, 50);
 
@@ -427,10 +315,6 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
     window.addEventListener('mouseover', enterHandler, { passive: true });
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      
       window.removeEventListener('mousemove', moveHandler);
       window.removeEventListener('mouseover', enterHandler);
       window.removeEventListener('scroll', scrollHandler);
@@ -444,78 +328,21 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       console.log('Cleaning up TargetCursor');
 
       spinTl.current?.kill();
-      
-      if (cursorRef.current) {
-        // Remove any rotation styles and animations
-        cursorRef.current.style.animation = '';
-        cursorRef.current.style.transform = cursorRef.current.style.transform.replace(/rotate\([^)]*\)/g, '');
-      }
-      
-      // Restore original cursor
       document.body.style.cursor = originalCursor;
-      document.documentElement.style.cursor = '';
       document.body.classList.remove('custom-cursor-active');
-      
-      // Remove global cursor hiding styles
-      const globalStyle = document.getElementById('target-cursor-global');
-      if (globalStyle) {
-        globalStyle.remove();
-      }
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isLowPerformance]);
-
-  // Add a position recovery mechanism for low-end devices
-  useEffect(() => {
-    if (!constants.reducedAnimations || !cursorRef.current) return;
-    
-    const checkCursorPosition = () => {
-      const cursor = cursorRef.current;
-      if (!cursor) return;
-      
-      const rect = cursor.getBoundingClientRect();
-      const isStuckAtOrigin = rect.left <= 10 && rect.top <= 10;
-      const isOutOfBounds = rect.left < -50 || rect.top < -50 || 
-                           rect.left > window.innerWidth + 50 || 
-                           rect.top > window.innerHeight + 50;
-      
-      if (isStuckAtOrigin || isOutOfBounds) {
-        // Use last known position or center as fallback
-        const fallbackX = lastMousePosition.current.x || window.innerWidth / 2;
-        const fallbackY = lastMousePosition.current.y || window.innerHeight / 2;
-        
-        cursor.style.left = fallbackX + 'px';
-        cursor.style.top = fallbackY + 'px';
-        cursor.style.transform = 'translate(-50%, -50%)';
-        
-        console.log('Cursor position recovered:', { x: fallbackX, y: fallbackY });
-      }
-    };
-    
-    // Check cursor position more frequently in performance mode
-    const intervalId = setInterval(checkCursorPosition, 500);
-    
-    // Also check on window resize
-    const handleResize = () => {
-      setTimeout(checkCursorPosition, 100);
-    };
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      clearInterval(intervalId);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [constants.reducedAnimations]);
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, performanceMode]);
 
   useEffect(() => {
-    if (!cursorRef.current) return;
+    if (!cursorRef.current || !spinTl.current) return;
 
-    // No spinning animation - removed rotation completely
-    return () => {
-      if (spinTl.current) {
-        spinTl.current.kill();
-      }
-    };
-  }, [spinDuration, constants.reducedAnimations]);
+    if (spinTl.current.isActive()) {
+      spinTl.current.kill();
+      spinTl.current = gsap
+        .timeline({ repeat: -1 })
+        .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
+    }
+  }, [spinDuration]);
 
   return (
     <div ref={cursorRef} className="target-cursor-wrapper">

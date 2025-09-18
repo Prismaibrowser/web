@@ -110,10 +110,52 @@ function LaserFlowBoxExample() {
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       {!isLoading && (
         <div style={{ position: 'relative', backgroundColor: '#060010', minHeight: '200vh', width: '100%' }}>
+          {/* Background Video */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              position: 'fixed',
+              top: '50px',
+              left: '-245px',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 1,
+             
+            }}
+          >
+            <source src="/laserflow.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          
+          {/* Sticky Header - moved outside of mouse tracking div */}
+          <header style={{ 
+            position: 'sticky', 
+            top: 0, 
+            zIndex: 1000,
+            backgroundColor: 'rgba(6, 0, 16, 0.95)',
+            backdropFilter: 'blur(8px)',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+            width: '100%'
+          }}>
+            <CardNav
+              logo="/nav-logo.png"
+              logoAlt="Prism Web Logo"
+              items={navItems}
+              baseColor="rgba(255, 255, 255, 0.1)"
+              menuColor="#88E755"
+              buttonBgColor="#88E755"
+              buttonTextColor="#000"
+              ease="power3.out"
+            />
+          </header>
           <TargetCursor 
             spinDuration={2}
             hideDefaultCursor={true}
-            performanceMode={false} // Set to true for low-end devices
+            performanceMode={isMobile} // Enable performance mode on mobile devices
           />
 
           <div 
@@ -121,7 +163,8 @@ function LaserFlowBoxExample() {
               minHeight: '100vh',
               width: '100%',
               position: 'relative',
-              backgroundColor: '#060010'
+              backgroundColor: 'transparent',
+              zIndex: 5
             }}
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
@@ -141,27 +184,8 @@ function LaserFlowBoxExample() {
               }
             }}
           >
-            <header style={{ 
-              position: 'sticky', 
-              top: 0, 
-              zIndex: 100,
-              backgroundColor: 'rgba(6, 0, 16, 0.95)',
-              backdropFilter: 'blur(8px)',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
-            }}>
-              <CardNav
-                logo="/nav-logo.png"
-                logoAlt="Prism Web Logo"
-                items={navItems}
-                baseColor="rgba(255, 255, 255, 0.1)"
-                menuColor="#88E755"
-                buttonBgColor="#88E755"
-                buttonTextColor="#000"
-                ease="power3.out"
-              />
-            </header>
             
-            <div style={{ position: 'relative', minHeight: '100vh', width: '100%', backgroundColor: '#060010', paddingBottom: '50vh' }}>
+            <div style={{ position: 'relative', minHeight: '100vh', width: '100%', backgroundColor: 'transparent', paddingBottom: '50vh', zIndex: 10 }}>
               <div style={{
                 position: 'relative',
                 top: isMobile ? '5vh' : '0',

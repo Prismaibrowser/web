@@ -128,7 +128,7 @@ const CardNav = ({
         style={{ backgroundColor: baseColor }}>
         <div className="card-nav-top">
           <div
-            className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''}`}
+            className={`hamburger-menu cursor-target ${isHamburgerOpen ? 'open' : ''}`}
             onClick={toggleMenu}
             role="button"
             aria-label={isExpanded ? 'Close menu' : 'Open menu'}
@@ -140,13 +140,13 @@ const CardNav = ({
 
           <div className="logo-container">
             <Link href="/">
-              <img src={logo} alt={logoAlt} className="logo" style={{cursor: 'pointer'}} />
+              <img src={logo} alt={logoAlt} className="logo cursor-target" style={{cursor: 'pointer'}} />
             </Link>
           </div>
 
           <button
             type="button"
-            className="card-nav-cta-button"
+            className="card-nav-cta-button cursor-target"
             style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}>
             <GoDownload className="download-icon" />
             <span className="button-text">Download</span>
@@ -168,7 +168,7 @@ const CardNav = ({
                       <Link
                         key={`${lnk.label}-${i}`}
                         href={lnk.href}
-                        className="nav-card-link"
+                        className="nav-card-link cursor-target"
                         aria-label={lnk.ariaLabel}>
                         <GoArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
                         {lnk.label}
@@ -178,7 +178,7 @@ const CardNav = ({
                     return (
                       <a
                         key={`${lnk.label}-${i}`}
-                        className="nav-card-link"
+                        className="nav-card-link cursor-target"
                         href={lnk.href}
                         aria-label={lnk.ariaLabel}>
                         <GoArrowUpRight className="nav-card-link-icon" aria-hidden="true" />
