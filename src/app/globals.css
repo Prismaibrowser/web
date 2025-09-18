@@ -7,6 +7,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hover-based logo rotation */
+.logo-hover-rotate:hover {
+  transform: translate(-50%, -50%) rotate(90deg) !important;
+}
+
 html,
 body {
   max-width: 100vw;
