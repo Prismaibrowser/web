@@ -315,7 +315,14 @@
 /* Social Buttons */
 .social-buttons {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.social-buttons-row {
+  display: flex;
   gap: 1.5rem;
+  justify-content: flex-start;
 }
 
 .social-button {

@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { BiMailSend } from 'react-icons/bi';
-import { FaInstagram, FaRegListAlt, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaInstagram, FaRegListAlt, FaYoutube, FaReddit, FaLinkedin, FaGithub, FaDiscord } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { PiCubeFocusDuotone } from 'react-icons/pi';
 import { TbCube3dSphere } from 'react-icons/tb';
@@ -308,32 +309,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Shuffle Text Component */}
-        <div className="shuffle-section">
-          <Shuffle
-            text="Where AI Meets Browser"
-            shuffleDirection="right"
-            duration={0.35}
-            animationMode="evenodd"
-            shuffleTimes={1}
-            ease="power3.out"
-            stagger={0.03}
-            threshold={0.1}
-            triggerOnce={true}
-            triggerOnHover={true}
-            respectReducedMotion={true}
-            style={{
-              color: '#88E755',
-              fontSize: '2rem',
-              fontFamily: 'Space Grotesk, sans-serif',
-              textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
-              textAlign: 'center',
-              position: 'relative',
-              zIndex: 15
-            }}
-          />
-        </div>
-
         {/* Main Content Grid */}
         <div className="footer-grid">
           {/* Contact Section */}
@@ -341,19 +316,47 @@ const Footer = () => {
             <p className="column-title">GET IN TOUCH</p>
             <div className="contact-item cursor-target">
               <FaArrowRightLong className="contact-icon" />
-              <span>hey@prismai.browser</span>
+              <a 
+                href="mailto:prismaibrowser@gmail.com" 
+                style={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  transition: 'color 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.color = '#88E755';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = 'inherit';
+                }}
+              >
+                prismaibrowser@gmail.com
+              </a>
             </div>
             <p className="column-title social-title">FOLLOW US</p>
             <div className="social-buttons">
-              <SocialButton label="Twitter" href="#">
-                <FaTwitter />
-              </SocialButton>
-              <SocialButton label="YouTube" href="#">
-                <FaYoutube />
-              </SocialButton>
-              <SocialButton label="Instagram" href="#">
-                <FaInstagram />
-              </SocialButton>
+              <div className="social-buttons-row">
+                <SocialButton label="X (Twitter)" href="#">
+                  <FaXTwitter />
+                </SocialButton>
+                <SocialButton label="Instagram" href="#">
+                  <FaInstagram />
+                </SocialButton>
+                <SocialButton label="Reddit" href="#">
+                  <FaReddit />
+                </SocialButton>
+              </div>
+              <div className="social-buttons-row">
+                <SocialButton label="LinkedIn" href="#">
+                  <FaLinkedin />
+                </SocialButton>
+                <SocialButton label="Discord" href="#">
+                  <FaDiscord />
+                </SocialButton>
+                <SocialButton label="GitHub" href="#">
+                  <FaGithub />
+                </SocialButton>
+              </div>
             </div>
           </div>
 

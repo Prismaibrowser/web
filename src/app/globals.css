@@ -19,6 +19,24 @@ body {
   scroll-behavior: smooth;
   background-color: #060010;
   min-height: 100vh;
+  /* Hide native scrollbars completely */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 11 */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+/* Global scrollbar hiding for all elements */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 body {
