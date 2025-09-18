@@ -28,6 +28,16 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   }, []);
 
   useEffect(() => {
+    // Check if we're on mobile - if so, don't initialize cursor
+    const isMobileDevice = () => {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+             window.innerWidth <= 768;
+    };
+
+    if (isMobileDevice() && !hideDefaultCursor) {
+      return; // Don't initialize cursor on mobile when it should be disabled
+    }
+
     if (!cursorRef.current) return;
 
     const originalCursor = document.body.style.cursor;
