@@ -189,7 +189,7 @@ export default function PrivacyPolicy() {
             textAlign: 'center',
             fontSize: isMobile ? '1.1rem' : '1.2rem'
           }}>
-            We don't sell data - We don't collect data - We don't track you
+            We don&apos;t sell data - We don&apos;t collect data - We don&apos;t track you
           </p>
 
           <h2 style={{
@@ -203,7 +203,7 @@ export default function PrivacyPolicy() {
           </h2>
 
           <p style={{ marginBottom: '30px' }}>
-            Prism AI Browser is designed with privacy in mind. We do not collect, store, or share any of your personal data. Here's what that means:
+            Prism AI Browser is designed with privacy in mind. We do not collect, store, or share any of your personal data. Here&apos;s what that means:
           </p>
 
           <h3 style={{
@@ -324,7 +324,7 @@ export default function PrivacyPolicy() {
           </h2>
 
           <p style={{ marginBottom: '15px' }}>
-            Prism AI Browser offers a "Sync" feature, which is implemented using Mozilla Firefox's Sync feature. This feature allows you to synchronize your bookmarks, history, passwords, and other data across multiple devices. For this feature to work, your data is encrypted and stored on Mozilla's servers and is treated in accordance with their Privacy Policy. We, at Prism AI Browser, cannot view any of this data.
+            Prism AI Browser offers a &quot;Sync&quot; feature, which is implemented using Mozilla Firefox&apos;s Sync feature. This feature allows you to synchronize your bookmarks, history, passwords, and other data across multiple devices. For this feature to work, your data is encrypted and stored on Mozilla&apos;s servers and is treated in accordance with their Privacy Policy. We, at Prism AI Browser, cannot view any of this data.
           </p>
 
           <div style={{ marginBottom: '20px', paddingLeft: '20px' }}>
@@ -351,7 +351,7 @@ export default function PrivacyPolicy() {
           </h2>
 
           <p style={{ marginBottom: '20px' }}>
-            You can install Add-ons from addons.mozilla.org. Prism AI Browser periodically checks for updates to these Add-ons. You can also install "Mods" from prism-browser.app/mods. These Mods are hosted by our services and follow the same privacy policy our website. We do not collect any data from these Mods, they are purely static content that is downloaded to your device.
+            You can install Add-ons from addons.mozilla.org. Prism AI Browser periodically checks for updates to these Add-ons. You can also install &quot;Mods&quot; from prism-browser.app/mods. These Mods are hosted by our services and follow the same privacy policy our website. We do not collect any data from these Mods, they are purely static content that is downloaded to your device.
           </p>
 
           <h2 style={{
@@ -393,7 +393,7 @@ export default function PrivacyPolicy() {
           </h3>
 
           <p style={{ marginBottom: '20px' }}>
-            You have full control over all data stored locally on your device by Prism AI Browser. You can clear your browsing data, cookies, and cache at any time using the browser's settings.
+            You have full control over all data stored locally on your device by Prism AI Browser. You can clear your browsing data, cookies, and cache at any time using the browser&apos;s settings.
           </p>
 
           <h2 style={{
@@ -407,7 +407,7 @@ export default function PrivacyPolicy() {
           </h2>
 
           <p style={{ marginBottom: '20px' }}>
-            Prism AI Browser's website and services do not use any third-party analytics, tracking, or CDN services. We do not collect any personal information from users visiting our website. The website is hosted on Cloudflare but with analytics and tracking disabled, Cloudflare may collect some analytics data from HTTP requests in order to provide security and performance improvements. However, this data is not linked to any personal information and is not used for tracking purposes.
+            Prism AI Browser&apos;s website and services do not use any third-party analytics, tracking, or CDN services. We do not collect any personal information from users visiting our website. The website is hosted on Cloudflare but with analytics and tracking disabled, Cloudflare may collect some analytics data from HTTP requests in order to provide security and performance improvements. However, this data is not linked to any personal information and is not used for tracking purposes.
           </p>
 
           <h3 style={{
@@ -474,7 +474,7 @@ export default function PrivacyPolicy() {
 
           <div style={{ marginBottom: '40px', paddingLeft: '20px' }}>
             <p style={{ marginBottom: '10px' }}>
-              <strong>Discord:</strong> <a href="#" className="cursor-target" style={{ color: '#88E755', textDecoration: 'underline' }}>Prism AI Browser's Discord</a>
+              <strong>Discord:</strong> <a href="#" className="cursor-target" style={{ color: '#88E755', textDecoration: 'underline' }}>Prism AI Browser&apos;s Discord</a>
             </p>
             <p style={{ marginBottom: '10px' }}>
               <strong>GitHub:</strong> <a href="https://github.com/Prismaibrowser" target="_blank" rel="noopener noreferrer" className="cursor-target" style={{ color: '#88E755', textDecoration: 'underline' }}>Organization</a>
