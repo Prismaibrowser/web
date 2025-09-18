@@ -1,4 +1,4 @@
-# 🌈 Prism Web
+# ⚡ Prism Web
 
 <div align="center">
   <img src="public/nav-logo.png" alt="Prism Logo" width="120" height="120" />
@@ -172,7 +172,7 @@ prism-web/
 
 <div align="center">
 
-### 🌈 Color Palette
+### 🎨 Color Palette
 
 | Color | Hex | Usage |
 |-------|-----|-------|
@@ -210,13 +210,13 @@ We welcome contributions! Here's how you can help:
 
 ### 👥 Our Team
 
-| Member | Role | GitHub | Color Theme |
-|--------|------|--------|-------------|
-| **Johan** | Lead Developer | [@johan](https://github.com/johan) | ![#374151](https://via.placeholder.com/20/374151/374151) `#374151` |
-| **Aljo** | Frontend Developer | [@aljo](https://github.com/aljo) | ![#f5dd42](https://via.placeholder.com/20/f5dd42/f5dd42) `#f5dd42` |
-| **Rohith** | UI/UX Designer | [@rohith](https://github.com/rohith) | ![#4bf542](https://via.placeholder.com/20/4bf542/4bf542) `#4bf542` |
-| **Nasih** | Backend Developer | [@nasih](https://github.com/nasih) | ![#4260f5](https://via.placeholder.com/20/4260f5/4260f5) `#4260f5` |
-| **Nazeem** | DevOps Engineer | [@nazeem](https://github.com/nazeem) | ![#064E3B](https://via.placeholder.com/20/064E3B/064E3B) `#064E3B` |
+| Member | Role | GitHub | Color Theme | Contributions |
+|--------|------|--------|-------------|---------------|
+| **Johan** | Lead Developer | [@johan](https://github.com/johan) | ![#374151](https://via.placeholder.com/20/374151/374151) `#374151` | ![Johan's Commits](https://img.shields.io/github/commits/NobinSijo7T/prism-web?author=johan&style=flat-square&label=Commits&color=374151) |
+| **Aljo** | Frontend Developer | [@aljo](https://github.com/aljo) | ![#f5dd42](https://via.placeholder.com/20/f5dd42/f5dd42) `#f5dd42` | ![Aljo's Commits](https://img.shields.io/github/commits/NobinSijo7T/prism-web?author=aljo&style=flat-square&label=Commits&color=f5dd42) |
+| **Rohith** | UI/UX Designer | [@rohith](https://github.com/rohith) | ![#4bf542](https://via.placeholder.com/20/4bf542/4bf542) `#4bf542` | ![Rohith's Commits](https://img.shields.io/github/commits/NobinSijo7T/prism-web?author=rohith&style=flat-square&label=Commits&color=4bf542) |
+| **Nasih** | Backend Developer | [@nasih](https://github.com/nasih) | ![#4260f5](https://via.placeholder.com/20/4260f5/4260f5) `#4260f5` | ![Nasih's Commits](https://img.shields.io/github/commits/NobinSijo7T/prism-web?author=nasih&style=flat-square&label=Commits&color=4260f5) |
+| **Nazeem** | DevOps Engineer | [@nazeem](https://github.com/nazeem) | ![#064E3B](https://via.placeholder.com/20/064E3B/064E3B) `#064E3B` | ![Nazeem's Commits](https://img.shields.io/github/commits/NobinSijo7T/prism-web?author=nazeem&style=flat-square&label=Commits&color=064E3B) |
 
 ---
 
@@ -252,6 +252,28 @@ We welcome contributions! Here's how you can help:
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/NobinSijo7T/prism-web?style=flat-square)
 
 [![GitHub Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=NobinSijo7T&theme=react-dark&custom_title=Prism%20Web%20Development%20Activity)](https://github.com/NobinSijo7T/prism-web)
+
+### 📈 Contributors Activity
+
+<div align="center">
+
+[![Contributors](https://contrib.rocks/image?repo=NobinSijo7T/prism-web)](https://github.com/NobinSijo7T/prism-web/graphs/contributors)
+
+#### Individual Contributor Stats
+
+| Contributor | Commits | Lines Added | Lines Removed | Files Changed |
+|-------------|---------|-------------|---------------|---------------|
+| ![Johan](https://github.com/johan.png?size=20) **Johan** | ![Johan Commits](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="johan")].total&label=commits&color=374151) | ![Johan Added](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="johan")].weeks[*].a&label=added&color=4bf542) | ![Johan Deleted](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="johan")].weeks[*].d&label=deleted&color=f54242) | ![Files](https://img.shields.io/badge/Files-Dynamic-blue) |
+| ![Aljo](https://github.com/aljo.png?size=20) **Aljo** | ![Aljo Commits](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="aljo")].total&label=commits&color=f5dd42) | ![Aljo Added](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="aljo")].weeks[*].a&label=added&color=4bf542) | ![Aljo Deleted](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="aljo")].weeks[*].d&label=deleted&color=f54242) | ![Files](https://img.shields.io/badge/Files-Dynamic-blue) |
+| ![Rohith](https://github.com/rohith.png?size=20) **Rohith** | ![Rohith Commits](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="rohith")].total&label=commits&color=4bf542) | ![Rohith Added](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="rohith")].weeks[*].a&label=added&color=4bf542) | ![Rohith Deleted](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="rohith")].weeks[*].d&label=deleted&color=f54242) | ![Files](https://img.shields.io/badge/Files-Dynamic-blue) |
+| ![Nasih](https://github.com/nasih.png?size=20) **Nasih** | ![Nasih Commits](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="nasih")].total&label=commits&color=4260f5) | ![Nasih Added](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="nasih")].weeks[*].a&label=added&color=4bf542) | ![Nasih Deleted](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="nasih")].weeks[*].d&label=deleted&color=f54242) | ![Files](https://img.shields.io/badge/Files-Dynamic-blue) |
+| ![Nazeem](https://github.com/nazeem.png?size=20) **Nazeem** | ![Nazeem Commits](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="nazeem")].total&label=commits&color=064E3B) | ![Nazeem Added](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="nazeem")].weeks[*].a&label=added&color=4bf542) | ![Nazeem Deleted](https://img.shields.io/badge/dynamic/json?url=https://api.github.com/repos/NobinSijo7T/prism-web/stats/contributors&query=$[?(@.author.login=="nazeem")].weeks[*].d&label=deleted&color=f54242) | ![Files](https://img.shields.io/badge/Files-Dynamic-blue) |
+
+### 📊 Contribution Heatmap
+
+![Contribution Heatmap](https://github-readme-streak-stats.herokuapp.com/?user=NobinSijo7T&theme=dark&hide_border=true&stroke=88E755&ring=88E755&fire=88E755&currStreakLabel=88E755)
+
+</div>
 
 </div>
 
