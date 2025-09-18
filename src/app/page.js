@@ -154,12 +154,13 @@ function LaserFlowBoxExample() {
             loop
             playsInline
             style={{
-              position: 'fixed',
-              top: '0',
-              left: '-245px',
-              width: '100%',
-              height: '100%',
+             position: 'absolute',
+              top: '-100px',
+              left: '245px',
+              width: '70%',
+              height: '35%',
               objectFit: 'cover',
+              alignContent: 'center',
               zIndex: 1,
              
             }}
