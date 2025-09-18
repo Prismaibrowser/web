@@ -3,12 +3,12 @@
 import { useRef, useState, useEffect } from 'react';
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
-
 import TargetCursor from "@/components/TargetCursor";
 import TextPressure from "@/components/TextPressure";
 import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
 import PrismLoader from "@/components/PrismLoader";
+import CustomScrollbar from "@/components/CustomScrollbar";
 
 function LaserFlowBoxExample() {
   const revealImgRef = useRef(null);
@@ -108,6 +108,7 @@ function LaserFlowBoxExample() {
   return (
     <>
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
+      <CustomScrollbar />
       {!isLoading && (
         <div style={{ position: 'relative', backgroundColor: '#060010', minHeight: '200vh', width: '100%' }}>
           {/* Background Video */}
@@ -118,7 +119,7 @@ function LaserFlowBoxExample() {
             playsInline
             style={{
               position: 'fixed',
-              top: '50px',
+              top: '0',
               left: '-245px',
               width: '100%',
               height: '100%',
@@ -131,26 +132,29 @@ function LaserFlowBoxExample() {
             Your browser does not support the video tag.
           </video>
           
-          {/* Sticky Header - moved outside of mouse tracking div */}
+          {/* Fixed Header - Rebuilt with fixed positioning */}
           <header style={{ 
-            position: 'sticky', 
+            position: 'fixed', 
             top: 0, 
-            zIndex: 1000,
-            backgroundColor: 'rgba(6, 0, 16, 0.95)',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-            width: '100%'
+            left: 0,
+            right: 0,
+            zIndex: 9999,
+            backgroundColor: 'transparent',
+            width: '100%',
+            pointerEvents: 'none'
           }}>
-            <CardNav
-              logo="/nav-logo.png"
-              logoAlt="Prism Web Logo"
-              items={navItems}
-              baseColor="rgba(255, 255, 255, 0.1)"
-              menuColor="#88E755"
-              buttonBgColor="#88E755"
-              buttonTextColor="#000"
-              ease="power3.out"
-            />
+            <div style={{ pointerEvents: 'auto' }}>
+              <CardNav
+                logo="/nav-logo.png"
+                logoAlt="Prism Web Logo"
+                items={navItems}
+                baseColor="rgba(255, 255, 255, 0.1)"
+                menuColor="#88E755"
+                buttonBgColor="#88E755"
+                buttonTextColor="#000"
+                ease="power3.out"
+              />
+            </div>
           </header>
           <TargetCursor 
             spinDuration={2}
@@ -164,7 +168,8 @@ function LaserFlowBoxExample() {
               width: '100%',
               position: 'relative',
               backgroundColor: 'transparent',
-              zIndex: 5
+              zIndex: 5,
+              paddingTop: '80px'
             }}
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
@@ -515,7 +520,7 @@ function LaserFlowBoxExample() {
                 border: 'none',
                 cursor: 'pointer',
                 boxShadow: '0 4px 12px rgba(136, 231, 85, 0.3)',
-                zIndex: 999,
+                zIndex: 9998,
                 fontSize: isMobile ? '20px' : '24px',
                 transition: 'all 0.3s ease'
               }}
@@ -533,7 +538,7 @@ function LaserFlowBoxExample() {
             transform: 'translateX(-50%)',
             width: isMobile ? '90%' : '80%',
             height: '200px',
-            zIndex: 7
+            zIndex: 2
           }}>
             <TextPressure
               text="Prism Mode"
@@ -557,7 +562,7 @@ function LaserFlowBoxExample() {
             transform: 'translateX(-50%)',
             width: isMobile ? '90%' : '80%',
             height: '200px',
-            zIndex: 7
+            zIndex: 2
           }}>
             <TextPressure
               text="Features"
@@ -605,7 +610,7 @@ function LaserFlowBoxExample() {
             transform: 'translateX(-50%)',
             width: isMobile ? '90%' : '80%',
             height: '200px',
-            zIndex: 7
+            zIndex: 2
           }}>
             <TextPressure
               text="Dev Space"
@@ -652,7 +657,7 @@ function LaserFlowBoxExample() {
             left: '50%',
             transform: 'translateX(-50%)',
             width: '100%',
-            zIndex: 7
+            zIndex: 3
           }}>
             <Footer />
           </div>

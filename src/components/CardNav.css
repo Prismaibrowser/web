@@ -17,19 +17,32 @@
   flex-direction: column;
   height: 60px;
   padding: 0;
-  background-color: white;
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: visible;
   will-change: height;
-  transition: border-radius 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .card-nav.open {
   border-radius: 0.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(25px) saturate(200%);
+  -webkit-backdrop-filter: blur(25px) saturate(200%);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .card-nav-top {
@@ -39,9 +52,30 @@
   height: 60px;
   padding: 0 1rem;
   z-index: 10;
-  background-color: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-nav-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.card-nav:hover .card-nav-top::before {
+  left: 100%;
 }
 
 .hamburger-menu {
@@ -97,16 +131,18 @@
 }
 
 .card-nav-cta-button {
-  background-color: #111;
-  color: white;
-  border: none;
+  background: rgba(136, 231, 85, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(136, 231, 85, 0.3);
   border-radius: 0.5rem;
   padding: 0 1.5rem;
   margin-right: 12px;
   height: 42px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   flex-shrink: 0;
@@ -117,7 +153,9 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 
+    0 4px 16px rgba(136, 231, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   order: 3;
   margin-left: auto;
 }
@@ -127,9 +165,15 @@
 }
 
 .card-nav-cta-button:hover {
-  background-color: #2a2a2a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: rgba(136, 231, 85, 1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 8px 24px rgba(136, 231, 85, 0.3),
+    0 4px 12px rgba(136, 231, 85, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(136, 231, 85, 0.5);
 }
 
 .card-nav-content {
@@ -142,18 +186,23 @@
   pointer-events: none;
   opacity: 0;
   transform: translateY(-20px);
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-height: 180px;
   width: 100%;
   box-sizing: border-box;
   position: absolute;
   top: 70px;
   left: 0;
-  background-color: rgba(6, 0, 16, 0.98);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(136, 231, 85, 0.2);
+  background: rgba(6, 0, 16, 0.85);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(136, 231, 85, 0.15);
   border-radius: 0.75rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    0 6px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(136, 231, 85, 0.1);
   overflow: hidden;
   z-index: -1;
 }
@@ -186,11 +235,16 @@
   padding: 24px;
   gap: 16px;
   user-select: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   margin: 4px;
-  background-color: rgba(17, 17, 17, 0.95);
-  border: 1px solid rgba(136, 231, 85, 0.1);
-  backdrop-filter: blur(5px);
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(15px) saturate(120%);
+  -webkit-backdrop-filter: blur(15px) saturate(120%);
+  border: 1px solid rgba(136, 231, 85, 0.08);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .nav-card-label {
@@ -236,7 +290,10 @@
     padding: 0 0.75rem;
     justify-content: space-between;
     align-items: center;
-    background-color: inherit;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .hamburger-menu {
