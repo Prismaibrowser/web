@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
 import TargetCursor from "@/components/TargetCursor";
@@ -245,9 +246,12 @@ function LaserFlowBoxExample() {
                 {/* LaserFlow component removed */}
               </div>
 
-              <img 
+              <Image 
                 src="/prism-preview.webp" 
                 alt="Prism Preview"
+                width={1200}
+                height={675}
+                priority
                 style={{ 
                   position: 'absolute',
                   top: isMobile ? '30%' : '42%',
@@ -263,9 +267,12 @@ function LaserFlowBoxExample() {
                 }}
               />
 
-              <img
+              <Image
                 src={isMobile ? "/PRISM3DMODEL(mobile).png" : "/prism-logo-3d.png"}
                 alt="Prism 3D Logo"
+                width={isMobile ? 200 : 703}
+                height={isMobile ? 200 : 703}
+                priority
                 style={{
                   position: 'absolute',
                   top: isMobile ? '20%' : '25%',
@@ -522,7 +529,7 @@ function LaserFlowBoxExample() {
                         }
                       }}
                     >
-                      <img src="/linux.png" alt="Linux" width="16" height="18" style={{ 
+                      <Image src="/linux.png" alt="Linux" width={16} height={18} style={{ 
                         filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)', 
                         transition: 'filter 0.3s ease' 
                       }} />
@@ -531,10 +538,12 @@ function LaserFlowBoxExample() {
                   </div>
                 </div>
 
-                <img
+                <Image
                   ref={revealImgRef}
                   src="/prism-preview.webp"
                   alt="Reveal effect"
+                  width={1200}
+                  height={675}
                   style={{
                     position: 'absolute',
                     width: '100%',
