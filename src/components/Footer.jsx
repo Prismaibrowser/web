@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { BiMailSend } from 'react-icons/bi';
-import { FaInstagram, FaRegListAlt, FaYoutube, FaReddit, FaLinkedin, FaGithub, FaDiscord } from 'react-icons/fa';
+import { FaInstagram, FaRegListAlt, FaYoutube, FaReddit, FaLinkedin, FaGithub, FaDiscord, FaBug, FaUsers, FaShieldAlt } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { PiCubeFocusDuotone } from 'react-icons/pi';
@@ -16,34 +16,44 @@ import './Footer.css';
 
 const solutions = [
   {
-    label: 'Life Cycle Analysis',
-    description: 'Fusce sed orci sit amet nisi',
-    icon: FaRegListAlt,
+    label: 'Report a Bug',
+    description: 'Help us improve by reporting issues',
+    icon: FaBug,
   },
   {
-    label: 'Corporate Inventory',
-    description: 'Fusce sed orci sit amet nisi',
-    icon: PiCubeFocusDuotone,
-  },
-  {
-    label: 'Scope 3 Decarbonaization',
-    description: 'Fusce sed orci sit amet nisi',
-    icon: TbCube3dSphere,
+    label: 'Discord',
+    description: 'Join our community discussions',
+    icon: FaDiscord,
   },
 ];
 
 const resources = [
   {
-    label: 'Success Stories',
-    description: 'Our Customers in action',
+    label: 'Documentation',
+    description: 'Comprehensive guides and API docs',
   },
   {
-    label: 'Guides',
-    description: 'Whitepapers and move',
+    label: 'Changelog',
+    description: 'Latest updates and releases',
   },
   {
-    label: 'Webinars',
-    description: 'Live and on-demand',
+    label: 'GitHub README',
+    description: 'Open source repository info',
+  },
+];
+
+const aboutUs = [
+  {
+    label: 'Team & Contributors',
+    description: 'Meet our amazing team',
+    icon: FaUsers,
+    href: '/team',
+  },
+  {
+    label: 'Privacy Policy',
+    description: 'Your data protection matters',
+    icon: FaShieldAlt,
+    href: '/privacy',
   },
 ];
 
@@ -102,15 +112,25 @@ const Footer = () => {
 
   return (
     <footer className="footer-new">
-
-
-      <div className="footer-container">
+        {/* Interactive Particles */}
+        <div className="footer-particles">
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+          <div className="footer-particle"></div>
+        </div>      <div className="footer-container">
         {/* Brand and Logo Section */}
         <div className="brand-section">
           <div className="brand-content">
             <div className="brand-logo">
               <img
-                src="/prism-logo-3d.png"
+                src="/footer-logo.png"
                 alt="Prism AI Browser"
                 className="logo-image logo-enlarged"
               />
@@ -290,17 +310,27 @@ const Footer = () => {
                   if (selectedPlatform !== 'Linux') {
                     e.target.style.color = '#000';
                     e.target.style.backgroundColor = '#88E755';
+                    // Change Linux logo to black on hover
+                    const img = e.target.querySelector('img');
+                    if (img) {
+                      img.style.filter = 'brightness(0) saturate(100%)';
+                    }
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (selectedPlatform !== 'Linux') {
                     e.target.style.color = '#88E755';
                     e.target.style.backgroundColor = 'transparent';
+                    // Change Linux logo back to green when not hovering
+                    const img = e.target.querySelector('img');
+                    if (img) {
+                      img.style.filter = 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)';
+                    }
                   }
                 }}
               >
                 <img src="/linux.png" alt="Linux" width="18" height="20" style={{ 
-                  filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(59%) sepia(93%) saturate(318%) hue-rotate(81deg) brightness(119%) contrast(119%)', 
+                  filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)', 
                   transition: 'filter 0.3s ease' 
                 }} />
                 Linux
@@ -353,11 +383,38 @@ const Footer = () => {
                 <SocialButton label="Discord" href="#">
                   <FaDiscord />
                 </SocialButton>
-                <SocialButton label="GitHub" href="#">
+                <SocialButton label="GitHub" href="https://github.com/Prismaibrowser">
                   <FaGithub />
                 </SocialButton>
               </div>
             </div>
+          </div>
+
+          {/* About Us Section */}
+          <div className="footer-column">
+            <p className="column-title">ABOUT US</p>
+            {aboutUs.map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <a 
+                  key={index} 
+                  href={item.href}
+                  className="about-item cursor-target"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  <IconComponent className="about-icon" />
+                  <div className="about-content">
+                    <p className="about-label">{item.label}</p>
+                    <p className="about-description">{item.description}</p>
+                  </div>
+                </a>
+              );
+            })}
           </div>
 
           {/* Solutions Section */}
@@ -380,12 +437,14 @@ const Footer = () => {
           {/* Resources Section */}
           <div className="footer-column">
             <p className="column-title">RESOURCES</p>
-            {resources.map((resource, index) => (
-              <div key={index} className="resource-item cursor-target">
-                <p className="resource-label">{resource.label}</p>
-                <p className="resource-description">{resource.description}</p>
-              </div>
-            ))}
+            <div className="resources-horizontal">
+              {resources.map((resource, index) => (
+                <div key={index} className="resource-item cursor-target">
+                  <p className="resource-label">{resource.label}</p>
+                  <p className="resource-description">{resource.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       {/* Close footer-container */}

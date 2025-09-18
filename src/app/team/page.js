@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ChromaGrid from '../../components/ChromaGrid';
 import CardNav from '../../components/CardNav';
@@ -10,6 +10,19 @@ import teamData from './team-data.json';
 
 export default function TeamPage() {
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Initial check
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   const navItems = [
     {
@@ -18,8 +31,9 @@ export default function TeamPage() {
       textColor: "#88E755",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
+        { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
         { label: "Documentation", ariaLabel: "Documentation" },
-        { label: "GitHub", ariaLabel: "GitHub" }
+        { label: "GitHub", ariaLabel: "GitHub", href: "https://github.com/Prismaibrowser" }
       ]
     },
     {
@@ -57,8 +71,8 @@ export default function TeamPage() {
       {/* Custom Cursor */}
       <TargetCursor 
         spinDuration={2}
-        hideDefaultCursor={true}
-        performanceMode={false}
+        hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
+        performanceMode={isMobile} // Enable performance mode on mobile
       />
       {/* Navigation Header */}
       <header style={{ 
@@ -93,12 +107,7 @@ export default function TeamPage() {
         {/* Back Button */}
         <button
           onClick={() => {
-            // Try to go back in history, fallback to home page
-            if (window.history.length > 1) {
-              router.back();
-            } else {
-              router.push('/');
-            }
+            router.push('/');
           }}
           className="cursor-target"
           style={{
