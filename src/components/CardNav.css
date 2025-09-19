@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 .card-nav-container {
-  position: relative;
+  position: relative; /* Changed position to relative */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;

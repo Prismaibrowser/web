@@ -7,7 +7,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hover-based logo rotation */
+/* Hover-based prism logo rotation */
 .logo-hover-rotate:hover {
   transform: translate(-50%, -50%) rotate(90deg) !important;
 }
