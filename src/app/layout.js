@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
         <link rel="shortcut icon" href="/favicon.ico?v=2" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`} style={{ margin: 0, padding: 0, overflowX: 'hidden' }}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
     </html>

@@ -53,6 +53,10 @@ const CardNav = ({
 
     const tl = gsap.timeline({ 
       paused: true,
+      defaults: {
+        duration: 0.3, // Reduced from 0.5 for faster animations
+        ease: ease
+      },
       onComplete: () => {
         // Ensure cards are fully visible and interactive after animation
         cards.forEach(card => {
@@ -81,7 +85,7 @@ const CardNav = ({
       }
     });
 
-    // Animate cards in with staggered timing
+    // Animate cards in with reduced staggered timing
     tl.to(
       cards,
       { 
@@ -89,9 +93,8 @@ const CardNav = ({
         opacity: 1, 
         visibility: 'visible',
         pointerEvents: 'auto',
-        duration: 0.5, 
-        ease, 
-        stagger: 0.1 
+        duration: 0.25, // Faster individual card animation
+        stagger: 0.05 // Reduced stagger for quicker overall animation
       },
       0
     );
@@ -102,34 +105,58 @@ const CardNav = ({
   // Prevent menu from disappearing during scroll
   useEffect(() => {
     const handleScroll = () => {
-      // Do nothing during scroll when menu is open
-      // Just prevent any interference
+      // Only close menu if scrolling significantly (more than 50px)
+      if (isExpanded && window.scrollY > 50 && !isScrolling) {
+        setIsScrolling(true);
+        
+        // Add a shorter timeout to close menu when scrolling
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+        
+        scrollTimeoutRef.current = setTimeout(() => {
+          if (isExpanded) {
+            toggleMenu(); // Close the menu
+          }
+          setIsScrolling(false);
+        }, 100); // Reduced from potentially longer timeout
+      }
     };
 
-    // Only add scroll listener when menu is expanded
-    if (isExpanded) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      
-      // Ensure cards remain visible and stable during scroll
-      const cards = cardsRef.current.filter(Boolean);
-      cards.forEach(card => {
-        if (card) {
-          gsap.set(card, { 
-            opacity: 1, 
-            y: 0, 
-            visibility: 'visible',
-            pointerEvents: 'auto'
-          });
-        }
-      });
-    }
-
+    // Add scroll listener regardless of menu state for better responsiveness
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
         scrollTimeoutRef.current = null;
       }
+    };
+  }, [isExpanded, isScrolling]);
+
+  // Add click outside and escape key handlers for better UX
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isExpanded && navRef.current && !navRef.current.contains(event.target)) {
+        toggleMenu();
+      }
+    };
+
+    const handleEscapeKey = (event) => {
+      if (event.key === 'Escape' && isExpanded) {
+        toggleMenu();
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscapeKey);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [isExpanded]);
 
@@ -179,14 +206,24 @@ const CardNav = ({
     const tl = tlRef.current;
     if (!tl) return;
     
+    // Clear any existing timeouts to prevent conflicts
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = null;
+    }
+    
     if (!isExpanded) {
       // Opening menu
       setIsHamburgerOpen(true);
       setIsExpanded(true);
+      setIsScrolling(false);
       
       // Set proper height for the nav container
       const newHeight = calculateHeight();
       gsap.set(navRef.current, { height: newHeight });
+      
+      // Clear any previous callbacks
+      tl.eventCallback('onReverseComplete', null);
       
       // Play the timeline to show cards
       tl.play(0);
@@ -206,28 +243,41 @@ const CardNav = ({
         });
       });
     } else {
-      // Closing menu
+      // Closing menu - faster and more reliable
       setIsHamburgerOpen(false);
-      
-      // Clear any scroll timeouts to prevent interference
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-        scrollTimeoutRef.current = null;
-      }
       setIsScrolling(false);
-      
-      // Set up reverse complete callback
-      tl.eventCallback('onReverseComplete', () => {
-        setIsExpanded(false);
-        // Reset nav height
-        gsap.set(navRef.current, { height: 60 });
-      });
       
       // Clear any previous callbacks to prevent conflicts
       tl.eventCallback('onComplete', null);
       
-      // Reverse the timeline to hide cards
+      // Set up reverse complete callback with faster execution
+      tl.eventCallback('onReverseComplete', () => {
+        setIsExpanded(false);
+        // Reset nav height immediately
+        gsap.set(navRef.current, { height: 60 });
+        
+        // Ensure cards are completely hidden
+        const cards = cardsRef.current.filter(Boolean);
+        cards.forEach(card => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 0, 
+              y: 20, 
+              visibility: 'hidden',
+              pointerEvents: 'none'
+            });
+          }
+        });
+      });
+      
+      // Reverse the timeline to hide cards with faster timing
+      tl.timeScale(1.5); // Make closing 1.5x faster
       tl.reverse();
+      
+      // Reset time scale after animation
+      setTimeout(() => {
+        if (tl) tl.timeScale(1);
+      }, 300);
     }
   };
 

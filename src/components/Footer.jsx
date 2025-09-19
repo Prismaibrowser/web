@@ -372,7 +372,7 @@ const Footer = () => {
                 <SocialButton label="Instagram" href="#">
                   <FaInstagram />
                 </SocialButton>
-                <SocialButton label="Reddit" href="#">
+                <SocialButton label="Reddit" href="https://www.reddit.com/user/Prism-Browser/">
                   <FaReddit />
                 </SocialButton>
               </div>

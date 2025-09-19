@@ -31,14 +31,6 @@ function LaserFlowBoxExample() {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    // Enhanced scroll behavior setup
-    document.documentElement.style.scrollBehavior = 'smooth';
-    document.body.style.scrollBehavior = 'smooth';
-    
-    // Prevent scroll lag and ensure smooth scrolling
-    document.documentElement.style.overflowX = 'hidden';
-    document.documentElement.style.overflowY = 'auto';
-    
     // Initial check
     handleResize();
     
@@ -137,7 +129,7 @@ function LaserFlowBoxExample() {
       links: [
         { label: "Email", ariaLabel: "Email us", href: "mailto:prismaibrowser@gmail.com" },
         { label: "X", ariaLabel: "X" },
-        { label: "Reddit", ariaLabel: "Reddit" },
+        { label: "Reddit", ariaLabel: "Reddit", href: "https://www.reddit.com/user/Prism-Browser/" },
         { label: "LinkedIn", ariaLabel: "LinkedIn" }
       ]
     }
