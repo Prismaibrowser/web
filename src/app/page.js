@@ -114,7 +114,7 @@ function LaserFlowBoxExample() {
     {
       label: "Useful Links", 
       bgColor: "#F2FFEB",
-      textColor: "#88E755",
+      textColor: "#272927ff",
       links: [
         { label: "Changelog", ariaLabel: "Changelog" },
         { label: "Donate Us", ariaLabel: "Donate Us" },
@@ -148,14 +148,14 @@ function LaserFlowBoxExample() {
             loop
             playsInline
             style={{
-              position: 'fixed',
-              top: '0',
-              left: '-245px',
+              position: 'absolute',
+              top: '-185px',
+              left: '-10%',
+              clipPath: 'inset(0 15% 0 35%)', // Trims 15% from left
               width: '100%',
-              height: '100%',
+              height: isMobile ? '120vh' : '70vh', // Adjust based on your preview box position
               objectFit: 'cover',
               zIndex: 1,
-             
             }}
           >
             <source src="/laserflow.mp4" type="video/mp4" />
