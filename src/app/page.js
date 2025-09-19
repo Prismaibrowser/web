@@ -116,7 +116,7 @@ function PrismWebApp() {
     {
       label: "About",
       bgColor: "#010710",
-      textColor: "#88E755",
+      textColor: "#e4eae2ff",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
         { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
@@ -127,7 +127,7 @@ function PrismWebApp() {
     {
       label: "Useful Links", 
       bgColor: "#F2FFEB",
-      textColor: "#88E755",
+      textColor: "#141514ff",
       links: [
         { label: "Changelog", ariaLabel: "Changelog" },
         { label: "Donate Us", ariaLabel: "Donate Us" },
@@ -147,7 +147,7 @@ function PrismWebApp() {
       ]
     }
   ];
-
+//laserflow
   return (
     <>
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
@@ -162,13 +162,10 @@ function PrismWebApp() {
             playsInline
             style={{
               position: 'absolute',
-              top: '-70px',
-              left: '245px',
-              width: '70%',
-              height: '14%',
               objectFit: 'cover',
               alignContent: 'center',
               zIndex: 1,
+              filter: 'blur(8px)',
              
             }}
           >
@@ -250,6 +247,33 @@ function PrismWebApp() {
                 transformOrigin: 'center'
               }}>
               </div>
+
+              {/* iframe positioned above the main image */}
+              <iframe
+                src="https://prasanthp.me/prism-homepage/" // Replace with your desired URL
+                title="Embedded Content"
+                className="cursor-target" // Enable custom cursor tracking
+                style={{
+                  position: 'absolute',
+                  top: isClient && isMobile ? '25%' : '39%',
+                  left: '56.6%',
+                  transform: 'translateX(-50%)',
+                  width: isClient && isMobile ? '300px' : '978px',
+                  height: isClient && isMobile ? '200px' : '920px',
+                  borderBlockColor: 'transparent',
+                  border: '2px solid #88E755',
+                  borderRadius: isClient && isMobile ? '8px' : '12px',
+                  zIndex: 7, // Higher than the image below
+                  //backgroundColor: 'rgba(6, 0, 16, 0.9)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  //boxShadow: '0 8px 32px rgba(136, 231, 85, 0.2)'
+                  cursor: 'none', // Disable default system cursor
+                  pointerEvents: 'auto' // Ensure pointer events work for custom cursor
+                }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
 
               <img 
                 src="/prism-preview.webp" 
@@ -552,6 +576,7 @@ function PrismWebApp() {
                     position: 'absolute',
                     width: '100%',
                     zIndex: 5,
+                    filter: 'blur(20px) brightness(1.2) contrast(1.2)',
                     mixBlendMode: 'lighten',
                     opacity: 0.3,
                     pointerEvents: 'none',
