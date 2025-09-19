@@ -3,21 +3,25 @@
 import { useRef, useState, useEffect } from 'react';
 import CardNav from "@/components/CardNav";
 import Shuffle from "@/components/Shuffle";
-
 import TargetCursor from "@/components/TargetCursor";
 import TextPressure from "@/components/TextPressure";
 import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
 import PrismLoader from "@/components/PrismLoader";
+import CustomScrollbar from "@/components/CustomScrollbar";
 
 function PrismWebApp() {
   const revealImgRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [selectedPlatform, setSelectedPlatform] = useState('');
+  const [selectedPlatform, setSelectedPlatform] = useState('Windows'); // Default to prevent hydration mismatch
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false); // Track client-side hydration
   
   useEffect(() => {
+    // Mark that we're on the client side
+    setIsClient(true);
+    
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowScrollTop(true);
@@ -30,10 +34,18 @@ function PrismWebApp() {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    // Initial check
+    // Enhanced scroll behavior setup
+    document.documentElement.style.scrollBehavior = 'smooth';
+    document.body.style.scrollBehavior = 'smooth';
+    
+    // Prevent scroll lag and ensure smooth scrolling
+    document.documentElement.style.overflowX = 'hidden';
+    document.documentElement.style.overflowY = 'auto';
+    
+    // Initial check after hydration
     handleResize();
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -42,27 +54,57 @@ function PrismWebApp() {
   }, []);
 
   useEffect(() => {
-    // Detect OS and set default platform
-    const detectOS = () => {
-      const userAgent = window.navigator.userAgent;
-      const platform = window.navigator.platform;
+    // Only detect OS after client-side hydration to prevent mismatch
+    if (isClient) {
+      const detectOS = () => {
+        const userAgent = window.navigator.userAgent;
+        const platform = window.navigator.platform;
+        
+        if (userAgent.includes('Windows') || platform.includes('Win')) {
+          return 'Windows';
+        } else if (userAgent.includes('Linux') || platform.includes('Linux')) {
+          return 'Linux';
+        } else if (userAgent.includes('Mac') || platform.includes('Mac')) {
+          return 'Linux'; // Default to Linux for Mac users
+        } else {
+          return 'Windows'; // Default fallback
+        }
+      };
       
-      if (userAgent.includes('Windows') || platform.includes('Win')) {
-        return 'Windows';
-      } else if (userAgent.includes('Linux') || platform.includes('Linux')) {
-        return 'Linux';
-      } else if (userAgent.includes('Mac') || platform.includes('Mac')) {
-        return 'Linux'; // Default to Linux for Mac users
-      } else {
-        return 'Windows'; // Default fallback
-      }
-    };
-    
-    setSelectedPlatform(detectOS());
-  }, []);
+      setSelectedPlatform(detectOS());
+    }
+  }, [isClient]);
   
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Enhanced scroll to top with better performance
+    try {
+      // Method 1: Instant scroll first to prevent lag
+      window.scrollTo(0, 0);
+      
+      // Method 2: Then apply smooth scroll for better UX
+      setTimeout(() => {
+        window.scrollTo({ 
+          top: 0, 
+          left: 0,
+          behavior: 'smooth' 
+        });
+      }, 10);
+      
+      // Method 3: Ensure we're at the top
+      setTimeout(() => {
+        if (window.scrollY > 0) {
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+      }, 100);
+      
+    } catch (error) {
+      // Emergency fallback
+      console.warn('Scroll to top error:', error);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
+    }
   };
 
   const handleDownload = () => {
@@ -77,9 +119,10 @@ function PrismWebApp() {
       textColor: "#88E755",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
-          { label: "Documentation", ariaLabel: "Documentation" },
-          { label: "GitHub", ariaLabel: "GitHub" }
-        ]
+        { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
+        { label: "Documentation", ariaLabel: "Documentation" },
+        { label: "GitHub", ariaLabel: "GitHub", href: "https://github.com/Prismaibrowser" }
+      ]
     },
     {
       label: "Useful Links", 
@@ -97,7 +140,7 @@ function PrismWebApp() {
       bgColor: "#88E755", 
       textColor: "#010710",
       links: [
-        { label: "Email", ariaLabel: "Email us" },
+        { label: "Email", ariaLabel: "Email us", href: "mailto:prismaibrowser@gmail.com" },
         { label: "X", ariaLabel: "X" },
         { label: "Reddit", ariaLabel: "Reddit" },
         { label: "LinkedIn", ariaLabel: "LinkedIn" }
@@ -108,8 +151,9 @@ function PrismWebApp() {
   return (
     <>
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
+      <CustomScrollbar />
       {!isLoading && (
-        <div style={{ position: 'relative', backgroundColor: '#060010', minHeight: '200vh', width: '100%' }}>
+        <div style={{ position: 'relative', backgroundColor: '#060010', width: '100%', overflow: 'hidden' }}>
           {/* Background Video */}
           <video
             autoPlay
@@ -118,11 +162,10 @@ function PrismWebApp() {
             playsInline
             style={{
               position: 'absolute',
-              //marginTop: '-170px',
-              top: '-100px',
+              top: '-70px',
               left: '245px',
               width: '70%',
-              height: '35%',
+              height: '14%',
               objectFit: 'cover',
               alignContent: 'center',
               zIndex: 1,
@@ -133,98 +176,110 @@ function PrismWebApp() {
             Your browser does not support the video tag.
           </video>
           
-          {/* Sticky Header - moved outside of mouse tracking div */}
+          {/* Fixed Header - Rebuilt with fixed positioning */}
           <header style={{ 
-            position: 'sticky', 
+            position: 'fixed', 
             top: 0, 
-            zIndex: 1000,
-            backgroundColor: 'rgba(6, 0, 16, 0.95)',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-            width: '100%'
+            left: 0,
+            right: 0,
+            zIndex: 9999,
+            backgroundColor: 'transparent',
+            width: '100%',
+            pointerEvents: 'none'
           }}>
-            <CardNav
-              logo="/nav-logo.png"
-              logoAlt="Prism Web Logo"
-              items={navItems}
-              baseColor="rgba(255, 255, 255, 0.1)"
-              menuColor="#88E755"
-              buttonBgColor="#88E755"
-              buttonTextColor="#000"
-              ease="power3.out"
-            />
+            <div style={{ pointerEvents: 'auto' }}>
+              <CardNav
+                logo="/nav-logo.png"
+                logoAlt="Prism Web Logo"
+                items={navItems}
+                baseColor="rgba(255, 255, 255, 0.1)"
+                menuColor="#88E755"
+                buttonBgColor="#88E755"
+                buttonTextColor="#000"
+                ease="power3.out"
+              />
+            </div>
           </header>
           <TargetCursor 
             spinDuration={2}
-            hideDefaultCursor={true}
+            hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
             performanceMode={isMobile} // Enable performance mode on mobile devices
           />
 
-          <div 
-            style={{ 
-              minHeight: '100vh',
-              width: '100%',
-              position: 'relative',
-              backgroundColor: 'transparent',
-              zIndex: 5
-            }}
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              const el = revealImgRef.current;
-              if (el) {
-                el.style.setProperty('--mx', `${x}px`);
-                el.style.setProperty('--my', `${y + rect.height * 0.5}px`);
-              }
-            }}
-            onMouseLeave={() => {
-              const el = revealImgRef.current;
-              if (el) {
-                el.style.setProperty('--mx', '-9999px');
-                el.style.setProperty('--my', '-9999px');
-              }
-            }}
-          >
+          {/* Main Content Container - Using proper document flow */}
+          <main style={{ 
+            position: 'relative',
+            width: '100%',
+            backgroundColor: 'transparent',
+            zIndex: 5,
+            paddingTop: '80px'
+          }}>
             
-            <div style={{ position: 'relative', minHeight: '100vh', width: '100%', backgroundColor: 'transparent', paddingBottom: '50vh', zIndex: 10 }}>
+            {/* Hero Section */}
+            <section 
+              style={{ 
+                minHeight: '100vh',
+                width: '100%',
+                position: 'relative',
+                backgroundColor: 'transparent',
+                zIndex: 10,
+                paddingBottom: '10vh'
+              }}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const el = revealImgRef.current;
+                if (el) {
+                  el.style.setProperty('--mx', `${x}px`);
+                  el.style.setProperty('--my', `${y + rect.height * 0.5}px`);
+                }
+              }}
+              onMouseLeave={() => {
+                const el = revealImgRef.current;
+                if (el) {
+                  el.style.setProperty('--mx', '-9999px');
+                  el.style.setProperty('--my', '-9999px');
+                }
+              }}
+            >
               <div style={{
                 position: 'relative',
-                top: isMobile ? '5vh' : '0',
-                transform: isMobile ? 'scale(1.3)' : 'scale(1)',
+                top: isClient && isMobile ? '5vh' : '0',
+                transform: isClient && isMobile ? 'scale(1.3)' : 'scale(1)',
                 transformOrigin: 'center'
               }}>
               </div>
 
               <img 
-                src="/prism-preview.png" 
+                src="/prism-preview.webp" 
                 alt="Prism Preview"
                 style={{ 
                   position: 'absolute',
-                  top: isMobile ? '30%' : '35%',
+                  top: isClient && isMobile ? '30%' : '42%',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  width: isMobile ? '90%' : '86%',
+                  width: isClient && isMobile ? '90%' : '86%',
                   height: 'auto',
                   objectFit: 'contain',
-                  borderRadius: isMobile ? '12px' : '18px',
+                  borderRadius: isClient && isMobile ? '12px' : '18px',
                   border: '2px solid #88E755',
                   zIndex: 6,
-                  maxWidth: isMobile ? '500px' : '1200px',
-                  marginTop: '7px'
+                  maxWidth: isClient && isMobile ? '500px' : '1200px',
+                  marginTop: '-30px'
                 }}
               />
 
               <img
-                src={isMobile ? "/PRISM3DMODEL(mobile).png" : "/prism-logo-3d.png"}
+                src={isClient && isMobile ? "/PRISM3DMODEL(mobile).png" : "/prism-logo-3d.png"}
                 alt="Prism 3D Logo"
                 className="logo-hover-rotate"
                 style={{
                   position: 'absolute',
-                  top: isMobile ? '20%' : '25%',
-                  left: isMobile ? '20%' : '22%',
-                  transform: isMobile ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) rotate(-15deg)',
-                  width: isMobile ? '200px' : '703.03px',
+                  top: isClient && isMobile ? '20%' : '25%',
+                  left: isClient && isMobile ? '20%' : '22%',
+                  transform: isClient && isMobile ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) rotate(-15deg)',
+                  width: isClient && isMobile ? '200px' : '703.03px',
                   height: 'auto',
                   zIndex: 4,
                   filter: 'drop-shadow(0 12px 28px rgba(136, 231, 85, 0.45))',
@@ -234,24 +289,27 @@ function PrismWebApp() {
                 }}
               />
 
-              {isMobile ? (
-                <div style={{
-                  position: 'absolute',
-                  top: '15%',
-                  right: '5%',
-                  transform: 'none',
-                  color: '#88E755',
-                  fontSize: '1.6rem',
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  zIndex: 8,
-                  textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
-                  textAlign: 'right',
-                  lineHeight: 1.2
-                }}>
-                  <div>Where AI</div>
-                  <div>Meets Browser</div>
-                </div>
-              ) : (
+              {/* Mobile text version */}
+              <div style={{
+                display: isClient && isMobile ? 'block' : 'none',
+                position: 'absolute',
+                top: '15%',
+                right: '5%',
+                transform: 'none',
+                color: '#88E755',
+                fontSize: '1.6rem',
+                fontFamily: 'Space Grotesk, sans-serif',
+                zIndex: 8,
+                textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
+                textAlign: 'right',
+                lineHeight: 1.2
+              }}>
+                <div>Where AI</div>
+                <div>Meets Browser</div>
+              </div>
+              
+              {/* Desktop text version */}
+              <div style={{ display: isClient && isMobile ? 'none' : 'block' }}>
                 <Shuffle
                   text="Where AI Meets Browser"
                   shuffleDirection="right"
@@ -276,14 +334,14 @@ function PrismWebApp() {
                     textAlign: 'left'
                   }}
                 />
-              )}
+              </div>
 
               <div style={{
                 position: 'absolute',
-                top: isMobile ? '95%' : '22%',
-                right: isMobile ? 'auto' : '15%',
-                left: isMobile ? '50%' : 'auto',
-                transform: isMobile ? 'translateX(-50%)' : 'none',
+                top: isClient && isMobile ? '95%' : '25%',
+                right: isClient && isMobile ? 'auto' : '15%',
+                left: isClient && isMobile ? '50%' : 'auto',
+                transform: isClient && isMobile ? 'translateX(-50%)' : 'none',
                 zIndex: 8,
                 display: 'flex',
                 flexDirection: 'column',
@@ -294,14 +352,14 @@ function PrismWebApp() {
                   className="cursor-target download-button"
                   onClick={handleDownload}
                   style={{
-                    padding: isMobile ? '10px 20px' : '12px 24px',
+                    padding: isClient && isMobile ? '10px 20px' : '12px 24px',
                     backgroundColor: '#88E755',
                     color: '#000',
                     border: 'none',
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontFamily: 'Space Grotesk, sans-serif',
-                    fontSize: isMobile ? '14px' : '16px',
+                    fontSize: isClient && isMobile ? '14px' : '16px',
                     fontWeight: '600',
                     textTransform: 'uppercase',
                     letterSpacing: '1px',
@@ -386,7 +444,7 @@ function PrismWebApp() {
                   </div>
                   <div style={{
                     display: 'flex',
-                    gap: isMobile ? '12px' : '10px',
+                    gap: isClient && isMobile ? '12px' : '10px',
                     alignItems: 'center',
                     flexDirection: 'row',
                     justifyContent: 'center',
@@ -396,14 +454,14 @@ function PrismWebApp() {
                       className="cursor-target"
                       onClick={() => setSelectedPlatform('Windows')}
                       style={{
-                        padding: isMobile ? '8px 16px' : '8px 16px',
+                        padding: isClient && isMobile ? '8px 16px' : '8px 16px',
                         backgroundColor: selectedPlatform === 'Windows' ? '#88E755' : 'transparent',
                         color: selectedPlatform === 'Windows' ? '#000' : '#88E755',
                         border: '2px solid #88E755',
                         borderRadius: '6px',
                         cursor: 'pointer',
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: isMobile ? '13px' : '14px',
+                        fontSize: isClient && isMobile ? '13px' : '14px',
                         fontWeight: '500',
                         transition: 'all 0.3s ease',
                         textTransform: 'uppercase',
@@ -411,7 +469,7 @@ function PrismWebApp() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        minWidth: isMobile ? '110px' : 'auto',
+                        minWidth: isClient && isMobile ? '110px' : 'auto',
                         justifyContent: 'center'
                       }}
                       onMouseEnter={(e) => {
@@ -436,14 +494,14 @@ function PrismWebApp() {
                       className="cursor-target"
                       onClick={() => setSelectedPlatform('Linux')}
                       style={{
-                        padding: isMobile ? '8px 16px' : '8px 16px',
+                        padding: isClient && isMobile ? '8px 16px' : '8px 16px',
                         backgroundColor: selectedPlatform === 'Linux' ? '#88E755' : 'transparent',
                         color: selectedPlatform === 'Linux' ? '#000' : '#88E755',
                         border: '2px solid #88E755',
                         borderRadius: '6px',
                         cursor: 'pointer',
                         fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: isMobile ? '13px' : '14px',
+                        fontSize: isClient && isMobile ? '13px' : '14px',
                         fontWeight: '500',
                         transition: 'all 0.3s ease',
                         textTransform: 'uppercase',
@@ -451,19 +509,29 @@ function PrismWebApp() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        minWidth: isMobile ? '110px' : 'auto',
+                        minWidth: isClient && isMobile ? '110px' : 'auto',
                         justifyContent: 'center'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedPlatform !== 'Linux') {
                           e.target.style.color = '#000';
                           e.target.style.backgroundColor = '#88E755';
+                          // Change Linux logo to black on hover
+                          const img = e.target.querySelector('img');
+                          if (img) {
+                            img.style.filter = 'brightness(0) saturate(100%)';
+                          }
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedPlatform !== 'Linux') {
                           e.target.style.color = '#88E755';
                           e.target.style.backgroundColor = 'transparent';
+                          // Change Linux logo back to green when not hovering
+                          const img = e.target.querySelector('img');
+                          if (img) {
+                            img.style.filter = 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)';
+                          }
                         }
                       }}
                     >
@@ -478,7 +546,7 @@ function PrismWebApp() {
 
                 <img
                   ref={revealImgRef}
-                  src="/prism-preview.png"
+                  src="/prism-preview.webp"
                   alt="Reveal effect"
                   style={{
                     position: 'absolute',
@@ -496,180 +564,207 @@ function PrismWebApp() {
                   }}
                 />
               </div>
-            </div>
-          </div>
+            </section>
           
           {/* Scroll to top button */}
           {showScrollTop && (
             <button 
               className="cursor-target"
-              onClick={scrollToTop}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Scroll to top button clicked'); // Debug log
+                scrollToTop();
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#66CC44';
+                e.target.style.transform = 'translateY(-2px) scale(1.05)';
+                e.target.style.boxShadow = '0 8px 20px rgba(136, 231, 85, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#88E755';
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 4px 12px rgba(136, 231, 85, 0.3)';
+              }}
               style={{
                 position: 'fixed',
-                bottom: isMobile ? '20px' : '30px',
-                right: isMobile ? '20px' : '30px',
-                width: isMobile ? '45px' : '50px',
-                height: isMobile ? '45px' : '50px',
+                bottom: isClient && isMobile ? '20px' : '30px',
+                right: isClient && isMobile ? '20px' : '30px',
+                width: isClient && isMobile ? '50px' : '55px',
+                height: isClient && isMobile ? '50px' : '55px',
                 borderRadius: '50%',
                 backgroundColor: '#88E755',
                 color: '#000',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: 'none',
+                border: '2px solid rgba(255, 255, 255, 0.2)',
                 cursor: 'pointer',
                 boxShadow: '0 4px 12px rgba(136, 231, 85, 0.3)',
-                zIndex: 999,
-                fontSize: isMobile ? '20px' : '24px',
-                transition: 'all 0.3s ease'
+                zIndex: 9998,
+                fontSize: isClient && isMobile ? '22px' : '26px',
+                fontWeight: 'bold',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                userSelect: 'none',
+                outline: 'none',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)'
               }}
               aria-label="Scroll to top"
+              title="Back to top"
             >
               ↑
             </button>
           )}      
           
-          {/* TextPressure Component */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '110%' : '88%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: isMobile ? '90%' : '80%',
-            height: '200px',
-            zIndex: 7
-          }}>
-            <TextPressure
-              text="Prism Mode"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#88E755"
-              strokeColor="#ff0000"
-              minFontSize={isMobile ? 48 : 72}
-            />
-          </div>
+            {/* Prism Mode Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isClient && isMobile ? '15vh 5%' : '15vh 10%',
+              zIndex: 2
+            }}>
+              <div style={{
+                width: isClient && isMobile ? '90%' : '80%',
+                height: '200px',
+                margin: '0 auto'
+              }}>
+                <TextPressure
+                  text="Prism Mode"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={true}
+                  textColor="#88E755"
+                  strokeColor="#ff0000"
+                  minFontSize={isClient && isMobile ? 48 : 72}
+                />
+              </div>
+            </section>
+            
+            {/* Features Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isClient && isMobile ? '15vh 5%' : '15vh 10%',
+              zIndex: 2
+            }}>
+              <div style={{
+                width: isClient && isMobile ? '90%' : '80%',
+                height: '200px',
+                margin: '0 auto'
+              }}>
+                <TextPressure
+                  text="Features"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={true}
+                  textColor="#88E755"
+                  strokeColor="#ff0000"
+                  minFontSize={isClient && isMobile ? 36 : 56}
+                />
+              </div>
+            </section>
+            
+            {/* Features Bento Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isClient && isMobile ? '15vh 0' : '15vh 0',
+              zIndex: 6
+            }}>
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+              }}>
+                <MagicBento 
+                  textAutoHide={true}
+                  enableStars={true}
+                  enableSpotlight={true}
+                  enableBorderGlow={true}
+                  enableTilt={true}
+                  enableMagnetism={true}
+                  clickEffect={true}
+                  spotlightRadius={300}
+                  particleCount={12}
+                  glowColor="136, 231, 85"
+                />
+              </div>
+            </section>
+            
+            {/* Dev Space Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isClient && isMobile ? '15vh 5%' : '15vh 10%',
+              zIndex: 2
+            }}>
+              <div style={{
+                width: isClient && isMobile ? '90%' : '80%',
+                height: '200px',
+                margin: '0 auto'
+              }}>
+                <TextPressure
+                  text="Dev Space"
+                  flex={true}
+                  alpha={false}
+                  stroke={false}
+                  width={true}
+                  weight={true}
+                  italic={true}
+                  textColor="#88E755"
+                  strokeColor="#ff0000"
+                  minFontSize={isClient && isMobile ? 42 : 64}
+                />
+              </div>
+            </section>
+            
+            {/* Dev Space Bento Section */}
+            <section style={{
+              position: 'relative',
+              width: '100%',
+              padding: isClient && isMobile ? '15vh 0' : '15vh 0',
+              zIndex: 6
+            }}>
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                margin: '0 auto'
+              }}>
+                <MagicBento 
+                  textAutoHide={true}
+                  enableStars={true}
+                  enableSpotlight={true}
+                  enableBorderGlow={true}
+                  enableTilt={true}
+                  enableMagnetism={true}
+                  clickEffect={true}
+                  spotlightRadius={300}
+                  particleCount={12}
+                  glowColor="136, 231, 85"
+                />
+              </div>
+            </section>
+            
+          </main>
           
-          {/* TextPressure Component - Features */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '130%' : '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: isMobile ? '90%' : '80%',
-            height: '200px',
-            zIndex: 7
-          }}>
-            <TextPressure
-              text="Features"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#88E755"
-              strokeColor="#ff0000"
-              minFontSize={isMobile ? 36 : 56}
-            />
-          </div>
-          
-          {/* MagicBento Component */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '200%' : '120%',
-            left: '50%',
-            transform: 'translateX(-50%)',
+          {/* Footer Section - At the utmost bottom using proper document flow */}
+          <footer style={{
+            position: 'relative',
             width: '100%',
-            maxWidth: '1200px',
-            zIndex: 6
-          }}>
-            <MagicBento 
-              textAutoHide={true}
-              enableStars={true}
-              enableSpotlight={true}
-              enableBorderGlow={true}
-              enableTilt={true}
-              enableMagnetism={true}
-              clickEffect={true}
-              spotlightRadius={300}
-              particleCount={12}
-              glowColor="136, 231, 85"
-            />
-          </div>
-          
-          {/* TextPressure Component - Dev Space */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '280%' : '160%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: isMobile ? '90%' : '80%',
-            height: '200px',
-            zIndex: 7
-          }}>
-            <TextPressure
-              text="Dev Space"
-              flex={true}
-              alpha={false}
-              stroke={false}
-              width={true}
-              weight={true}
-              italic={true}
-              textColor="#88E755"
-              strokeColor="#ff0000"
-              minFontSize={isMobile ? 42 : 64}
-            />
-          </div>
-          
-          {/* Second MagicBento Component - Under Dev Space */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '300%' : '175%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '100%',
-            maxWidth: '1200px',
-            zIndex: 6
-          }}>
-            <MagicBento 
-              textAutoHide={true}
-              enableStars={true}
-              enableSpotlight={true}
-              enableBorderGlow={true}
-              enableTilt={true}
-              enableMagnetism={true}
-              clickEffect={true}
-              spotlightRadius={300}
-              particleCount={12}
-              glowColor="136, 231, 85"
-            />
-          </div>
-          
-          {/* Footer Component - Placed under Second MagicBento */}
-          <div style={{
-            position: 'absolute',
-            top: isMobile ? '380%' : '220%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '100%',
-            zIndex: 7
+            zIndex: 3,
+            marginTop: isClient && isMobile ? '5vh' : '8vh',
+            paddingTop: isClient && isMobile ? '8vh' : '10vh',
+            paddingBottom: '0'
           }}>
             <Footer />
-          </div>
-          
-          {/* Footer section to prevent white space */}
-          <div style={{ 
-            minHeight: '50vh',
-            backgroundColor: '#060010',
-            width: '100%',
-            position: 'relative'
-          }}>
-            {/* This ensures no white space appears when scrolling on both mobile and desktop */}
-          </div>
+          </footer>
           
         </div>
       )}

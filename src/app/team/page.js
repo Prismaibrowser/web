@@ -1,6 +1,7 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import ChromaGrid from '../../components/ChromaGrid';
 import CardNav from '../../components/CardNav';
 import Footer from '../../components/Footer';
@@ -8,6 +9,21 @@ import TargetCursor from '../../components/TargetCursor';
 import teamData from './team-data.json';
 
 export default function TeamPage() {
+  const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Initial check
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   const navItems = [
     {
       label: "About",
@@ -15,8 +31,9 @@ export default function TeamPage() {
       textColor: "#88E755",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
+        { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
         { label: "Documentation", ariaLabel: "Documentation" },
-        { label: "GitHub", ariaLabel: "GitHub" }
+        { label: "GitHub", ariaLabel: "GitHub", href: "https://github.com/Prismaibrowser" }
       ]
     },
     {
@@ -54,8 +71,8 @@ export default function TeamPage() {
       {/* Custom Cursor */}
       <TargetCursor 
         spinDuration={2}
-        hideDefaultCursor={true}
-        performanceMode={false}
+        hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
+        performanceMode={isMobile} // Enable performance mode on mobile
       />
       {/* Navigation Header */}
       <header style={{ 
@@ -87,6 +104,47 @@ export default function TeamPage() {
         width: '100%',
         boxSizing: 'border-box'
       }}>
+        {/* Back Button */}
+        <button
+          onClick={() => {
+            router.push('/');
+          }}
+          className="cursor-target"
+          style={{
+            position: 'absolute',
+            top: '1rem',
+            left: '1rem',
+            background: 'rgba(136, 231, 85, 0.1)',
+            border: '1px solid rgba(136, 231, 85, 0.3)',
+            borderRadius: '8px',
+            padding: '8px 12px',
+            color: '#88E755',
+            cursor: 'pointer',
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontSize: '14px',
+            fontWeight: '500',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            transition: 'all 0.3s ease',
+            zIndex: 10
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'rgba(136, 231, 85, 0.2)';
+            e.target.style.borderColor = 'rgba(136, 231, 85, 0.5)';
+            e.target.style.transform = 'translateX(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'rgba(136, 231, 85, 0.1)';
+            e.target.style.borderColor = 'rgba(136, 231, 85, 0.3)';
+            e.target.style.transform = 'translateX(0)';
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.414l4.293-4.293c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0l-6 6c-.39.39-.39 1.023 0 1.414l6 6c.195.195.451.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L7.414 13H20c.553 0 1-.447 1-1s-.447-1-1-1z"/>
+          </svg>
+          Back to Home
+        </button>
         {/* Page Title */}
         <div style={{ 
           textAlign: 'center', 
