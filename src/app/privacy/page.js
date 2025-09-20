@@ -292,10 +292,10 @@ export default function PrivacyPolicy() {
 
           <div style={{ marginBottom: '30px', paddingLeft: '20px' }}>
             <p style={{ marginBottom: '15px' }}>
-              <strong>Cookies:</strong> Cookies are stored locally on your device and are not shared with Prism AI Browser or any third party. You have full control over the management of cookies through the browser's settings.
+              <strong>Cookies:</strong> Cookies are stored locally on your device and are not shared with Prism AI Browser or any third party. You have full control over the management of cookies through the browser&apos;s settings.
             </p>
             <p style={{ marginBottom: '15px' }}>
-              <strong>Cache and Temporary Files:</strong> Prism AI Browser may store cache files and other temporary data locally to improve performance. These files can be cleared at any time through the browser's settings.
+              <strong>Cache and Temporary Files:</strong> Prism AI Browser may store cache files and other temporary data locally to improve performance. These files can be cleared at any time through the browser&apos;s settings.
             </p>
           </div>
 
@@ -347,7 +347,7 @@ export default function PrivacyPolicy() {
             marginBottom: '20px',
             color: '#88E755'
           }}>
-            4. Add-ons and "Mods"
+            4. Add-ons and &quot;Mods&quot;
           </h2>
 
           <p style={{ marginBottom: '20px' }}>
@@ -365,7 +365,7 @@ export default function PrivacyPolicy() {
           </h2>
 
           <p style={{ marginBottom: '15px' }}>
-            Although Prism AI Browser does not collect your data, we are committed to protecting the information that is stored locally on your device and, if you use the Sync feature, the encrypted data stored on Mozilla's servers. We recommend that you use secure passwords, enable device encryption, and regularly update your software to ensure your data remains safe.
+            Although Prism AI Browser does not collect your data, we are committed to protecting the information that is stored locally on your device and, if you use the Sync feature, the encrypted data stored on Mozilla&apos;s servers. We recommend that you use secure passwords, enable device encryption, and regularly update your software to ensure your data remains safe.
           </p>
 
           <p style={{ marginBottom: '20px', fontStyle: 'italic', color: '#ccc' }}>
