@@ -140,6 +140,52 @@ function LaserFlowBoxExample() {
 
   return (
     <>
+      {/* Structured Data for SEO and Social Sharing */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Prism AI Browser",
+            "applicationCategory": "WebBrowser",
+            "operatingSystem": "Windows, Linux, macOS",
+            "description": "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools. Built on Zen Browser with advanced AI capabilities.",
+            "url": "https://prismbrowser.com",
+            "downloadUrl": "https://prismbrowser.com",
+            "author": {
+              "@type": "Organization",
+              "name": "Prism Browser Team"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Prism Browser"
+            },
+            "screenshot": "https://prismbrowser.com/prism-preview.png",
+            "image": "https://prismbrowser.com/prism-preview.png",
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "ratingCount": "150"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "AI-powered automation",
+              "Voice command navigation",
+              "MCP integrations",
+              "Accessibility enhancements",
+              "Developer tools",
+              "Focus mode",
+              "Captcha solver",
+              "Built-in code editor"
+            ]
+          })
+        }}
+      />
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       <CustomScrollbar />
       {!isLoading && (
@@ -156,7 +202,7 @@ function LaserFlowBoxExample() {
             style={{
               position: 'fixed',
               top: 0,
-              left: -225,
+              left: -240,
               width: '100%',
               height: '100%',
               objectFit: 'cover',

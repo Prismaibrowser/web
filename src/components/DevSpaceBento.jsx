@@ -40,11 +40,64 @@ const devSpaceCardData = [
   },
   {
     color: '#060010',
-    title: 'Structured insights navigation',
+    title: 'Structured insights',
     description: 'The browser can scrape web content and convert websites into LLM-ready data',
     label: 'Content Processing'
   }
 ];
+
+// Illustration mapping for each DevSpace card based on their context
+const getDevSpaceIllustration = (index, label) => {
+  // For Open Source Tools, create a code/tools illustration
+  if (label === 'Open Source Tools') {
+    return (
+      <svg width="32" height="32" viewBox="0 0 32 32" style={{ marginBottom: '8px' }}>
+        <defs>
+          <linearGradient id="osGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#88e755" />
+            <stop offset="100%" stopColor="#22c55e" />
+          </linearGradient>
+        </defs>
+        <rect x="4" y="8" width="24" height="16" rx="2" fill="none" stroke="url(#osGradient)" strokeWidth="2" />
+        <path d="M8 12 L12 16 L8 20" fill="none" stroke="url(#osGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <line x1="14" y1="18" x2="20" y2="18" stroke="url(#osGradient)" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="16" cy="6" r="2" fill="url(#osGradient)" opacity="0.7" />
+        <circle cx="8" cy="26" r="1.5" fill="url(#osGradient)" opacity="0.5" />
+        <circle cx="24" cy="26" r="1.5" fill="url(#osGradient)" opacity="0.5" />
+      </svg>
+    );
+  }
+  
+  // For API Tools, create an API/integration illustration
+  if (label === 'API Tools') {
+    return (
+      <svg width="32" height="32" viewBox="0 0 32 32" style={{ marginBottom: '8px' }}>
+        <defs>
+          <linearGradient id="apiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#88e755" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+        </defs>
+        <rect x="6" y="6" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <rect x="18" y="6" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <rect x="6" y="18" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <rect x="18" y="18" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <line x1="14" y1="10" x2="18" y2="10" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+        <line x1="10" y1="14" x2="10" y2="18" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+        <line x1="22" y1="14" x2="22" y2="18" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+        <line x1="14" y1="22" x2="18" y2="22" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+  
+  // Default emoji icons for other cards
+  const icons = ['💻', '🔀', '🌐', '🔧', '🎨', '📊'];
+  return (
+    <div style={{ fontSize: '2rem', marginBottom: '8px' }}>
+      {icons[index] || '✨'}
+    </div>
+  );
+};
 
 const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
   const el = document.createElement('div');
@@ -523,6 +576,7 @@ const DevSpaceBento = ({
                 enableMagnetism={enableMagnetism}
               >
                 <div className="card__header">
+                  <div className="card__icon">{getDevSpaceIllustration(index, card.label)}</div>
                   <div className="card__label" style={{ fontSize: '20px' }}>{card.label}</div>
                 </div>
                 <div className="card__content">
@@ -646,6 +700,7 @@ const DevSpaceBento = ({
               }}
             >
               <div className="card__header">
+                <div className="card__icon">{getDevSpaceIllustration(index, card.label)}</div>
                 <div className="card__label" style={{ fontSize: '20px' }}>{card.label}</div>
               </div>
               <div className="card__content">
