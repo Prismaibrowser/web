@@ -7,42 +7,42 @@ const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '136, 231, 85';
 const MOBILE_BREAKPOINT = 768;
 
-const cardData = [
+const devSpaceCardData = [
   {
     color: '#060010',
-    title: 'Stay focused and work efficiently',
-    description: 'Includes features like focus mode, break timers, and other enhancements',
-    label: 'Productivity Tools'
+    title: 'Code Editor',
+    description: 'Built-in code editor with syntax highlighting, debugging tools',
+    label: 'IDE Integration'
   },
   {
     color: '#060010',
-    title: 'Smart tools for effortless navigation',
-    description: 'Features tools for solving captchas automatically and Speedtest for an in-built internet speed tester',
-    label: 'Web Assistance'
+    title: 'Git Support',
+    description: 'Native Git integration with visual diff tools, branch management, and direct GitHub connectivity ',
+    label: 'Version Control'
   },
   {
     color: '#060010',
-    title: 'Agentic Automation',
-    description: 'Prism Mode controlled by natural language prompts and voice commands, aiming to transform how users interact with the web. It is a fork of Zen Browser, extending its capabilities with advanced AI automation.',
-    label: 'PRISM MODE'
+    title: 'Uninterrupted Browsing',
+    description: 'Dev Space provides web assistance and filtering tools, such as screen recording and Captcha Solver for solving captchas',
+    label: 'Open Source Tools'
   },
   {
     color: '#060010',
-    title: 'Seamless Connections',
-    description: 'Unlock a smarter web with Prism Browser’s MCP integrations—your AI agents can connect to tools like GitHub, Google Docs, and automation servers to handle coding, writing, scraping, and more. Build your own custom agents to automate workflows',
-    label: 'MCP Integrations'
+    title: 'API Testing & Documentation',
+    description: 'Built-in REST client for API testing, automatic documentation generation, and endpoint management tools',
+    label: 'API Tools'
   },
   {
     color: '#060010',
-    title: 'Browsing for every user',
-    description: 'Features include a focus mode, high contrast, and screen reader support',
-    label: 'Accessibility Enhancement'
+    title: 'Designer Tools',
+    description: 'Dev Space provides designer tools and resources, such as a built-in colour generator and more ',
+    label: 'Designer Tools'
   },
   {
     color: '#060010',
-    title: 'Effortless navigation',
-    description: 'Enables users to control navigation and other functions using voice commands',
-    label: 'Voice Command Navigation'
+    title: 'Structured insights navigation',
+    description: 'The browser can scrape web content and convert websites into LLM-ready data',
+    label: 'Content Processing'
   }
 ];
 
@@ -470,8 +470,8 @@ const useMobileDetection = () => {
   return isMobile;
 };
 
-const MagicBento = ({
-  textAutoHide = true,
+const DevSpaceBento = ({
+  textAutoHide = false,
   enableStars = true,
   enableSpotlight = true,
   enableBorderGlow = true,
@@ -500,7 +500,7 @@ const MagicBento = ({
       )}
 
       <BentoCardGrid gridRef={gridRef}>
-        {cardData.map((card, index) => {
+        {devSpaceCardData.map((card, index) => {
           const baseClassName = `card ${textAutoHide ? 'card--text-autohide' : ''} ${enableBorderGlow ? 'card--border-glow' : ''}`;
           const cardProps = {
             className: baseClassName,
@@ -660,4 +660,4 @@ const MagicBento = ({
   );
 };
 
-export default MagicBento;
+export default DevSpaceBento;
