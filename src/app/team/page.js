@@ -6,6 +6,8 @@ import ChromaGrid from '../../components/ChromaGrid';
 import CardNav from '../../components/CardNav';
 import Footer from '../../components/Footer';
 import TargetCursor from '../../components/TargetCursor';
+import ParticleEffects from '../../components/ParticleEffects';
+import CustomScrollbar from '../../components/CustomScrollbar';
 import teamData from './team-data.json';
 
 export default function TeamPage() {
@@ -106,12 +108,16 @@ export default function TeamPage() {
 
   return (
     <div style={{ 
-      backgroundColor: '#060010', 
+      backgroundColor: '#030A15', 
       minHeight: '100vh', 
       width: '100%',
       position: 'relative',
       overflowX: 'hidden'
     }}>
+      {/* Custom Scrollbar */}
+      <CustomScrollbar />
+      {/* Particle Effects Background */}
+      <ParticleEffects />
       {/* Custom Cursor */}
       <TargetCursor 
         spinDuration={2}
@@ -123,7 +129,7 @@ export default function TeamPage() {
         position: 'sticky', 
         top: 0, 
         zIndex: 100,
-        backgroundColor: 'rgba(6, 0, 16, 0.95)',
+        backgroundColor: 'rgba(3, 10, 21, 0.95)',
         backdropFilter: 'blur(8px)',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
       }}>

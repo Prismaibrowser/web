@@ -13,7 +13,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  background-color: #060010;
+  background-color: #030A15;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -42,7 +42,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
-  background-color: #060010;
+  background-color: #030A15;
   min-height: 100vh;
 }
 
@@ -53,7 +53,7 @@ body {
 }
 
 #__next {
-  background-color: #060010;
+  background-color: #030A15;
   min-height: 100vh;
 }
 

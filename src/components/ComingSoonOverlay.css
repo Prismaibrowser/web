@@ -1,0 +1,175 @@
+.coming-soon-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9990;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.coming-soon-modal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border: 2px solid #88E755;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 
+    0 20px 60px rgba(136, 231, 85, 0.2),
+    0 0 0 1px rgba(136, 231, 85, 0.1);
+  transform: scale(0.8) translateY(20px);
+  animation: modalSlideIn 0.4s ease-out 0.1s forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes modalSlideIn {
+  to {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.coming-soon-modal::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(136, 231, 85, 0.1),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+.coming-soon-content {
+  position: relative;
+  z-index: 9995;
+}
+
+.coming-soon-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.coming-soon-modal h2 {
+  color: #88E755;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(136, 231, 85, 0.5);
+}
+
+.coming-soon-modal p {
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.coming-soon-close-btn {
+  background: linear-gradient(135deg, #88E755 0%, #6BC73F 100%);
+  color: #000;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 9996;
+}
+
+.coming-soon-close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(136, 231, 85, 0.4);
+}
+
+.coming-soon-close-btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .coming-soon-modal {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .coming-soon-icon {
+    font-size: 3rem;
+  }
+  
+  .coming-soon-modal h2 {
+    font-size: 2rem;
+  }
+  
+  .coming-soon-modal p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .coming-soon-modal {
+    padding: 25px 15px;
+  }
+  
+  .coming-soon-icon {
+    font-size: 2.5rem;
+  }
+  
+  .coming-soon-modal h2 {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+}

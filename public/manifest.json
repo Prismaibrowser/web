@@ -1,0 +1,34 @@
+{
+  "name": "Prism AI Browser",
+  "short_name": "Prism Browser",
+  "description": "Experience the future of web browsing with AI-powered automation, voice commands, and developer tools.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060010",
+  "theme_color": "#060010",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["productivity", "utilities", "developer"],
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/prism-preview.png",
+      "type": "image/png",
+      "sizes": "1200x630",
+      "form_factor": "wide"
+    }
+  ]
+}

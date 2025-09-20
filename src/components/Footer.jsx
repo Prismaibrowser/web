@@ -69,7 +69,7 @@ const SocialButton = ({ children, label, href }) => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ onDownloadClick }) => {
   const [selectedPlatform, setSelectedPlatform] = useState('Windows');
   const [isMobile, setIsMobile] = useState(false);
 
@@ -180,7 +180,7 @@ const Footer = () => {
         }}>
           <button
             className="cursor-target"
-            onClick={handleDownload}
+            onClick={onDownloadClick}
             style={{
               padding: isMobile ? '12px 24px' : '14px 28px',
               backgroundColor: '#88E755',
@@ -366,7 +366,7 @@ const Footer = () => {
             <p className="column-title social-title">FOLLOW US</p>
             <div className="social-buttons">
               <div className="social-buttons-row">
-                <SocialButton label="X (Twitter)" href="#">
+                <SocialButton label="X (Twitter)" href="https://x.com/prismaibrowser">
                   <FaXTwitter />
                 </SocialButton>
                 <SocialButton label="Instagram" href="#">
@@ -377,7 +377,7 @@ const Footer = () => {
                 </SocialButton>
               </div>
               <div className="social-buttons-row">
-                <SocialButton label="LinkedIn" href="#">
+                <SocialButton label="LinkedIn" href="https://www.linkedin.com/in/prism-browser-702b08385/">
                   <FaLinkedin />
                 </SocialButton>
                 <SocialButton label="Discord" href="#">
