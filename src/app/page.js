@@ -10,6 +10,7 @@ import MagicBento from "@/components/MagicBento";
 import Footer from "@/components/Footer";
 import PrismLoader from "@/components/PrismLoader";
 import CustomScrollbar from "@/components/CustomScrollbar";
+import ParticleEffects from "@/components/ParticleEffects";
 
 function LaserFlowBoxExample() {
   const revealImgRef = useRef(null);
@@ -140,7 +141,10 @@ function LaserFlowBoxExample() {
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       <CustomScrollbar />
       {!isLoading && (
-        <div style={{ position: 'relative', backgroundColor: '#060010', width: '100%', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', backgroundColor: '#030A15', width: '100%', overflow: 'hidden' }}>
+          {/* Particle Effects Background */}
+          <ParticleEffects />
+          
           {/* Background Video */}
           <video
             autoPlay
