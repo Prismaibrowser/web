@@ -34,8 +34,8 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
              window.innerWidth <= 768;
     };
 
-    if (isMobileDevice() && !hideDefaultCursor) {
-      return; // Don't initialize cursor on mobile when it should be disabled
+    if (isMobileDevice() && hideDefaultCursor === false) {
+      return; // Correct logic!
     }
 
     if (!cursorRef.current) return;
