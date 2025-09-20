@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  outputFileTracingRoot: '/home/prashu/prism-web',
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true
+  },
 };
 
 export default nextConfig;
