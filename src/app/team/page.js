@@ -7,6 +7,7 @@ import CardNav from '../../components/CardNav';
 import Footer from '../../components/Footer';
 import TargetCursor from '../../components/TargetCursor';
 import ParticleEffects from '../../components/ParticleEffects';
+import CustomScrollbar from '../../components/CustomScrollbar';
 import teamData from './team-data.json';
 
 export default function TeamPage() {
@@ -113,6 +114,8 @@ export default function TeamPage() {
       position: 'relative',
       overflowX: 'hidden'
     }}>
+      {/* Custom Scrollbar */}
+      <CustomScrollbar />
       {/* Particle Effects Background */}
       <ParticleEffects />
       {/* Custom Cursor */}

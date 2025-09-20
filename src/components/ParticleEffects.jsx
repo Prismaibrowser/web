@@ -6,10 +6,25 @@ const ParticleEffects = ({ className = '' }) => {
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+  const lastScrollY = useRef(0);
+  const scrollDirection = useRef(0); // 1 for down, -1 for up
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    // Scroll tracking for particle movement
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const direction = currentScrollY > lastScrollY.current ? 1 : -1;
+      scrollDirection.current = direction;
+      lastScrollY.current = currentScrollY;
+      setScrollY(currentScrollY);
+      
+      // Temporary debug log to check if scroll is working
+      console.log(`Scroll: ${currentScrollY}, Direction: ${direction}`);
+    };
 
     // Mouse tracking for 3D effects
     const handleMouseMove = (e) => {
@@ -47,11 +62,12 @@ const ParticleEffects = ({ className = '' }) => {
           cursor: pointer;
           animation: floatParticle ${6 + Math.random() * 4}s ease-in-out infinite;
           animation-delay: ${delay}s;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           box-shadow: 0 0 ${isGreen ? '10px rgba(136, 231, 85, 0.6)' : '8px rgba(255, 255, 255, 0.8)'};
           opacity: 0.7;
           z-index: 1;
           transform-style: preserve-3d;
+          will-change: transform;
         `;
 
         container.appendChild(particle);
@@ -114,6 +130,7 @@ const ParticleEffects = ({ className = '' }) => {
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       if (container) {
@@ -122,44 +139,76 @@ const ParticleEffects = ({ className = '' }) => {
         container.removeEventListener('mouseleave', handleMouseLeave);
         container.innerHTML = '';
       }
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  // Update 3D effect when mouse position changes
+  // Combined effect for both mouse and scroll updates
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || !isHovered) return;
+    if (!container) return;
 
-    const particles = container.querySelectorAll('.floating-particle');
-    particles.forEach((particle, index) => {
-      const factor = (index % 3 + 1) * 0.1;
-      const translateX = mousePosition.x * 20 * factor;
-      const translateY = mousePosition.y * 20 * factor;
-      const rotateX = mousePosition.y * 10 * factor;
-      const rotateY = mousePosition.x * 10 * factor;
-      const scale = 1 + Math.abs(mousePosition.x * mousePosition.y) * 0.3 * factor;
-      
-      particle.style.transform = `
-        translateX(${translateX}px) 
-        translateY(${translateY}px) 
-        rotateX(${rotateX}deg) 
-        rotateY(${rotateY}deg) 
-        scale(${scale})
-      `;
-      
-      // Enhanced glow effect
-      const proximity = Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2);
-      const glowIntensity = Math.max(0.6, 1 - proximity * 0.5);
-      const isGreen = particle.style.background.includes('#88E755');
-      
-      particle.style.boxShadow = `
-        0 0 ${15 * glowIntensity}px ${isGreen ? `rgba(136, 231, 85, ${0.8 * glowIntensity})` : `rgba(255, 255, 255, ${0.9 * glowIntensity})`},
-        0 0 ${30 * glowIntensity}px ${isGreen ? `rgba(136, 231, 85, ${0.4 * glowIntensity})` : `rgba(255, 255, 255, ${0.5 * glowIntensity})`}
-      `;
-      
-      particle.style.opacity = Math.min(1, 0.7 + glowIntensity * 0.3);
-    });
-  }, [mousePosition, isHovered]);
+    const updateParticlePositions = () => {
+      const particles = container.querySelectorAll('.floating-particle');
+      particles.forEach((particle, index) => {
+        const factor = (index % 3 + 1) * 0.1;
+        
+        // Mouse-based 3D movement (only when hovered)
+        let mouseTranslateX = 0;
+        let mouseTranslateY = 0;
+        let rotateX = 0;
+        let rotateY = 0;
+        let scale = 1;
+        
+        if (isHovered) {
+          mouseTranslateX = mousePosition.x * 20 * factor;
+          mouseTranslateY = mousePosition.y * 20 * factor;
+          rotateX = mousePosition.y * 10 * factor;
+          rotateY = mousePosition.x * 10 * factor;
+          scale = 1 + Math.abs(mousePosition.x * mousePosition.y) * 0.3 * factor;
+        }
+        
+        // Scroll-based vertical movement (always active and more pronounced)
+        const scrollMultiplier = (index % 2 === 0 ? 1 : -1); // Alternating directions
+        const scrollOffset = scrollY * 0.5 * scrollMultiplier; // Increased for more visibility
+        // Apply scroll direction - particles move opposite to scroll direction for parallax effect
+        const scrollTranslateY = -scrollOffset * factor; // Negative for upward movement when scrolling down
+        
+        // Debug log for first particle only
+        if (index === 0) {
+          console.log(`Particle 0: scrollY=${scrollY}, scrollOffset=${scrollOffset}, scrollTranslateY=${scrollTranslateY}`);
+        }
+        
+        // Combine both movements
+        const finalTranslateX = mouseTranslateX;
+        const finalTranslateY = mouseTranslateY + scrollTranslateY;
+        
+        particle.style.transform = `
+          translateX(${finalTranslateX}px) 
+          translateY(${finalTranslateY}px) 
+          rotateX(${rotateX}deg) 
+          rotateY(${rotateY}deg) 
+          scale(${scale})
+        `;
+        
+        // Enhanced glow effect based on movement intensity
+        const movementIntensity = Math.sqrt(finalTranslateX ** 2 + finalTranslateY ** 2) / 100;
+        const proximity = isHovered ? Math.sqrt(mousePosition.x ** 2 + mousePosition.y ** 2) : 1;
+        const scrollIntensity = Math.abs(scrollTranslateY) / 50; // Add scroll-based glow
+        const glowIntensity = Math.max(0.6, 1 - proximity * 0.5 + movementIntensity * 0.3 + scrollIntensity * 0.2);
+        const isGreen = particle.style.background.includes('#88E755');
+        
+        particle.style.boxShadow = `
+          0 0 ${15 * glowIntensity}px ${isGreen ? `rgba(136, 231, 85, ${0.8 * glowIntensity})` : `rgba(255, 255, 255, ${0.9 * glowIntensity})`},
+          0 0 ${30 * glowIntensity}px ${isGreen ? `rgba(136, 231, 85, ${0.4 * glowIntensity})` : `rgba(255, 255, 255, ${0.5 * glowIntensity})`}
+        `;
+        
+        particle.style.opacity = Math.min(1, 0.7 + glowIntensity * 0.3);
+      });
+    };
+
+    updateParticlePositions();
+  }, [mousePosition, isHovered, scrollY]);
 
   return (
     <>
