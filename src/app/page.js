@@ -189,7 +189,7 @@ function Home() {
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       <CustomScrollbar />
       {!isLoading && (
-        <div style={{ position: 'relative', backgroundColor: '#030A15', width: '100%', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', backgroundColor: '#070110', width: '100%', overflow: 'hidden' }}>
           {/* Particle Effects Background */}
           <ParticleEffects />
           
