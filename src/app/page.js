@@ -241,7 +241,7 @@ function Home() {
         </header>
         <TargetCursor 
           spinDuration={2}
-          hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
+          hideDefaultCursor={!isMobile} // Disable custom cursor on mobile devices
           performanceMode={isMobile} // Enable performance mode on mobile devices
         />
 
