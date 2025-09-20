@@ -7,116 +7,91 @@ const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '136, 231, 85';
 const MOBILE_BREAKPOINT = 768;
 
-const cardData = [
+const devSpaceCardData = [
   {
     color: '#060010',
-    title: 'Stay focused and work efficiently',
-    description: 'Includes features like focus mode, break timers, and other enhancements',
-    label: 'Productivity Tools'
+    title: 'Code Editor',
+    description: 'Built-in code editor with syntax highlighting, debugging tools',
+    label: 'IDE Integration'
   },
   {
     color: '#060010',
-    title: 'Smart tools for effortless navigation',
-    description: 'Features tools for solving captchas automatically and Speedtest for an in-built internet speed tester',
-    label: 'Web Assistance'
+    title: 'Git Support',
+    description: 'Native Git integration with visual diff tools, branch management, and direct GitHub connectivity ',
+    label: 'Version Control'
   },
   {
     color: '#060010',
-    title: 'Agentic Automation',
-    description: 'Prism Mode controlled by natural language prompts and voice commands, aiming to transform how users interact with the web. It is a fork of Zen Browser, extending its capabilities with advanced AI automation.',
-    label: 'PRISM MODE'
+    title: 'Uninterrupted Browsing',
+    description: 'Dev Space provides web assistance and filtering tools, such as screen recording and Captcha Solver for solving captchas',
+    label: 'Open Source Tools'
   },
   {
     color: '#060010',
-    title: 'Seamless Connections',
-    description: 'Unlock a smarter web with Prism Browser’s MCP integrations—your AI agents can connect to tools like GitHub, Google Docs, and automation servers to handle coding, writing, scraping, and more. Build your own custom agents to automate workflows',
-    label: 'MCP Integrations'
+    title: 'API Testing & Documentation',
+    description: 'Built-in REST client for API testing, automatic documentation generation, and endpoint management tools',
+    label: 'API Tools'
   },
   {
     color: '#060010',
-    title: 'Browsing for every user',
-    description: 'Features include a focus mode, high contrast, and screen reader support',
-    label: 'Accessibility Enhancement'
+    title: 'Designer Tools',
+    description: 'Dev Space provides designer tools and resources, such as a built-in colour generator and more ',
+    label: 'Designer Tools'
   },
   {
     color: '#060010',
-    title: 'Effortless navigation',
-    description: 'Enables users to control navigation and other functions using voice commands',
-    label: 'Voice Command Navigation'
+    title: 'Structured insights',
+    description: 'The browser can scrape web content and convert websites into LLM-ready data',
+    label: 'Content Processing'
   }
 ];
 
-// Component for PRISM MODE icon with fallbacks
-const PrismModeIcon = () => {
-  const [iconSrc, setIconSrc] = useState('/favicon-32x32.png');
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  const handleError = () => {
-    if (iconSrc.includes('favicon-32x32.png')) {
-      setIconSrc('/prism-logo-3d.png');
-    } else if (iconSrc.includes('prism-logo-3d.png')) {
-      setIconSrc('/nav-logo.png');
-    } else {
-      // Final fallback - show emoji
-      setIconSrc(null);
-    }
-  };
-
-  if (iconSrc === null) {
-    return <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🔮</div>;
-  }
-
-  return (
-    <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <img 
-        src={iconSrc}
-        alt="Prism Mode" 
-        width="32"
-        height="32"
-        style={{ 
-          filter: 'brightness(1.2) contrast(1.1)',
-          objectFit: 'contain',
-          opacity: isLoaded ? 1 : 0.5
-        }}
-        onLoad={() => setIsLoaded(true)}
-        onError={handleError}
-      />
-    </div>
-  );
-};
-
-// Illustration mapping for each card based on their context
-const getCardIllustration = (index, label) => {
-  // For PRISM MODE card, use the specialized component
-  if (label === 'PRISM MODE') {
-    return <PrismModeIcon />;
-  }
-  
-  // For MCP Integrations, create a connection/network illustration
-  if (label === 'MCP Integrations') {
+// Illustration mapping for each DevSpace card based on their context
+const getDevSpaceIllustration = (index, label) => {
+  // For Open Source Tools, create a code/tools illustration
+  if (label === 'Open Source Tools') {
     return (
       <svg width="32" height="32" viewBox="0 0 32 32" style={{ marginBottom: '8px' }}>
         <defs>
-          <linearGradient id="mcpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="osGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#88e755" />
-            <stop offset="100%" stopColor="#4ade80" />
+            <stop offset="100%" stopColor="#22c55e" />
           </linearGradient>
         </defs>
-        <circle cx="8" cy="8" r="3" fill="url(#mcpGradient)" opacity="0.9" />
-        <circle cx="24" cy="8" r="3" fill="url(#mcpGradient)" opacity="0.9" />
-        <circle cx="8" cy="24" r="3" fill="url(#mcpGradient)" opacity="0.9" />
-        <circle cx="24" cy="24" r="3" fill="url(#mcpGradient)" opacity="0.9" />
-        <circle cx="16" cy="16" r="4" fill="url(#mcpGradient)" />
-        <line x1="8" y1="8" x2="16" y2="16" stroke="#88e755" strokeWidth="2" opacity="0.7" />
-        <line x1="24" y1="8" x2="16" y2="16" stroke="#88e755" strokeWidth="2" opacity="0.7" />
-        <line x1="8" y1="24" x2="16" y2="16" stroke="#88e755" strokeWidth="2" opacity="0.7" />
-        <line x1="24" y1="24" x2="16" y2="16" stroke="#88e755" strokeWidth="2" opacity="0.7" />
+        <rect x="4" y="8" width="24" height="16" rx="2" fill="none" stroke="url(#osGradient)" strokeWidth="2" />
+        <path d="M8 12 L12 16 L8 20" fill="none" stroke="url(#osGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <line x1="14" y1="18" x2="20" y2="18" stroke="url(#osGradient)" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="16" cy="6" r="2" fill="url(#osGradient)" opacity="0.7" />
+        <circle cx="8" cy="26" r="1.5" fill="url(#osGradient)" opacity="0.5" />
+        <circle cx="24" cy="26" r="1.5" fill="url(#osGradient)" opacity="0.5" />
+      </svg>
+    );
+  }
+  
+  // For API Tools, create an API/integration illustration
+  if (label === 'API Tools') {
+    return (
+      <svg width="32" height="32" viewBox="0 0 32 32" style={{ marginBottom: '8px' }}>
+        <defs>
+          <linearGradient id="apiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#88e755" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+        </defs>
+        <rect x="6" y="6" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <rect x="18" y="6" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <rect x="6" y="18" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <rect x="18" y="18" width="8" height="8" rx="2" fill="url(#apiGradient)" opacity="0.8" />
+        <line x1="14" y1="10" x2="18" y2="10" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+        <line x1="10" y1="14" x2="10" y2="18" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+        <line x1="22" y1="14" x2="22" y2="18" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
+        <line x1="14" y1="22" x2="18" y2="22" stroke="#88e755" strokeWidth="2" strokeLinecap="round" />
       </svg>
     );
   }
   
   // Default emoji icons for other cards
-  const icons = ['🎯', '🛠️', '🤖', '🔗', '♿', '🎤'];
+  const icons = ['💻', '🔀', '🌐', '🔧', '🎨', '📊'];
   return (
     <div style={{ fontSize: '2rem', marginBottom: '8px' }}>
       {icons[index] || '✨'}
@@ -548,8 +523,8 @@ const useMobileDetection = () => {
   return isMobile;
 };
 
-const MagicBento = ({
-  textAutoHide = true,
+const DevSpaceBento = ({
+  textAutoHide = false,
   enableStars = true,
   enableSpotlight = true,
   enableBorderGlow = true,
@@ -578,7 +553,7 @@ const MagicBento = ({
       )}
 
       <BentoCardGrid gridRef={gridRef}>
-        {cardData.map((card, index) => {
+        {devSpaceCardData.map((card, index) => {
           const baseClassName = `card ${textAutoHide ? 'card--text-autohide' : ''} ${enableBorderGlow ? 'card--border-glow' : ''}`;
           const cardProps = {
             className: baseClassName,
@@ -601,7 +576,7 @@ const MagicBento = ({
                 enableMagnetism={enableMagnetism}
               >
                 <div className="card__header">
-                  <div className="card__icon">{getCardIllustration(index, card.label)}</div>
+                  <div className="card__icon">{getDevSpaceIllustration(index, card.label)}</div>
                   <div className="card__label" style={{ fontSize: '20px' }}>{card.label}</div>
                 </div>
                 <div className="card__content">
@@ -725,7 +700,7 @@ const MagicBento = ({
               }}
             >
               <div className="card__header">
-                <div className="card__icon">{getCardIllustration(index, card.label)}</div>
+                <div className="card__icon">{getDevSpaceIllustration(index, card.label)}</div>
                 <div className="card__label" style={{ fontSize: '20px' }}>{card.label}</div>
               </div>
               <div className="card__content">
@@ -740,4 +715,4 @@ const MagicBento = ({
   );
 };
 
-export default MagicBento;
+export default DevSpaceBento;

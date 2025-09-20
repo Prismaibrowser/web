@@ -14,7 +14,8 @@ const CardNav = ({
   baseColor = '#fff',
   menuColor,
   buttonBgColor,
-  buttonTextColor
+  buttonTextColor,
+  onDownloadClick
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -312,7 +313,8 @@ const CardNav = ({
           <button
             type="button"
             className="card-nav-cta-button cursor-target"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}>
+            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+            onClick={onDownloadClick}>
             <GoDownload className="download-icon" />
             <span className="button-text">Download</span>
           </button>

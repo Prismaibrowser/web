@@ -6,6 +6,7 @@ import CardNav from "@/components/CardNav";
 import Footer from "@/components/Footer";
 import TargetCursor from "@/components/TargetCursor";
 import CustomScrollbar from "@/components/CustomScrollbar";
+import ParticleEffects from "@/components/ParticleEffects";
 
 export default function PrivacyPolicy() {
   const router = useRouter();
@@ -59,13 +60,15 @@ export default function PrivacyPolicy() {
 
   return (
     <div style={{
-      backgroundColor: '#060010',
+      backgroundColor: '#030A15',
       minHeight: '100vh',
       color: '#fff',
       fontFamily: 'Space Grotesk, sans-serif',
       position: 'relative',
       overflowX: 'hidden'
     }}>
+      {/* Particle Effects Background */}
+      <ParticleEffects />
       <CustomScrollbar />
       {/* Custom Cursor */}
       <TargetCursor 
@@ -79,7 +82,7 @@ export default function PrivacyPolicy() {
         position: 'sticky', 
         top: 0, 
         zIndex: 100,
-        backgroundColor: 'rgba(6, 0, 16, 0.95)',
+        backgroundColor: 'rgba(3, 10, 21, 0.95)',
         backdropFilter: 'blur(8px)',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
       }}>
@@ -103,7 +106,8 @@ export default function PrivacyPolicy() {
         position: 'relative',
         width: '100%',
         boxSizing: 'border-box',
-        lineHeight: '1.6'
+        lineHeight: '1.6',
+        zIndex: 10
       }}>
         {/* Back Button */}
         <button

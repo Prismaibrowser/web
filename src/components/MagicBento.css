@@ -78,7 +78,7 @@
 .card__title,
 .card__description {
   --clamp-title: 1;
-  --clamp-desc: 2;
+  --clamp-desc: 4;
 }
 
 .card__title {

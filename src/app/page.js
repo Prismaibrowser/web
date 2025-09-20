@@ -7,9 +7,12 @@ import Shuffle from "@/components/Shuffle";
 import TargetCursor from "@/components/TargetCursor";
 import TextPressure from "@/components/TextPressure";
 import MagicBento from "@/components/MagicBento";
+import DevSpaceBento from "@/components/DevSpaceBento";
 import Footer from "@/components/Footer";
 import PrismLoader from "@/components/PrismLoader";
 import CustomScrollbar from "@/components/CustomScrollbar";
+import ParticleEffects from "@/components/ParticleEffects";
+import ComingSoonOverlay from "@/components/ComingSoonOverlay";
 
 function Home() {
   const revealImgRef = useRef(null);
@@ -17,6 +20,7 @@ function Home() {
   const [selectedPlatform, setSelectedPlatform] = useState('');
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showComingSoonOverlay, setShowComingSoonOverlay] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -95,8 +99,7 @@ function Home() {
   };
 
   const handleDownload = () => {
-    console.log(`Downloading for ${selectedPlatform}`);
-    // Add actual download logic here based on selectedPlatform
+    setShowComingSoonOverlay(true);
   };
 
   const navItems = [
@@ -128,19 +131,68 @@ function Home() {
       textColor: "#010710",
       links: [
         { label: "Email", ariaLabel: "Email us", href: "mailto:prismaibrowser@gmail.com" },
-        { label: "X", ariaLabel: "X" },
+        { label: "X", ariaLabel: "X", href: "https://x.com/prismaibrowser" },
         { label: "Reddit", ariaLabel: "Reddit", href: "https://www.reddit.com/user/Prism-Browser/" },
-        { label: "LinkedIn", ariaLabel: "LinkedIn" }
+        { label: "LinkedIn", ariaLabel: "LinkedIn", href: "https://www.linkedin.com/in/prism-browser-702b08385/" }
       ]
     }
   ];
 
   return (
     <>
+      {/* Structured Data for SEO and Social Sharing */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Prism AI Browser",
+            "applicationCategory": "WebBrowser",
+            "operatingSystem": "Windows, Linux, macOS",
+            "description": "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools. Built on Zen Browser with advanced AI capabilities.",
+            "url": "https://prismbrowser.com",
+            "downloadUrl": "https://prismbrowser.com",
+            "author": {
+              "@type": "Organization",
+              "name": "Prism Browser Team"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Prism Browser"
+            },
+            "screenshot": "https://prismbrowser.com/prism-preview.png",
+            "image": "https://prismbrowser.com/prism-preview.png",
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "ratingCount": "150"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "AI-powered automation",
+              "Voice command navigation",
+              "MCP integrations",
+              "Accessibility enhancements",
+              "Developer tools",
+              "Focus mode",
+              "Captcha solver",
+              "Built-in code editor"
+            ]
+          })
+        }}
+      />
       <PrismLoader onLoadComplete={() => setIsLoading(false)} />
       <CustomScrollbar />
       {!isLoading && (
-        <div style={{ position: 'relative', backgroundColor: '#060010', width: '100%', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', backgroundColor: '#030A15', width: '100%', overflow: 'hidden' }}>
+          {/* Particle Effects Background */}
+          <ParticleEffects />
+          
           {/* Background Video */}
           <video
             autoPlay
@@ -161,36 +213,37 @@ function Home() {
             <source src={isMobile ? "/laserflowmobile.mp4" : "/laserflow.mp4"} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          
-          {/* Fixed Header - Rebuilt with fixed positioning */}
-          <header style={{ 
-            position: 'fixed', 
-            top: 0, 
-            left: 0,
-            right: 0,
-            zIndex: 9999,
-            backgroundColor: 'transparent',
-            width: '100%',
-            pointerEvents: 'none'
-          }}>
-            <div style={{ pointerEvents: 'auto' }}>
-              <CardNav
-                logo="/nav-logo.png"
-                logoAlt="Prism Web Logo"
-                items={navItems}
-                baseColor="rgba(255, 255, 255, 0.1)"
-                menuColor="#88E755"
-                buttonBgColor="#88E755"
-                buttonTextColor="#000"
-                ease="power3.out"
-              />
-            </div>
-          </header>
-          <TargetCursor 
-            spinDuration={2}
-            hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
-            performanceMode={isMobile} // Enable performance mode on mobile devices
-          />
+        
+        {/* Fixed Header - Rebuilt with fixed positioning */}
+        <header style={{ 
+          position: 'fixed', 
+          top: 0, 
+          left: 0,
+          right: 0,
+          zIndex: 9999,
+          backgroundColor: 'transparent',
+          width: '100%',
+          pointerEvents: 'none'
+        }}>
+          <div style={{ pointerEvents: 'auto' }}>
+            <CardNav
+              logo="/nav-logo.png"
+              logoAlt="Prism Web Logo"
+              items={navItems}
+              baseColor="rgba(255, 255, 255, 0.1)"
+              menuColor="#88E755"
+              buttonBgColor="#88E755"
+              buttonTextColor="#000"
+              ease="power3.out"
+              onDownloadClick={handleDownload}
+            />
+          </div>
+        </header>
+        <TargetCursor 
+          spinDuration={2}
+          hideDefaultCursor={!isMobile} // Disable custom cursor on mobile
+          performanceMode={isMobile} // Enable performance mode on mobile devices
+        />
 
           {/* Main Content Container - Using proper document flow */}
           <main style={{ 
@@ -269,49 +322,49 @@ function Home() {
                 }}
               />
 
-              {isMobile ? (
-                <div style={{
+            {isMobile ? (
+              <div style={{
+                position: 'absolute',
+                top: '15%',
+                right: '5%',
+                transform: 'none',
+                color: '#88E755',
+                fontSize: '1.6rem',
+                fontFamily: 'Space Grotesk, sans-serif',
+                zIndex: 8,
+                textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
+                textAlign: 'right',
+                lineHeight: 1.2
+              }}>
+                <div>Where AI</div>
+                <div>Meets Browser</div>
+              </div>
+            ) : (
+              <Shuffle
+                text="Where AI Meets Browser"
+                shuffleDirection="right"
+                duration={0.35}
+                animationMode="evenodd"
+                shuffleTimes={1}
+                ease="power3.out"
+                stagger={0.03}
+                threshold={0.1}
+                triggerOnce={true}
+                triggerOnHover={true}
+                respectReducedMotion={true}
+                style={{
                   position: 'absolute',
-                  top: '15%',
+                  top: '17%',
                   right: '5%',
-                  transform: 'none',
                   color: '#88E755',
-                  fontSize: '1.6rem',
+                  fontSize: '2.5rem',
                   fontFamily: 'Space Grotesk, sans-serif',
                   zIndex: 8,
                   textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
-                  textAlign: 'right',
-                  lineHeight: 1.2
-                }}>
-                  <div>Where AI</div>
-                  <div>Meets Browser</div>
-                </div>
-              ) : (
-                <Shuffle
-                  text="Where AI Meets Browser"
-                  shuffleDirection="right"
-                  duration={0.35}
-                  animationMode="evenodd"
-                  shuffleTimes={1}
-                  ease="power3.out"
-                  stagger={0.03}
-                  threshold={0.1}
-                  triggerOnce={true}
-                  triggerOnHover={true}
-                  respectReducedMotion={true}
-                  style={{
-                    position: 'absolute',
-                    top: '17%',
-                    right: '5%',
-                    color: '#88E755',
-                    fontSize: '2.5rem',
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    zIndex: 8,
-                    textShadow: '0 0 20px rgba(136, 231, 85, 0.5)',
-                    textAlign: 'left'
-                  }}
-                />
-              )}
+                  textAlign: 'left'
+                }}
+              />
+            )}
 
               <div style={{
                 position: 'absolute',
@@ -402,124 +455,124 @@ function Home() {
                   </span>
                 </button>
 
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px'
+              }}>
+                <div style={{
+                  color: '#88E755',
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  marginBottom: '2px',
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  textAlign: 'center'
+                }}>
+                  Download Preference
+                </div>
                 <div style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px'
+                  gap: isMobile ? '12px' : '10px',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  width: '100%'
                 }}>
-                  <div style={{
-                    color: '#88E755',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    marginBottom: '2px',
-                    fontFamily: 'Space Grotesk, sans-serif',
-                    textAlign: 'center'
-                  }}>
-                    Download Preference
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    gap: isMobile ? '12px' : '10px',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    width: '100%'
-                  }}>
-                    <button
-                      className="cursor-target"
-                      onClick={() => setSelectedPlatform('Windows')}
-                      style={{
-                        padding: isMobile ? '8px 16px' : '8px 16px',
-                        backgroundColor: selectedPlatform === 'Windows' ? '#88E755' : 'transparent',
-                        color: selectedPlatform === 'Windows' ? '#000' : '#88E755',
-                        border: '2px solid #88E755',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: isMobile ? '13px' : '14px',
-                        fontWeight: '500',
-                        transition: 'all 0.3s ease',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        minWidth: isMobile ? '110px' : 'auto',
-                        justifyContent: 'center'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (selectedPlatform !== 'Windows') {
-                          e.target.style.color = '#000';
-                          e.target.style.backgroundColor = '#88E755';
+                  <button
+                    className="cursor-target"
+                    onClick={() => setSelectedPlatform('Windows')}
+                    style={{
+                      padding: isMobile ? '8px 16px' : '8px 16px',
+                      backgroundColor: selectedPlatform === 'Windows' ? '#88E755' : 'transparent',
+                      color: selectedPlatform === 'Windows' ? '#000' : '#88E755',
+                      border: '2px solid #88E755',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontSize: isMobile ? '13px' : '14px',
+                      fontWeight: '500',
+                      transition: 'all 0.3s ease',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      minWidth: isMobile ? '110px' : 'auto',
+                      justifyContent: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedPlatform !== 'Windows') {
+                        e.target.style.color = '#000';
+                        e.target.style.backgroundColor = '#88E755';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedPlatform !== 'Windows') {
+                        e.target.style.color = '#88E755';
+                        e.target.style.backgroundColor = 'transparent';
+                      }
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91v-6.84l10 .15z"/>
+                    </svg>
+                    Windows
+                  </button>
+                  <button
+                    className="cursor-target"
+                    onClick={() => setSelectedPlatform('Linux')}
+                    style={{
+                      padding: isMobile ? '8px 16px' : '8px 16px',
+                      backgroundColor: selectedPlatform === 'Linux' ? '#88E755' : 'transparent',
+                      color: selectedPlatform === 'Linux' ? '#000' : '#88E755',
+                      border: '2px solid #88E755',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontSize: isMobile ? '13px' : '14px',
+                      fontWeight: '500',
+                      transition: 'all 0.3s ease',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      minWidth: isMobile ? '110px' : 'auto',
+                      justifyContent: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedPlatform !== 'Linux') {
+                        e.target.style.color = '#000';
+                        e.target.style.backgroundColor = '#88E755';
+                        // Change Linux logo to black on hover
+                        const img = e.target.querySelector('img');
+                        if (img) {
+                          img.style.filter = 'brightness(0) saturate(100%)';
                         }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (selectedPlatform !== 'Windows') {
-                          e.target.style.color = '#88E755';
-                          e.target.style.backgroundColor = 'transparent';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedPlatform !== 'Linux') {
+                        e.target.style.color = '#88E755';
+                        e.target.style.backgroundColor = 'transparent';
+                        // Change Linux logo back to green when not hovering
+                        const img = e.target.querySelector('img');
+                        if (img) {
+                          img.style.filter = 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)';
                         }
-                      }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91v-6.84l10 .15z"/>
-                      </svg>
-                      Windows
-                    </button>
-                    <button
-                      className="cursor-target"
-                      onClick={() => setSelectedPlatform('Linux')}
-                      style={{
-                        padding: isMobile ? '8px 16px' : '8px 16px',
-                        backgroundColor: selectedPlatform === 'Linux' ? '#88E755' : 'transparent',
-                        color: selectedPlatform === 'Linux' ? '#000' : '#88E755',
-                        border: '2px solid #88E755',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontFamily: 'Space Grotesk, sans-serif',
-                        fontSize: isMobile ? '13px' : '14px',
-                        fontWeight: '500',
-                        transition: 'all 0.3s ease',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        minWidth: isMobile ? '110px' : 'auto',
-                        justifyContent: 'center'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (selectedPlatform !== 'Linux') {
-                          e.target.style.color = '#000';
-                          e.target.style.backgroundColor = '#88E755';
-                          // Change Linux logo to black on hover
-                          const img = e.target.querySelector('img');
-                          if (img) {
-                            img.style.filter = 'brightness(0) saturate(100%)';
-                          }
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (selectedPlatform !== 'Linux') {
-                          e.target.style.color = '#88E755';
-                          e.target.style.backgroundColor = 'transparent';
-                          // Change Linux logo back to green when not hovering
-                          const img = e.target.querySelector('img');
-                          if (img) {
-                            img.style.filter = 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)';
-                          }
-                        }
-                      }}
-                    >
-                      <Image src="/linux.png" alt="Linux" width={16} height={18} style={{ 
-                        filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)', 
-                        transition: 'filter 0.3s ease' 
-                      }} />
-                      Linux
-                    </button>
-                  </div>
+                      }
+                    }}
+                  >
+                    <Image src="/linux.png" alt="Linux" width={16} height={18} style={{ 
+                      filter: selectedPlatform === 'Linux' ? 'brightness(0) saturate(100%)' : 'brightness(0) saturate(100%) invert(57%) sepia(41%) saturate(2396%) hue-rotate(81deg) brightness(102%) contrast(93%)', 
+                      transition: 'filter 0.3s ease' 
+                    }} />
+                    Linux
+                  </button>
                 </div>
+              </div>
 
                 <Image
                   ref={revealImgRef}
@@ -748,6 +801,12 @@ function Home() {
           
         </div>
       )}
+      
+      {/* Coming Soon Overlay */}
+      <ComingSoonOverlay 
+        isVisible={showComingSoonOverlay}
+        onClose={() => setShowComingSoonOverlay(false)}
+      />
     </>
   );
 }
