@@ -209,7 +209,7 @@ function Home() {
                 position: 'relative',
                 backgroundColor: 'transparent',
                 zIndex: 10,
-                paddingBottom: '10vh'
+                paddingBottom: isMobile ? '0' : '10vh'
               }}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -258,7 +258,7 @@ function Home() {
                 priority
                 style={{
                   position: 'absolute',
-                  top: isMobile ? '20%' : '25%',
+                  top: isMobile ? '24%' : '25%',
                   left: isMobile ? '20%' : '22%',
                   transform: isMobile ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) rotate(-15deg)',
                   width: isMobile ? '200px' : '703.03px',
@@ -315,7 +315,7 @@ function Home() {
 
               <div style={{
                 position: 'absolute',
-                top: isMobile ? '95%' : '25%',
+                top: isMobile ? '70%' : '25%',
                 right: isMobile ? 'auto' : '15%',
                 left: isMobile ? '50%' : 'auto',
                 transform: isMobile ? 'translateX(-50%)' : 'none',
@@ -601,12 +601,12 @@ function Home() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              padding: isMobile ? '0vh 5%' : '15vh 10%',
               zIndex: 2
             }}>
               <div style={{
                 width: isMobile ? '90%' : '80%',
-                height: '200px',
+                height: '70px',
                 margin: '0 auto'
               }}>
                 <TextPressure
@@ -628,12 +628,12 @@ function Home() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              padding: isMobile ? '0vh 5%' : '15vh 10%',
               zIndex: 2
             }}>
               <div style={{
                 width: isMobile ? '90%' : '80%',
-                height: '200px',
+                height: '70px',
                 margin: '0 auto'
               }}>
                 <TextPressure
@@ -655,7 +655,7 @@ function Home() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 0' : '15vh 0',
+              padding: isMobile ? '5vh 0' : '15vh 0',
               zIndex: 6
             }}>
               <div style={{
@@ -682,12 +682,12 @@ function Home() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 5%' : '15vh 10%',
+              padding: isMobile ? '0vh 5%' : '15vh 10%',
               zIndex: 2
             }}>
               <div style={{
                 width: isMobile ? '90%' : '80%',
-                height: '200px',
+                height: '70px',
                 margin: '0 auto'
               }}>
                 <TextPressure
@@ -709,7 +709,7 @@ function Home() {
             <section style={{
               position: 'relative',
               width: '100%',
-              padding: isMobile ? '15vh 0' : '15vh 0',
+              padding: isMobile ? '5vh 0' : '15vh 0',
               zIndex: 6
             }}>
               <div style={{
