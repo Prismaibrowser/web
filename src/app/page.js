@@ -368,7 +368,7 @@ function Home() {
 
               <div style={{
                 position: 'absolute',
-                top: isMobile ? '70%' : '25%',
+                top: isMobile ? '75%' : '25%',
                 right: isMobile ? 'auto' : '15%',
                 left: isMobile ? '50%' : 'auto',
                 transform: isMobile ? 'translateX(-50%)' : 'none',
