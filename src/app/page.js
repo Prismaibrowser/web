@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 import PrismLoader from "@/components/PrismLoader";
 import CustomScrollbar from "@/components/CustomScrollbar";
 
-function LaserFlowBoxExample() {
+function Home() {
   const revealImgRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState('');
@@ -149,16 +149,16 @@ function LaserFlowBoxExample() {
             playsInline
             style={{
               position: 'absolute',
-              top: '-185px',
-              left: '-10%',
-              clipPath: 'inset(0 15% 0 35%)', // Trims 15% from left
-              width: '100%',
-              height: isMobile ? '120vh' : '70vh', // Adjust based on your preview box position
+              top: isMobile ? '-100px' : '-185px',
+              left: isMobile ? '0' : '-10%',
+              clipPath: isMobile ? 'inset(0 0 0 0)' : 'inset(0 15% 0 35%)', // Trims 15% from left
+              width: isMobile ? '105%' : '100%',
+              height: isMobile ? '70vh' : '70vh', // Adjust based on your preview box position
               objectFit: 'cover',
               zIndex: 1,
             }}
           >
-            <source src="/laserflow.mp4" type="video/mp4" />
+            <source src={isMobile ? "/laserflowmobile.mp4" : "/laserflow.mp4"} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           
@@ -229,15 +229,6 @@ function LaserFlowBoxExample() {
                 }
               }}
             >
-              <div style={{
-                position: 'relative',
-                top: isMobile ? '5vh' : '0',
-                transform: isMobile ? 'scale(1.3)' : 'scale(1)',
-                transformOrigin: 'center'
-              }}>
-                {/* LaserFlow component removed */}
-              </div>
-
               <Image 
                 src="/prism-preview.webp" 
                 alt="Prism Preview"
@@ -249,7 +240,7 @@ function LaserFlowBoxExample() {
                   top: isMobile ? '30%' : '42%',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  width: isMobile ? '90%' : '86%',
+                  width: isMobile ? '100%' : '86%',
                   height: 'auto',
                   objectFit: 'contain',
                   borderRadius: isMobile ? '12px' : '18px',
@@ -761,8 +752,4 @@ function LaserFlowBoxExample() {
   );
 }
 
-export default function Home() {
-  return (
-    <LaserFlowBoxExample />
-  );
-}
+export default Home;

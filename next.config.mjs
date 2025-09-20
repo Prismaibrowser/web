@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  outputFileTracingRoot: '/home/prashu/prism-web',
+};
 
 export default nextConfig;
