@@ -65,6 +65,21 @@
   cursor: none !important;
 }
 
+/* Mobile hide cursor completely */
+@media (max-width: 768px), (pointer: coarse) {
+  .target-cursor-wrapper {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  .cursor-target,
+  .cursor-target *,
+  .cursor-target *:before,
+  .cursor-target *:after {
+    cursor: default !important;
+  }
+}
+
 /* Performance mode optimizations */
 @media (max-width: 768px), (prefers-reduced-motion: reduce) {
   .target-cursor-corner {

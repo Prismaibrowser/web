@@ -127,11 +127,6 @@ body.custom-cursor-active ::-moz-selection {
     letter-spacing: 0.02em;
   }
   
-  /* Reduce animation intensity on mobile */
-  .laser-flow-container {
-    opacity: 0.8;
-  }
-  
   /* Optimize for mobile viewport */
   .mobile-container {
     padding: 0 10px;

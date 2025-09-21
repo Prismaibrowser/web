@@ -35,6 +35,30 @@
   align-items: center;
   justify-content: center;
   order: 1; /* Ensure logo comes first on mobile */
+  /*left: -7px;
+  top: 98px;*/
+}
+
+.logo-container-loader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 1; /* Ensure logo comes first on mobile */
+  left: -7px;
+  top: 98px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo-container-loader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 1; /* Ensure logo comes first on mobile */
+  left: -7px;
+  top: 50px;
+  }
 }
 
 .logo-glow {
@@ -217,7 +241,7 @@
     padding: 1rem;
     justify-content: center;
     height: auto;
-    min-height: 70vh;
+    min-height: 29vh;
   }
   
   .logo-container {
