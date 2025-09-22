@@ -70,8 +70,8 @@ export default function PrivacyPolicy() {
   const navItems = [
     {
       label: "About",
-      bgColor: "#010710",
-      textColor: "#88E755",
+      bgColor: "#F2FFEB",
+      textColor: "#010710",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
         { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
@@ -81,8 +81,8 @@ export default function PrivacyPolicy() {
     },
     {
       label: "Useful Links", 
-      bgColor: "#F2FFEB",
-      textColor: "#88E755",
+      bgColor: "#88E755",
+      textColor: "#F2FFEB",
       links: [
         { label: "Changelog", ariaLabel: "Changelog" },
         { label: "Donate Us", ariaLabel: "Donate Us" },
@@ -92,13 +92,13 @@ export default function PrivacyPolicy() {
     },
     {
       label: "Contact",
-      bgColor: "#88E755", 
-      textColor: "#010710",
+      bgColor: "#010710", 
+      textColor: "#88E755",
       links: [
         { label: "Email", ariaLabel: "Email us", href: "mailto:prismaibrowser@gmail.com" },
-        { label: "X", ariaLabel: "X" },
+        { label: "X", ariaLabel: "X", href: "https://x.com/prismaibrowser" },
         { label: "Reddit", ariaLabel: "Reddit", href: "https://www.reddit.com/user/Prism-Browser/" },
-        { label: "LinkedIn", ariaLabel: "LinkedIn" }
+        { label: "LinkedIn", ariaLabel: "LinkedIn", href: "https://www.linkedin.com/in/prism-browser-702b08385/" }
       ]
     }
   ];

@@ -61,9 +61,9 @@ const PrismLoader = ({ onLoadComplete }) => {
     <div className={`modern-loader ${fadeOut ? 'fade-out' : ''}`}>
       <div className="modern-loader-content">
         {/* Animated Logo */}
-        <div className="logo-container">
+        <div className="logo-container-loader">
           <div className="logo-glow"></div>
-          <img 
+          <img
             src="/nav-logo.png" 
             alt="Prism Logo" 
             className="modern-logo"

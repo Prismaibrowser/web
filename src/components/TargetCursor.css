@@ -10,6 +10,13 @@
   transform: translate(-50%, -50%);
 }
 
+/* Hide cursor on mobile devices */
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
+  .target-cursor-wrapper {
+    display: none !important;
+  }
+}
+
 .target-cursor-dot {
   position: absolute;
   left: 50%;

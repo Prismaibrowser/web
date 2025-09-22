@@ -7,6 +7,19 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   const cornersRef = useRef(null);
   const spinTl = useRef(null);
   const dotRef = useRef(null);
+  
+  // Check if device is mobile
+  const isMobile = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    const isSmallScreen = window.innerWidth <= 768;
+    const isTouchOnly = !window.matchMedia('(hover: hover)').matches;
+    
+    return isMobileUA || isSmallScreen || isTouchOnly;
+  }, []);
+  
   const constants = useMemo(
     () => ({
       borderWidth: 3,
@@ -28,14 +41,9 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
   }, []);
 
   useEffect(() => {
-    // Check if we're on mobile - if so, don't initialize cursor
-    const isMobileDevice = () => {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-             window.innerWidth <= 768;
-    };
-
-    if (isMobileDevice() && !hideDefaultCursor) {
-      return; // Don't initialize cursor on mobile when it should be disabled
+    // Don't initialize cursor on mobile devices
+    if (isMobile) {
+      return;
     }
 
     if (!cursorRef.current) return;
@@ -341,7 +349,7 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
       document.body.style.cursor = originalCursor;
       document.body.classList.remove('custom-cursor-active');
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, performanceMode]);
+  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, performanceMode, isMobile]);
 
   useEffect(() => {
     if (!cursorRef.current || !spinTl.current) return;
@@ -353,6 +361,11 @@ const TargetCursor = ({ targetSelector = '.cursor-target', spinDuration = 2, hid
         .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
     }
   }, [spinDuration]);
+
+  // Don't render anything on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div ref={cursorRef} className="target-cursor-wrapper">
