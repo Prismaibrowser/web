@@ -14,7 +14,7 @@ import CustomScrollbar from "@/components/CustomScrollbar";
 import ParticleEffects from "@/components/ParticleEffects";
 import ComingSoonOverlay from "@/components/ComingSoonOverlay";
 
-function LaserFlowBoxExample() {
+function PrismHomepage() {
   const revealImgRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState('');
@@ -105,8 +105,8 @@ function LaserFlowBoxExample() {
   const navItems = [
     {
       label: "About",
-      bgColor: "#010710",
-      textColor: "#88E755",
+      bgColor: "#F2FFEB",
+      textColor: "#010710",
       links: [
         { label: "Team", ariaLabel: "About Team", href: "/team" },
         { label: "Privacy Policy", ariaLabel: "Privacy Policy", href: "/privacy" },
@@ -116,8 +116,8 @@ function LaserFlowBoxExample() {
     },
     {
       label: "Useful Links", 
-      bgColor: "#F2FFEB",
-      textColor: "#88E755",
+      bgColor: "#88E755",
+      textColor: "#F2FFEB",
       links: [
         { label: "Changelog", ariaLabel: "Changelog" },
         { label: "Donate Us", ariaLabel: "Donate Us" },
@@ -127,8 +127,8 @@ function LaserFlowBoxExample() {
     },
     {
       label: "Contact",
-      bgColor: "#88E755", 
-      textColor: "#010710",
+      bgColor: "#010710", 
+      textColor: "#88E755",
       links: [
         { label: "Email", ariaLabel: "Email us", href: "mailto:prismaibrowser@gmail.com" },
         { label: "X", ariaLabel: "X", href: "https://x.com/prismaibrowser" },
@@ -202,14 +202,15 @@ function LaserFlowBoxExample() {
             style={{
               position: 'fixed',
               top: 0,
-              left: -240,
+              left: 0,
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              zIndex: 1
+              zIndex: 0,
+              filter: isMobile ? 'blur(0.5px) brightness(0.7)' : 0,
             }}
           >
-            <source src="/laserflow.mp4" type="video/mp4" />
+            <source src={isMobile ? "/laserflowmobile.mp4" : "/laserflow.mp4"} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         
@@ -281,14 +282,6 @@ function LaserFlowBoxExample() {
               }
             }}
           >
-            <div style={{
-              position: 'relative',
-              top: isMobile ? '5vh' : '0',
-              transform: isMobile ? 'scale(1.3)' : 'scale(1)',
-              transformOrigin: 'center'
-            }}>
-              {/* LaserFlow component removed */}
-            </div>
 
             <Image 
               src="/prism-preview.webp" 
@@ -298,7 +291,7 @@ function LaserFlowBoxExample() {
               priority
               style={{ 
                 position: 'absolute',
-                top: isMobile ? '30%' : '42%',
+                top: isMobile ? '25%' : '42%',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: isMobile ? '90%' : '86%',
@@ -321,7 +314,7 @@ function LaserFlowBoxExample() {
                 position: 'absolute',
                 top: isMobile ? '20%' : '25%',
                 left: isMobile ? '20%' : '22%',
-                transform: isMobile ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) rotate(-15deg)',
+                transform: isMobile ? 'translate(-50%, -50%) rotate(-5deg)' : 'translate(-50%, -50%) rotate(-15deg)',
                 width: isMobile ? '200px' : '703.03px',
                 height: 'auto',
                 zIndex: 4,
@@ -376,7 +369,7 @@ function LaserFlowBoxExample() {
 
             <div style={{
               position: 'absolute',
-              top: isMobile ? '95%' : '25%',
+              top: isMobile ? '70%' : '25%',
               right: isMobile ? 'auto' : '15%',
               left: isMobile ? '50%' : 'auto',
               transform: isMobile ? 'translateX(-50%)' : 'none',
@@ -384,7 +377,8 @@ function LaserFlowBoxExample() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '15px'
+              gap: '15px',
+              minHeight: isMobile ? '60vh' : 'auto'
             }}>
               <button
                 className="cursor-target download-button"
@@ -662,12 +656,12 @@ function LaserFlowBoxExample() {
           <section style={{
             position: 'relative',
             width: '100%',
-            padding: isMobile ? '15vh 5%' : '15vh 10%',
+            padding: isMobile ? '0vh 5%' : '15vh 10%',
             zIndex: 2
           }}>
             <div style={{
               width: isMobile ? '90%' : '80%',
-              height: '200px',
+              height: '100px',
               margin: '0 auto'
             }}>
               <TextPressure
@@ -689,12 +683,12 @@ function LaserFlowBoxExample() {
           <section style={{
             position: 'relative',
             width: '100%',
-            padding: isMobile ? '15vh 5%' : '15vh 10%',
+            padding: isMobile ? '0vh 5%' : '15vh 10%',
             zIndex: 2
           }}>
             <div style={{
               width: isMobile ? '90%' : '80%',
-              height: '200px',
+              height: '100px',
               margin: '0 auto'
             }}>
               <TextPressure
@@ -743,12 +737,12 @@ function LaserFlowBoxExample() {
           <section style={{
             position: 'relative',
             width: '100%',
-            padding: isMobile ? '15vh 5%' : '15vh 10%',
+            padding: isMobile ? '0vh 5%' : '15vh 10%',
             zIndex: 2
           }}>
             <div style={{
               width: isMobile ? '90%' : '80%',
-              height: '200px',
+              height: '100px',
               margin: '0 auto'
             }}>
               <TextPressure
@@ -820,6 +814,6 @@ function LaserFlowBoxExample() {
 
 export default function Home() {
   return (
-    <LaserFlowBoxExample />
+    <PrismHomepage />
   );
 }
