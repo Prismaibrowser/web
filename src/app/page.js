@@ -656,7 +656,8 @@ function PrismHomepage() {
           <section style={{
             position: 'relative',
             width: '100%',
-            padding: isMobile ? '0vh 5%' : '15vh 10%',
+            marginTop: isMobile ? '0' : '50vh',
+            padding: isMobile ? '0vh 5%' : '10vh 10%',
             zIndex: 2
           }}>
             <div style={{
@@ -683,7 +684,7 @@ function PrismHomepage() {
           <section style={{
             position: 'relative',
             width: '100%',
-            padding: isMobile ? '0vh 5%' : '15vh 10%',
+            padding: isMobile ? '0vh 5%' : '5vh 10%',
             zIndex: 2
           }}>
             <div style={{
