@@ -9,6 +9,7 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import { PiCubeFocusDuotone } from 'react-icons/pi';
 import { TbCube3dSphere } from 'react-icons/tb';
 import Shuffle from './Shuffle';
+import WaitlistSection from './WaitlistSection';
 import './Footer.css';
 
 
@@ -338,6 +339,9 @@ const Footer = ({ onDownloadClick }) => {
             </div>
           </div>
         </div>
+
+        {/* Waitlist Section */}
+        <WaitlistSection />
 
         {/* Main Content Grid */}
         <div className="footer-grid">

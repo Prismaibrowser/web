@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prism Browser Waitlist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .waitlist-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #emailInput {
+            flex: 1;
+            padding: 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 250px;
+        }
+
+        #emailInput:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        #joinBtn {
+            padding: 16px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 140px;
+        }
+
+        #joinBtn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        #joinBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-height: 20px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .features {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .features h3 {
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            color: #666;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+            }
+
+            #emailInput,
+            #joinBtn {
+                width: 100%;
+            }
+
+            .waitlist-container {
+                padding: 30px 20px;
+            }
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff33;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="waitlist-container">
+        <div class="logo">PRISM</div>
+        <p class="subtitle">The next-generation browser that puts you in control. Join our waitlist to be notified when we launch!</p>
+        
+        <div class="input-group">
+            <input type="email" id="emailInput" placeholder="Enter your email address" required>
+            <button id="joinBtn">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">Join Waitlist</span>
+            </button>
+        </div>
+        
+        <div id="message"></div>
+        
+        <div class="features">
+            <h3>What to expect from Prism:</h3>
+            <ul class="feature-list">
+                <li>Enhanced privacy controls</li>
+                <li>Lightning-fast performance</li>
+                <li>Customizable interface</li>
+                <li>Advanced developer tools</li>
+                <li>Built-in productivity features</li>
+                <li>Cross-platform compatibility</li>
+            </ul>
+        </div>
+    </div>
+
+<script>
+    const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyxqaphCYAfrOkrJG0Y7KLcfXY9qwf3BNYjlULr7bmI6-lpT8XXET2bFwL5DXejTOSMjg/exec';
+    
+    const emailInput = document.getElementById('emailInput');
+    const joinBtn = document.getElementById('joinBtn');
+    const messageDiv = document.getElementById('message');
+    const loadingSpinner = joinBtn.querySelector('.loading-spinner');
+    const btnText = joinBtn.querySelector('.btn-text');
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function showMessage(message, type) {
+        messageDiv.textContent = message;
+        messageDiv.className = type;
+        messageDiv.style.display = 'block';
+    }
+
+    function setLoading(loading) {
+        joinBtn.disabled = loading;
+        if (loading) {
+            loadingSpinner.style.display = 'inline-block';
+            btnText.textContent = 'Joining...';
+        } else {
+            loadingSpinner.style.display = 'none';
+            btnText.textContent = 'Join Waitlist';
+        }
+    }
+
+    async function submitEmail() {
+    const email = emailInput.value.trim();
+    
+    messageDiv.style.display = 'none';
+    
+    if (!email) {
+        showMessage('Please enter an email address', 'error');
+        emailInput.focus();
+        return;
+    }
+    
+    if (!isValidEmail(email)) {
+        showMessage('Please enter a valid email address', 'error');
+        emailInput.focus();
+        return;
+    }
+
+    setLoading(true);
+
+    try {
+        console.log('Submitting email:', email);
+        
+        // Method 1: Try as URL parameters (GET-style but with POST)
+        const url = `${WEBAPP_URL}?email=${encodeURIComponent(email)}`;
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            redirect: 'follow'
+        });
+
+        const result = await response.json();
+        console.log('Response:', result);
+        
+        if (result.success) {
+            showMessage(result.message || 'Successfully joined the waitlist! 🎉', 'success');
+            emailInput.value = '';
+        } else {
+            showMessage(result.message || 'Something went wrong. Please try again.', 'error');
+        }
+
+    } catch (error) {
+        console.error('Submission error:', error);
+        showMessage(`Error: ${error.message}`, 'error');
+    } finally {
+        setLoading(false);
+    }
+}
+
+
+    joinBtn.addEventListener('click', submitEmail);
+    emailInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            submitEmail();
+        }
+    });
+
+    window.addEventListener('load', function() {
+        emailInput.focus();
+    });
+</script>
+
+</body>
+</html>
