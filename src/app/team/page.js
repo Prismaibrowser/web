@@ -10,38 +10,6 @@ import ParticleEffects from '../../components/ParticleEffects';
 import CustomScrollbar from '../../components/CustomScrollbar';
 import teamData from './team-data.json';
 
-// Add export for metadata to make the page more SEO-friendly
-export const metadata = {
-  title: "Meet Our Team | Prism AI Browser",
-  description: "Learn about the passionate minds behind Prism Browser, dedicated to revolutionizing your web experience with AI-powered innovation.",
-  keywords: "Prism Browser team, AI browser developers, web browser team, browser innovation team",
-  alternates: {
-    canonical: "https://prismbrowser.tech/team"
-  },
-  openGraph: {
-    title: "Meet Our Team | Prism AI Browser",
-    description: "Learn about the passionate minds behind Prism Browser, dedicated to revolutionizing your web experience with AI-powered innovation.",
-    url: "https://prismbrowser.tech/team",
-    siteName: "Prism AI Browser",
-    images: [
-      {
-        url: "/prism-preview.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Browser Team"
-      }
-    ],
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Meet Our Team | Prism AI Browser",
-    description: "Learn about the passionate minds behind Prism Browser, dedicated to revolutionizing your web experience with AI-powered innovation.",
-    images: ["/prism-preview.png"]
-  }
-};
-
 export default function TeamPage() {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
