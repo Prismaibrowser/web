@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://prismbrowser.tech</loc>
     <lastmod>2025-09-20</lastmod>
@@ -11,5 +11,63 @@
     <lastmod>2025-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://prismbrowser.tech/privacy</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Favicon resources for better SEO -->
+  <url>
+    <loc>https://prismbrowser.tech/favicon.ico</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://prismbrowser.tech/favicon-16x16.png</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://prismbrowser.tech/favicon-32x32.png</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <!-- Important images for SEO -->
+  <url>
+    <loc>https://prismbrowser.tech/prism-preview.png</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://prismbrowser.tech/prism-preview.png</image:loc>
+      <image:title>Prism Browser Preview</image:title>
+      <image:caption>Prism Browser - AI-Powered Web Browser</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://prismbrowser.tech/prism-preview.webp</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://prismbrowser.tech/prism-preview.webp</image:loc>
+      <image:title>Prism Browser Preview</image:title>
+      <image:caption>Prism Browser - AI-Powered Web Browser</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://prismbrowser.tech/nav-logo.png</loc>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <image:image>
+      <image:loc>https://prismbrowser.tech/nav-logo.png</image:loc>
+      <image:title>Prism Browser Logo</image:title>
+    </image:image>
   </url>
 </urlset>

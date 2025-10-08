@@ -8,6 +8,38 @@ import TargetCursor from "@/components/TargetCursor";
 import CustomScrollbar from "@/components/CustomScrollbar";
 import ParticleEffects from "@/components/ParticleEffects";
 
+// Add export for metadata to make the page more SEO-friendly
+export const metadata = {
+  title: "Privacy Policy | Prism AI Browser",
+  description: "Learn about Prism AI Browser's commitment to your privacy. We don't collect, sell, or share your personal data. Your browsing experience is completely private.",
+  keywords: "privacy policy, browser privacy, data protection, no tracking, private browsing, Prism Browser",
+  alternates: {
+    canonical: "https://prismbrowser.tech/privacy"
+  },
+  openGraph: {
+    title: "Privacy Policy | Prism AI Browser",
+    description: "Learn about Prism AI Browser's commitment to your privacy. We don't collect, sell, or share your personal data. Your browsing experience is completely private.",
+    url: "https://prismbrowser.tech/privacy",
+    siteName: "Prism AI Browser",
+    images: [
+      {
+        url: "/prism-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism Browser Privacy Policy"
+      }
+    ],
+    locale: "en_US",
+    type: "article"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | Prism AI Browser",
+    description: "Learn about Prism AI Browser's commitment to your privacy. We don't collect, sell, or share your personal data.",
+    images: ["/prism-preview.png"]
+  }
+};
+
 export default function PrivacyPolicy() {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);

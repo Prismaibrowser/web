@@ -2,7 +2,10 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://prismbrowser.test/sitemap.xml
+Sitemap: https://prismbrowser.tech/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
+
+# Host directive
+Host: https://prismbrowser.tech

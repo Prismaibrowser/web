@@ -12,20 +12,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://prismbrowser.com'),
-  title: "Prism AI Browser - Next Generation Web Browser",
+  metadataBase: new URL('https://prismbrowser.tech'),
+  title: {
+    default: "Prism AI Browser - Next Generation Web Browser",
+    template: "%s | Prism AI Browser"
+  },
   description: "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools. Built on Zen Browser with advanced AI capabilities.",
-  keywords: "AI browser, web browser, automation, voice commands, MCP integrations, Zen browser, developer tools, accessibility, AI automation, Prism Mode",
+  keywords: "AI browser, web browser, automation, voice commands, MCP integrations, Zen browser, developer tools, accessibility, AI automation, Prism Mode, browser extension, AI assistant",
   authors: [{ name: "Prism Browser Team" }],
   creator: "Prism Browser",
   publisher: "Prism Browser",
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    }
+  },
   
   // Open Graph metadata for social sharing
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://prismbrowser.com",
+    url: "https://prismbrowser.tech",
     siteName: "Prism AI Browser",
     title: "Prism AI Browser - Next Generation Web Browser",
     description: "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools.",
@@ -61,6 +74,9 @@ export const metadata = {
   applicationName: "Prism Browser",
   referrer: "origin-when-cross-origin",
   category: "technology",
+  alternates: {
+    canonical: "https://prismbrowser.tech"
+  },
   
   // Favicon and icon configuration
   icons: {
@@ -68,6 +84,11 @@ export const metadata = {
       {
         url: '/favicon.ico',
         sizes: 'any',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
       },
       {
         url: '/favicon-32x32.png',
@@ -95,6 +116,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* Favicon links with cache busting */}
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
         <link rel="shortcut icon" href="/favicon.ico?v=2" />
         <link rel="apple-touch-icon" sizes="32x32" href="/favicon-32x32.png" />
@@ -109,13 +131,13 @@ export default function RootLayout({ children }) {
         {/* Additional Open Graph tags */}
         <meta property="og:site_name" content="Prism AI Browser" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://prismbrowser.com" />
+        <meta property="og:url" content="https://prismbrowser.tech" />
         
         {/* Twitter specific meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@PrismBrowser" />
         <meta name="twitter:creator" content="@PrismBrowser" />
-        <meta name="twitter:domain" content="prismbrowser.com" />
+        <meta name="twitter:domain" content="prismbrowser.tech" />
         
         {/* Additional SEO meta tags */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -124,6 +146,9 @@ export default function RootLayout({ children }) {
         <meta name="language" content="English" />
         <meta name="revisit-after" content="7 days" />
         <meta name="rating" content="general" />
+        <meta name="geo.region" content="US" />
+        <meta name="geo.placename" content="San Francisco" />
+        <meta name="distribution" content="global" />
         
         {/* Preload important assets */}
         <link rel="preload" href="/prism-preview.png" as="image" />
@@ -132,6 +157,25 @@ export default function RootLayout({ children }) {
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        
+        {/* Structured data for rich results */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Prism AI Browser",
+            "url": "https://prismbrowser.tech",
+            "description": "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Prism Browser",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://prismbrowser.tech/favicon-32x32.png"
+              }
+            }
+          })}
+        </script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}

@@ -14,6 +14,38 @@ import CustomScrollbar from "@/components/CustomScrollbar";
 import ParticleEffects from "@/components/ParticleEffects";
 import ComingSoonOverlay from "@/components/ComingSoonOverlay";
 
+// Add export for metadata to make the page more SEO-friendly
+export const metadata = {
+  title: "Prism AI Browser - Next Generation Web Browser",
+  description: "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools. Built on Zen Browser with advanced AI capabilities.",
+  keywords: "AI browser, web browser, automation, voice commands, MCP integrations, Zen browser, developer tools, accessibility, AI automation, Prism Mode, browser extension, AI assistant",
+  alternates: {
+    canonical: "https://prismbrowser.tech"
+  },
+  openGraph: {
+    title: "Prism AI Browser - Next Generation Web Browser",
+    description: "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools.",
+    url: "https://prismbrowser.tech",
+    siteName: "Prism AI Browser",
+    images: [
+      {
+        url: "/prism-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism Browser - AI-Powered Web Browser"
+      }
+    ],
+    locale: "en_US",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Prism AI Browser - Next Generation Web Browser",
+    description: "Experience the future of web browsing with AI-powered automation, voice commands, and developer tools.",
+    images: ["/prism-preview.png"]
+  }
+};
+
 function PrismHomepage() {
   const revealImgRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
