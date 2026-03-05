@@ -107,6 +107,18 @@ export default function TeamPage() {
     }
   ];
 
+  const gridItems = [
+    ...teamData,
+    {
+      image: '/prism-logo-3d.png',
+      title: 'Open-source Contributors',
+      subtitle: 'Interested in contributing? Click to share details',
+      borderColor: '#88E755',
+      gradient: 'linear-gradient(145deg, #88E755, #000)',
+      url: '/contribute'
+    }
+  ];
+
   return (
     <div style={{ 
       backgroundColor: '#030A15', 
@@ -243,7 +255,7 @@ export default function TeamPage() {
           paddingBottom: '2rem'
         }}>
           <ChromaGrid 
-            items={teamData}
+            items={gridItems}
             radius={300}
             damping={0.45}
             fadeOut={0.6}

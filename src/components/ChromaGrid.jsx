@@ -116,9 +116,12 @@ export const ChromaGrid = ({
   };
 
   const handleCardClick = url => {
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+    if (!url) return;
+    if (typeof url === 'string' && url.startsWith('/')) {
+      window.location.href = url;
+      return;
     }
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleEmailClick = (email, event) => {

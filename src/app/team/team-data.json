@@ -108,16 +108,6 @@
     "borderColor": "#4260f5",
     "gradient": "linear-gradient(195deg, #4260f5, #000)",
     "url": "https://www.linkedin.com/in/nasihkp"
-  },
-   {
-    "image": "/team/abhijith.jpg",
-    "title": "Abhijith",
-    "subtitle": "Extension Ecosystem Engineer",
-    "handle": "@abhijith",
-    "email": "babhijith58@gmail.com",
-    "borderColor": "#EC4899",
-    "gradient": "linear-gradient(255deg, #EC4899, #000)",
-    "url": "https://linkedin.com/in/abhi-jithb"
   }
 
 ]

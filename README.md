@@ -56,38 +56,38 @@
 
 ### Frontend Framework & Libraries
 
-| Technology | Version | Purpose | Logo |
-|------------|---------|---------|------|
-| **Next.js** | 15.5.3 | React Framework | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="40" height="40" alt="Next.js" /> |
-| **React** | 19.1.0 | UI Library | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React" /> |
-| **TypeScript** | Latest | Type Safety | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="40" height="40" alt="TypeScript" /> |
-| **Tailwind CSS** | Latest | Styling | <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" width="40" height="40" alt="Tailwind" /> |
+| Technology       | Version | Purpose         | Logo                                                                                                                                        |
+| ---------------- | ------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Next.js**      | 15.5.3  | React Framework | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="40" height="40" alt="Next.js" />            |
+| **React**        | 19.1.0  | UI Library      | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React" />                |
+| **TypeScript**   | Latest  | Type Safety     | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="40" height="40" alt="TypeScript" /> |
+| **Tailwind CSS** | Latest  | Styling         | <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" width="40" height="40" alt="Tailwind" />                      |
 
 ### Animation & 3D Libraries
 
-| Technology | Version | Purpose | Logo |
-|------------|---------|---------|------|
-| **GSAP** | Latest | Advanced Animations | <img src="https://greensock.com/uploads/monthly_2020_03/tweenmax.png.cf27916e9ba4adb2fc9a6e9f126ec5c4.png" width="40" height="40" alt="GSAP" /> |
-| **Three.js** | Latest | 3D Graphics | <img src="https://global.discourse-cdn.com/standard17/uploads/threejs/original/2X/e/e4f86d2200d2d35c30f7b1494e96b9595ebc2751.png" width="40" height="40" alt="Three.js" /> |
-| **React Three Fiber** | Latest | React 3D | <img src="https://docs.pmnd.rs/react-three-fiber/logo.svg" width="40" height="40" alt="R3F" /> |
-| **React Three Drei** | Latest | 3D Helpers | <img src="https://docs.pmnd.rs/react-three-fiber/logo.svg" width="40" height="40" alt="Drei" /> |
+| Technology            | Version | Purpose             | Logo                                                                                                                                                                       |
+| --------------------- | ------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **GSAP**              | Latest  | Advanced Animations | <img src="https://greensock.com/uploads/monthly_2020_03/tweenmax.png.cf27916e9ba4adb2fc9a6e9f126ec5c4.png" width="40" height="40" alt="GSAP" />                            |
+| **Three.js**          | Latest  | 3D Graphics         | <img src="https://global.discourse-cdn.com/standard17/uploads/threejs/original/2X/e/e4f86d2200d2d35c30f7b1494e96b9595ebc2751.png" width="40" height="40" alt="Three.js" /> |
+| **React Three Fiber** | Latest  | React 3D            | <img src="https://docs.pmnd.rs/react-three-fiber/logo.svg" width="40" height="40" alt="R3F" />                                                                             |
+| **React Three Drei**  | Latest  | 3D Helpers          | <img src="https://docs.pmnd.rs/react-three-fiber/logo.svg" width="40" height="40" alt="Drei" />                                                                            |
 
 ### UI & Icons
 
-| Technology | Version | Purpose | Logo |
-|------------|---------|---------|------|
-| **Lucide React** | Latest | Icon Library | <img src="https://lucide.dev/logo.light.svg" width="40" height="40" alt="Lucide" /> |
-| **React Icons** | Latest | Additional Icons | <img src="https://react-icons.github.io/react-icons/icons/ri/ri-reactjs-line.svg" width="40" height="40" alt="React Icons" /> |
-| **Radix UI** | Latest | Headless Components | <img src="https://www.radix-ui.com/logo.svg" width="40" height="40" alt="Radix" /> |
+| Technology       | Version | Purpose             | Logo                                                                                                                          |
+| ---------------- | ------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Lucide React** | Latest  | Icon Library        | <img src="https://lucide.dev/logo.light.svg" width="40" height="40" alt="Lucide" />                                           |
+| **React Icons**  | Latest  | Additional Icons    | <img src="https://react-icons.github.io/react-icons/icons/ri/ri-reactjs-line.svg" width="40" height="40" alt="React Icons" /> |
+| **Radix UI**     | Latest  | Headless Components | <img src="https://www.radix-ui.com/logo.svg" width="40" height="40" alt="Radix" />                                            |
 
 ### Development Tools
 
-| Technology | Version | Purpose | Logo |
-|------------|---------|---------|------|
-| **ESLint** | Latest | Code Linting | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg" width="40" height="40" alt="ESLint" /> |
-| **PostCSS** | Latest | CSS Processing | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postcss/postcss-original.svg" width="40" height="40" alt="PostCSS" /> |
-| **Git** | Latest | Version Control | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="40" height="40" alt="Git" /> |
-| **GitHub** | Latest | Repository Hosting | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="40" height="40" alt="GitHub" /> |
+| Technology  | Version | Purpose            | Logo                                                                                                                               |
+| ----------- | ------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **ESLint**  | Latest  | Code Linting       | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg" width="40" height="40" alt="ESLint" />    |
+| **PostCSS** | Latest  | CSS Processing     | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postcss/postcss-original.svg" width="40" height="40" alt="PostCSS" /> |
+| **Git**     | Latest  | Version Control    | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="40" height="40" alt="Git" />             |
+| **GitHub**  | Latest  | Repository Hosting | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="40" height="40" alt="GitHub" />    |
 
 </div>
 
@@ -174,12 +174,12 @@ prism-web/
 
 ### 🎨 Color Palette
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| **Prism Green** | `#88E755` | Primary brand color |
-| **Dark Background** | `#060010` | Main background |
-| **Light Text** | `#FFFFFF` | Primary text |
-| **Accent Colors** | Various | Interactive elements |
+| Color               | Hex       | Usage                |
+| ------------------- | --------- | -------------------- |
+| **Prism Green**     | `#88E755` | Primary brand color  |
+| **Dark Background** | `#060010` | Main background      |
+| **Light Text**      | `#FFFFFF` | Primary text         |
+| **Accent Colors**   | Various   | Interactive elements |
 
 </div>
 
@@ -251,14 +251,14 @@ We welcome contributions! Here's how you can help:
 
 <div align="center">
 
-| 🎯 Milestone | ✅ Status | 📅 Date |
-|-------------|-----------|---------|
-| **Project Setup** | Complete | ✅ 2024 |
-| **Core Features** | Complete | ✅ 2024 |
-| **Mobile Optimization** | Complete | ✅ 2024 |
-| **Performance Optimization** | Complete | ✅ 2024 |
-| **Privacy Policy** | Complete | ✅ 2024 |
-| **Team Page** | Complete | ✅ 2024 |
+| 🎯 Milestone                 | ✅ Status | 📅 Date |
+| ---------------------------- | --------- | ------- |
+| **Project Setup**            | Complete  | ✅ 2024 |
+| **Core Features**            | Complete  | ✅ 2024 |
+| **Mobile Optimization**      | Complete  | ✅ 2024 |
+| **Performance Optimization** | Complete  | ✅ 2024 |
+| **Privacy Policy**           | Complete  | ✅ 2024 |
+| **Team Page**                | Complete  | ✅ 2024 |
 
 </div>
 
