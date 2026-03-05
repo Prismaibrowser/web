@@ -18,6 +18,7 @@ export default function ContributePage() {
     name: '',
     email: '',
     github: '',
+    portfolio: '',
     message: ''
   });
 
@@ -78,8 +79,8 @@ export default function ContributePage() {
     e.preventDefault();
     setStatus(null);
 
-    if (!form.name.trim() || !form.email.trim()) {
-      setStatus({ type: 'error', message: 'Please enter your name and email.' });
+    if (!form.name.trim() || !form.email.trim() || !form.github.trim() || !form.message.trim()) {
+      setStatus({ type: 'error', message: 'Please fill in all required fields.' });
       return;
     }
 
@@ -92,6 +93,7 @@ export default function ContributePage() {
           name: form.name.trim(),
           email: form.email.trim(),
           github: form.github.trim(),
+          portfolio: form.portfolio.trim(),
           message: form.message.trim()
         })
       });
@@ -103,7 +105,7 @@ export default function ContributePage() {
       }
 
       setStatus({ type: 'success', message: 'Submitted! We will reach out soon.' });
-      setForm({ name: '', email: '', github: '', message: '' });
+      setForm({ name: '', email: '', github: '', portfolio: '', message: '' });
     } catch {
       setStatus({ type: 'error', message: 'Network error. Please try again.' });
     } finally {
@@ -284,7 +286,7 @@ export default function ContributePage() {
             </div>
 
             <div style={{ display: 'grid', gap: '0.5rem' }}>
-              <label style={{ color: '#88E755', fontWeight: 600 }}>GitHub (optional)</label>
+              <label style={{ color: '#88E755', fontWeight: 600 }}>GitHub *</label>
               <input
                 value={form.github}
                 onChange={setField('github')}
@@ -303,12 +305,31 @@ export default function ContributePage() {
             </div>
 
             <div style={{ display: 'grid', gap: '0.5rem' }}>
-              <label style={{ color: '#88E755', fontWeight: 600 }}>How would you like to contribute?</label>
+              <label style={{ color: '#88E755', fontWeight: 600 }}>Portfolio (optional)</label>
+              <input
+                value={form.portfolio}
+                onChange={setField('portfolio')}
+                className="cursor-target"
+                placeholder="https://your-site.com / Behance / Dribbble / LinkedIn"
+                style={{
+                  width: '100%',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  border: '1px solid rgba(255,255,255,0.18)',
+                  background: 'rgba(3, 10, 21, 0.7)',
+                  color: '#fff',
+                  outline: 'none'
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'grid', gap: '0.5rem' }}>
+              <label style={{ color: '#88E755', fontWeight: 600 }}>How would you like to contribute? *</label>
               <textarea
                 value={form.message}
                 onChange={setField('message')}
                 className="cursor-target"
-                placeholder="Tell us what you want to work on (features, docs, design, QA, infra, etc.)"
+                placeholder="Tell us what you want to work on (features, docs, design, QA, infra, etc.). Start a conversation with the team at Prism. Share something about you, what you're looking for, or why Prism interests you. Human-written messages are more likely to get a response."
                 rows={5}
                 style={{
                   width: '100%',

@@ -4,6 +4,7 @@ export async function POST(request) {
     const name = String(body?.name ?? '').trim();
     const email = String(body?.email ?? '').trim();
     const github = String(body?.github ?? '').trim();
+    const portfolio = String(body?.portfolio ?? '').trim();
     const message = String(body?.message ?? '').trim();
 
     if (!name || !email) {
@@ -25,6 +26,7 @@ export async function POST(request) {
       name,
       email,
       github,
+      portfolio,
       message,
       submittedAt: new Date().toISOString(),
       ...(token ? { token } : {})
