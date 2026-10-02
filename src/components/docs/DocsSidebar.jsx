@@ -78,8 +78,12 @@ export default function DocsSidebar() {
     <aside className="docs-sidebar">
       <div className="docs-sidebar-header">
         <Link href="/docs" className="docs-sidebar-logo">
-          <span className="docs-icon">⚡</span>
+          <span className="docs-icon" aria-hidden="true" />
           <span className="docs-title">Documentation</span>
+        </Link>
+        <Link href="/" className="docs-home-link">
+          <span aria-hidden="true">←</span>
+          Back to homepage
         </Link>
       </div>
 

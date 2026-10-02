@@ -1,10 +1,9 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GradientButtonGroup } from '@/components/ui/gradient-button-group';
 import Footer from '@/components/Footer';
-import TargetCursor from '@/components/TargetCursor';
 import CustomScrollbar from '@/components/CustomScrollbar';
 
 export default function ContributePage() {
@@ -34,7 +33,7 @@ export default function ContributePage() {
     () => [
       {
         label: 'About',
-        bgColor: '#00df81',
+        bgColor: '#a1fea0',
         textColor: '#000000',
         links: [
           { label: 'Privacy Policy', ariaLabel: 'Privacy Policy', href: '/privacy' },
@@ -45,7 +44,7 @@ export default function ContributePage() {
       {
         label: 'Useful Links',
         bgColor: '#090c12',
-        textColor: '#00df81',
+        textColor: '#a1fea0',
         links: [
           { label: 'Changelog', ariaLabel: 'Changelog' },
           { label: 'Donate Us', ariaLabel: 'Donate Us' },
@@ -56,7 +55,7 @@ export default function ContributePage() {
       {
         label: 'Contact',
         bgColor: '#000000',
-        textColor: '#00df81',
+        textColor: '#a1fea0',
         links: [
           { label: 'Email', ariaLabel: 'Email us', href: 'mailto:prismaibrowser@gmail.com' },
           { label: 'X', ariaLabel: 'X', href: 'https://x.com/prismaibrowser' },
@@ -113,8 +112,9 @@ export default function ContributePage() {
 
   return (
     <div
+      className="contribute-page"
       style={{
-        backgroundColor: '#00df81',
+        backgroundColor: '#a1fea0',
         minHeight: '100vh',
         color: '#000000',
         fontFamily: 'Space Grotesk, sans-serif',
@@ -123,7 +123,6 @@ export default function ContributePage() {
       }}
     >
       <CustomScrollbar />
-      <TargetCursor spinDuration={2} hideDefaultCursor={!isMobile} performanceMode={isMobile} />
 
       <header
         style={{
@@ -155,10 +154,10 @@ export default function ContributePage() {
           style={{
             marginBottom: '40px',
             background: '#000000',
-            border: '1px solid #00df81',
+            border: '1px solid #a1fea0',
             borderRadius: '8px',
             padding: '10px 16px',
-            color: '#00df81',
+            color: '#a1fea0',
             cursor: 'pointer',
             fontFamily: 'JetBrains Mono, monospace',
             fontSize: '13px',
@@ -169,7 +168,7 @@ export default function ContributePage() {
             transition: 'all 0.2s ease'
           }}
           onMouseEnter={(e) => {
-            e.target.style.background = 'rgba(0, 223, 129, 0.1)';
+            e.target.style.background = 'rgba(161, 254, 160, 0.1)';
             e.target.style.transform = 'translateX(-4px)';
           }}
           onMouseLeave={(e) => {
@@ -214,7 +213,7 @@ export default function ContributePage() {
         }}>
           
           <h3 className="tech-label" style={{ 
-            color: '#00df81', 
+            color: '#a1fea0', 
             marginBottom: '24px',
             fontSize: '13px'
           }}>
@@ -229,7 +228,7 @@ export default function ContributePage() {
                 fontFamily: 'JetBrains Mono, monospace',
                 fontSize: '12px',
                 fontWeight: 700,
-                color: '#00df81',
+                color: '#a1fea0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
               }}>
@@ -244,7 +243,7 @@ export default function ContributePage() {
                   width: '100%',
                   padding: '12px 16px',
                   borderRadius: '8px',
-                  border: '1px solid rgba(0, 223, 129, 0.3)',
+                  border: '1px solid rgba(161, 254, 160, 0.3)',
                   background: 'rgba(0, 0, 0, 0.4)',
                   color: '#ffffff',
                   fontFamily: 'JetBrains Mono, monospace',
@@ -252,8 +251,8 @@ export default function ContributePage() {
                   outline: 'none',
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#00df81'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(0, 223, 129, 0.3)'}
+                onFocus={(e) => e.target.style.borderColor = '#a1fea0'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(161, 254, 160, 0.3)'}
               />
             </div>
 
@@ -263,7 +262,7 @@ export default function ContributePage() {
                 fontFamily: 'JetBrains Mono, monospace',
                 fontSize: '12px',
                 fontWeight: 700,
-                color: '#00df81',
+                color: '#a1fea0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
               }}>
@@ -279,7 +278,7 @@ export default function ContributePage() {
                   width: '100%',
                   padding: '12px 16px',
                   borderRadius: '8px',
-                  border: '1px solid rgba(0, 223, 129, 0.3)',
+                  border: '1px solid rgba(161, 254, 160, 0.3)',
                   background: 'rgba(0, 0, 0, 0.4)',
                   color: '#ffffff',
                   fontFamily: 'JetBrains Mono, monospace',
@@ -287,8 +286,8 @@ export default function ContributePage() {
                   outline: 'none',
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#00df81'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(0, 223, 129, 0.3)'}
+                onFocus={(e) => e.target.style.borderColor = '#a1fea0'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(161, 254, 160, 0.3)'}
               />
             </div>
 
@@ -298,7 +297,7 @@ export default function ContributePage() {
                 fontFamily: 'JetBrains Mono, monospace',
                 fontSize: '12px',
                 fontWeight: 700,
-                color: '#00df81',
+                color: '#a1fea0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
               }}>
@@ -313,7 +312,7 @@ export default function ContributePage() {
                   width: '100%',
                   padding: '12px 16px',
                   borderRadius: '8px',
-                  border: '1px solid rgba(0, 223, 129, 0.3)',
+                  border: '1px solid rgba(161, 254, 160, 0.3)',
                   background: 'rgba(0, 0, 0, 0.4)',
                   color: '#ffffff',
                   fontFamily: 'JetBrains Mono, monospace',
@@ -321,8 +320,8 @@ export default function ContributePage() {
                   outline: 'none',
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#00df81'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(0, 223, 129, 0.3)'}
+                onFocus={(e) => e.target.style.borderColor = '#a1fea0'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(161, 254, 160, 0.3)'}
               />
             </div>
 
@@ -332,7 +331,7 @@ export default function ContributePage() {
                 fontFamily: 'JetBrains Mono, monospace',
                 fontSize: '12px',
                 fontWeight: 700,
-                color: '#00df81',
+                color: '#a1fea0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
               }}>
@@ -347,7 +346,7 @@ export default function ContributePage() {
                   width: '100%',
                   padding: '12px 16px',
                   borderRadius: '8px',
-                  border: '1px solid rgba(0, 223, 129, 0.3)',
+                  border: '1px solid rgba(161, 254, 160, 0.3)',
                   background: 'rgba(0, 0, 0, 0.4)',
                   color: '#ffffff',
                   fontFamily: 'JetBrains Mono, monospace',
@@ -355,8 +354,8 @@ export default function ContributePage() {
                   outline: 'none',
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#00df81'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(0, 223, 129, 0.3)'}
+                onFocus={(e) => e.target.style.borderColor = '#a1fea0'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(161, 254, 160, 0.3)'}
               />
             </div>
 
@@ -366,7 +365,7 @@ export default function ContributePage() {
                 fontFamily: 'JetBrains Mono, monospace',
                 fontSize: '12px',
                 fontWeight: 700,
-                color: '#00df81',
+                color: '#a1fea0',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
               }}>
@@ -382,7 +381,7 @@ export default function ContributePage() {
                   width: '100%',
                   padding: '12px 16px',
                   borderRadius: '8px',
-                  border: '1px solid rgba(0, 223, 129, 0.3)',
+                  border: '1px solid rgba(161, 254, 160, 0.3)',
                   background: 'rgba(0, 0, 0, 0.4)',
                   color: '#ffffff',
                   fontFamily: 'JetBrains Mono, monospace',
@@ -392,8 +391,8 @@ export default function ContributePage() {
                   lineHeight: 1.6,
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#00df81'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(0, 223, 129, 0.3)'}
+                onFocus={(e) => e.target.style.borderColor = '#a1fea0'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(161, 254, 160, 0.3)'}
               />
             </div>
 
@@ -403,11 +402,11 @@ export default function ContributePage() {
                 style={{
                   padding: '12px 16px',
                   borderRadius: '8px',
-                  border: `1px solid ${status.type === 'success' ? 'rgba(0, 223, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)'}`,
-                  background: status.type === 'success' ? 'rgba(0, 223, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                  border: `1px solid ${status.type === 'success' ? 'rgba(161, 254, 160, 0.5)' : 'rgba(239, 68, 68, 0.5)'}`,
+                  background: status.type === 'success' ? 'rgba(161, 254, 160, 0.15)' : 'rgba(239, 68, 68, 0.15)',
                   fontFamily: 'JetBrains Mono, monospace',
                   fontSize: '12px',
-                  color: status.type === 'success' ? '#00df81' : '#EF4444'
+                  color: status.type === 'success' ? '#a1fea0' : '#EF4444'
                 }}
               >
                 {status.message}
@@ -459,3 +458,4 @@ export default function ContributePage() {
     </div>
   );
 }
+

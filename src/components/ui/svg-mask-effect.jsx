@@ -1,6 +1,5 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import { motion } from "motion/react";
+﻿"use client";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 export const MaskContainer = ({
@@ -10,91 +9,188 @@ export const MaskContainer = ({
   revealSize = 600,
   className,
   style,
-  revealOnScroll = false,
-  scrollReveal = false,
+  revealOnScroll = true,
+  scrollReveal = true,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isRevealed, setIsRevealed] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: null, y: null });
   const containerRef = useRef(null);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isFullyRevealed, setIsFullyRevealed] = useState(false);
 
-  const updateMousePosition = (e) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return undefined;
-    container.addEventListener("mousemove", updateMousePosition);
-    return () => container.removeEventListener("mousemove", updateMousePosition);
+  // High-performance cursor spotlight: updates CSS variables directly on DOM
+  // ZERO React state updates on mousemove -> ZERO re-renders of the child tree!
+  const handleMouseMove = useCallback((e) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--mouse-x", `${Math.round(e.clientX - rect.left)}px`);
+    el.style.setProperty("--mouse-y", `${Math.round(e.clientY - rect.top)}px`);
+    el.style.setProperty("--spotlight-opacity", "1");
   }, []);
 
-  useEffect(() => {
-    if (!revealOnScroll || scrollReveal || !containerRef.current) return undefined;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsRevealed(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05 }
-    );
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [revealOnScroll, scrollReveal]);
+  const handleMouseLeave = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.style.setProperty("--spotlight-opacity", "0");
+  }, []);
 
+  // rAF-throttled scroll detection
+  useEffect(() => {
+    if (!scrollReveal) {
+      setIsRevealed(true);
+      setIsFullyRevealed(true);
+      return;
+    }
+
+    let isDisposed = false;
+    let ticking = false;
+    const element = containerRef.current;
+    if (!element) return;
+
+    const triggerReveal = () => {
+      if (isDisposed) return;
+      setIsRevealed(true);
+      // Once transition completes (950ms), drop clip-path to free GPU memory
+      setTimeout(() => {
+        if (!isDisposed) setIsFullyRevealed(true);
+      }, 1000);
+    };
+
+    const checkVisibility = () => {
+      if (isDisposed || !element) return;
+      const rect = element.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      if (rect.top <= vh * 0.88 && rect.bottom >= 0) {
+        triggerReveal();
+      }
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          checkVisibility();
+          ticking = false;
+        });
+      }
+    };
+
+    // Immediate check
+    checkVisibility();
+    const timer1 = setTimeout(checkVisibility, 60);
+    const timer2 = setTimeout(checkVisibility, 250);
+
+    // IntersectionObserver
+    let observer;
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+              triggerReveal();
+              if (observer) observer.disconnect();
+              break;
+            }
+          }
+        },
+        { threshold: 0, rootMargin: "0px 0px -5% 0px" }
+      );
+      observer.observe(element);
+    } catch (e) {}
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      isDisposed = true;
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      if (observer) observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [scrollReveal]);
+
+  // ── SCROLL REVEAL MODE ──────────────────────────────────────────────────
   if (scrollReveal) {
+    const activeClip = isFullyRevealed
+      ? "none"
+      : isRevealed
+      ? "circle(150% at 50% 50%)"
+      : "circle(0% at 50% 50%)";
+
     return (
-      <motion.div
-        className={cn("relative w-full will-change-[clip-path]", className)}
-        style={{ overflow: "clip", ...style }}
-        initial={{ clipPath: "circle(0% at 50% 50%)" }}
-        whileInView={{ clipPath: "circle(150% at 50% 50%)" }}
-        viewport={{ once: true, amount: 0.05 }}
-        transition={{ clipPath: { duration: 1.6, ease: [0.22, 1, 0.36, 1] } }}
+      <div
+        ref={containerRef}
+        className={cn("relative w-full overflow-hidden", className)}
+        style={{
+          backgroundColor: "#a1fea0",
+          transform: "translateZ(0)",
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
-        {children}
-      </motion.div>
+        <div
+          className="relative w-full"
+          style={{
+            backgroundColor: "#000000",
+            clipPath: activeClip,
+            WebkitClipPath: activeClip,
+            transition: isFullyRevealed
+              ? "none"
+              : "clip-path 0.95s cubic-bezier(0.19, 1, 0.22, 1), -webkit-clip-path 0.95s cubic-bezier(0.19, 1, 0.22, 1)",
+            willChange: isFullyRevealed ? "auto" : "clip-path",
+            transform: "translateZ(0)",
+            ...style,
+          }}
+        >
+          {/* Hardware-accelerated cursor spotlight using CSS variables */}
+          <div
+            className="pointer-events-none absolute inset-0 z-10"
+            style={{
+              opacity: "var(--spotlight-opacity, 0)",
+              transition: "opacity 0.25s ease-out",
+              background:
+                "radial-gradient(circle 380px at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(161, 254, 160, 0.09), transparent 70%)",
+            }}
+          />
+
+          {children}
+        </div>
+      </div>
     );
   }
 
-  const maskSize = isHovered || isRevealed ? revealSize : size;
-  const maskX = mousePosition.x ?? (containerRef.current?.clientWidth ?? 0) / 2;
-  const maskY = mousePosition.y ?? (containerRef.current?.clientHeight ?? 0) / 2;
-
+  // ── CLASSIC CURSOR MASK MODE (Aceternity UI fallback) ────────────────────
   return (
-    <motion.div
+    <div
       ref={containerRef}
-      className={cn("relative overflow-hidden", className || "h-screen")}
-      animate={{ backgroundColor: "#000000" }}
-      transition={{ backgroundColor: { duration: 0.3 } }}
+      className={cn("relative overflow-hidden w-full", className || "h-screen")}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        backgroundColor: "#a1fea0",
+        transform: "translateZ(0)",
+      }}
     >
-      <motion.div
-        className="absolute flex h-full w-full items-center justify-center bg-black text-6xl [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [mask-size:40px]"
-        animate={{
-          maskPosition: `${maskX - maskSize / 2}px ${maskY - maskSize / 2}px`,
-          maskSize: `${maskSize}px`,
-        }}
-        transition={{
-          maskSize: { duration: 0.3, ease: "easeInOut" },
-          maskPosition: { duration: 0.15, ease: "linear" },
+      <div
+        className="w-full h-full"
+        style={{
+          backgroundColor: "#000000",
+          clipPath: `circle(var(--mask-radius, ${size}px) at var(--mouse-x, 50%) var(--mouse-y, 50%))`,
+          WebkitClipPath: `circle(var(--mask-radius, ${size}px) at var(--mouse-x, 50%) var(--mouse-y, 50%))`,
+          transition: "clip-path 0.15s ease-out, -webkit-clip-path 0.15s ease-out",
+          transform: "translateZ(0)",
+          ...style,
         }}
       >
-        <div className="absolute inset-0 z-0 h-full w-full bg-black opacity-50 dark:bg-white" />
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="relative z-20 mx-auto max-w-4xl text-center text-4xl font-bold"
-        >
-          {children}
-        </div>
-      </motion.div>
-      <div className="flex h-full w-full items-center justify-center">
-        {revealText}
+        {children}
       </div>
-    </motion.div>
+      {revealText && (
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          {revealText}
+        </div>
+      )}
+    </div>
   );
 };
+

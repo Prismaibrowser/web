@@ -1,146 +1,104 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'PrismSpace Documentation - High Voltage UI',
-  description: 'Complete documentation for PrismSpace AI-powered developer operating environment',
+  title: 'Documentation | PrismSpace',
+  description: 'The PrismSpace technical handbook: setup, architecture, tools, and privacy boundaries.',
 };
+
+const routes = [
+  {
+    number: '01',
+    label: 'START HERE',
+    title: 'Get running in minutes',
+    description: 'Install the workspace, check prerequisites, and launch your first PrismSpace session.',
+    href: '/docs/getting-started/quick-start',
+  },
+  {
+    number: '02',
+    label: 'UNDER THE HOOD',
+    title: 'Understand the architecture',
+    description: 'Trace the frontend, backend, ML routing layer, and data workflows that power the system.',
+    href: '/docs/architecture/overview',
+  },
+  {
+    number: '03',
+    label: 'MAKE IT YOURS',
+    title: 'Explore tools & settings',
+    description: 'Configure the interface and use the developer utilities built into the environment.',
+    href: '/docs/features/overview',
+  },
+];
+
+const stack = [
+  ['Frontend', 'Next.js 15 · React 19'],
+  ['Backend', 'Python FastAPI · MCP'],
+  ['Intelligence', 'PyTorch · routing · evaluation'],
+  ['Persistence', 'PrismDb · browser-local IndexedDB'],
+];
 
 export default function DocsHome() {
   return (
-    <div className="docs-page">
-      <h1>prismspace documentation</h1>
-      <p className="lead">
-        Complete guide to the AI-powered developer operating environment with multi-agent orchestration, 
-        23+ developer tools, and machine learning routing subsystem.
-      </p>
-
-      <div className="quick-links-grid">
-        <Link href="/docs/getting-started/quick-start" className="quick-link-card">
-          <span className="quick-link-icon">🚀</span>
-          <span className="quick-link-title">Quick Start</span>
-          <span className="quick-link-desc">
-            Get PrismSpace running in minutes with our step-by-step guide for frontend and backend setup.
-          </span>
-        </Link>
-
-        <Link href="/docs/architecture/overview" className="quick-link-card">
-          <span className="quick-link-icon">🏛️</span>
-          <span className="quick-link-title">Architecture</span>
-          <span className="quick-link-desc">
-            Explore the four-layer system: Next.js frontend, FastAPI backend, ML subsystem, and data lake.
-          </span>
-        </Link>
-
-        <Link href="/docs/features/overview" className="quick-link-card">
-          <span className="quick-link-icon">⚡</span>
-          <span className="quick-link-title">Features & Tools</span>
-          <span className="quick-link-desc">
-            Discover 23 developer utilities, AI tools, productivity features, and system capabilities.
-          </span>
-        </Link>
-
-        <Link href="/docs/usage-guide/settings" className="quick-link-card">
-          <span className="quick-link-icon">⚙️</span>
-          <span className="quick-link-title">Usage Guide</span>
-          <span className="quick-link-desc">
-            Learn how to customize settings, use tools, keyboard shortcuts, and troubleshoot issues.
-          </span>
-        </Link>
-
-        <Link href="/docs/api/training" className="quick-link-card">
-          <span className="quick-link-icon">🧠</span>
-          <span className="quick-link-title">API & Development</span>
-          <span className="quick-link-desc">
-            Train ML models, test inference, evaluate performance, and deploy to production.
-          </span>
-        </Link>
-
-        <Link href="/docs/license/apache" className="quick-link-card">
-          <span className="quick-link-icon">📝</span>
-          <span className="quick-link-title">License & Contributing</span>
-          <span className="quick-link-desc">
-            Apache 2.0 license details, contribution guidelines, and third-party notices.
-          </span>
-        </Link>
-      </div>
-
-      <h2>what is prismspace?</h2>
-      <p>
-        PrismSpace is an <strong>AI-powered developer operating environment</strong> that combines a feature-rich 
-        browser dashboard with intelligent multi-agent orchestration. Built on <strong>Next.js 15</strong>, <strong>React 19</strong>, 
-        and a <strong>Python FastAPI</strong> backend, it provides developers with everything needed for productive workflow.
-      </p>
-
-      <h3>core capabilities</h3>
-      <ul>
-        <li><strong>23+ Developer Tools</strong> - JSON toolkit, regex workbench, SQL playground, markdown editor, crypto utils, and more</li>
-        <li><strong>Multi-Agent Swarm</strong> - Dynamic agent orchestration with Model Context Protocol (MCP) integration</li>
-        <li><strong>ML Intelligence Layer</strong> - Intent classification, agent routing, workflow prediction, and cost optimization</li>
-        <li><strong>Agent OS Tools</strong> - Structured filesystem, terminal, process, and system operations with approval gates</li>
-        <li><strong>Customizable UI</strong> - 15+ clock styles, custom themes, glassmorphism design, and live system monitoring</li>
-      </ul>
-
-      <h3>technology stack</h3>
-      <div className="quick-links-grid">
-        <div className="quick-link-card">
-          <span className="editorial-badge">Frontend</span>
-          <p>Next.js 15, React 19, TypeScript, Tailwind CSS</p>
+    <div className="docs-page docs-home">
+      <section className="docs-hero">
+        <div>
+          <span className="editorial-badge">PRISMSPACE / HANDBOOK</span>
+          <h1>build with<br /><span className="cutout-box">clear intent.</span></h1>
+          <p className="lead">
+            A practical guide to the AI-powered developer environment: install it, understand its layers, and make the tools work for your flow.
+          </p>
+          <div className="docs-hero-actions">
+            <Link href="/docs/getting-started/quick-start" className="docs-primary-action">Read the quick start <span>→</span></Link>
+            <Link href="/privacy" className="docs-text-action">Read our privacy policy</Link>
+          </div>
         </div>
-        <div className="quick-link-card">
-          <span className="editorial-badge">Backend</span>
-          <p>Python FastAPI, Model Context Protocol (MCP)</p>
+        <div className="docs-hero-board micro-grid" aria-label="PrismSpace system summary">
+          <div className="board-topline"><span className="status-dot-pulse" /> SYSTEM MAP <span>v1.0.0</span></div>
+          <div className="board-title">one workspace.<br /><em>four connected layers.</em></div>
+          <div className="board-layers">
+            {['Browser interface', 'Agent orchestration', 'ML routing subsystem', 'Local-first data layer'].map((layer, index) => (
+              <div className="board-layer" key={layer}><span>0{index + 1}</span>{layer}<b>↗</b></div>
+            ))}
+          </div>
         </div>
-        <div className="quick-link-card">
-          <span className="editorial-badge">ML</span>
-          <p>PyTorch, CUDA 12.6, Scikit-learn, FAISS</p>
+      </section>
+
+      <section className="docs-section-intro">
+        <div><span className="tech-label">THE SHORT VERSION</span><h2>Everything you need.<br />Nothing hidden.</h2></div>
+        <p>PrismSpace brings developer utilities, multi-agent workflows, and ML-assisted routing into one browser-based operating environment. The docs are organized around how you actually use it.</p>
+      </section>
+
+      <section className="docs-route-grid" aria-label="Documentation paths">
+        {routes.map((route) => (
+          <Link href={route.href} className="docs-route-card" key={route.number}>
+            <div className="route-number">{route.number}</div>
+            <span className="tech-label">{route.label}</span>
+            <h3>{route.title}</h3>
+            <p>{route.description}</p>
+            <span className="route-arrow">Open section <b>↗</b></span>
+          </Link>
+        ))}
+      </section>
+
+      <section className="docs-local-note">
+        <div className="local-note-mark">◎</div>
+        <div>
+          <span className="tech-label">PRIVACY BY DEFAULT</span>
+          <h2>PrismDb stays in your browser.</h2>
+          <p>PrismDb is PrismSpace’s local data layer. It uses the browser’s IndexedDB storage and keeps that data on your device. PrismSpace does not receive or store your PrismDb records on its own servers.</p>
+          <Link href="/privacy">See the full privacy boundary →</Link>
         </div>
-        <div className="quick-link-card">
-          <span className="editorial-badge">Data</span>
-          <p>15+ benchmark datasets, ORPO alignment, retrieval ranking</p>
+      </section>
+
+      <section className="docs-stack-section">
+        <div className="stack-heading"><span className="tech-label">SYSTEM INVENTORY</span><h2>What PrismSpace is made of.</h2></div>
+        <div className="stack-grid">
+          {stack.map(([name, value]) => <div className="stack-item" key={name}><span>{name}</span><strong>{value}</strong></div>)}
         </div>
-      </div>
-
-      <h2>getting started</h2>
-      <p>
-        The fastest way to start is using our unified runner scripts that handle both frontend and backend:
-      </p>
-
-      <h4>Windows (PowerShell)</h4>
-      <pre><code>.\run\run.ps1</code></pre>
-
-      <h4>Linux / macOS / WSL</h4>
-      <pre><code>./run/run.sh</code></pre>
-
-      <p>
-        For detailed installation instructions, prerequisites, and environment setup, see the{' '}
-        <Link href="/docs/getting-started/quick-start">Quick Start Guide</Link>.
-      </p>
-
-      <div className="docs-callout">
-        <div className="docs-callout-title">✨ What's New</div>
-        <p>
-          <strong>v1.0.0</strong> - High Voltage UI redesign with electric mint canvas, obsidian boards, 
-          Space Grotesk + JetBrains Mono typography, and comprehensive documentation site.
-        </p>
-      </div>
-
-      <h2>explore documentation</h2>
-      <p>
-        Use the sidebar navigation to explore different sections, or jump directly to:
-      </p>
-      <ul>
-        <li><Link href="/docs/getting-started/installation">Installation Guide</Link> - Detailed setup instructions</li>
-        <li><Link href="/docs/architecture/ml-models">ML Models & Alignment</Link> - ORPO, routing, and prediction systems</li>
-        <li><Link href="/docs/features/dev-tools">Developer Tools</Link> - Complete tool reference</li>
-        <li><Link href="/docs/api/training">Training Models</Link> - ML training commands and workflows</li>
-        <li><Link href="/docs/license/contributing">Contributing</Link> - How to contribute to PrismSpace</li>
-      </ul>
+      </section>
 
       <div className="docs-nav-footer">
-        <Link href="/docs/getting-started/quick-start" className="docs-nav-button">
-          <span className="docs-nav-label">Next</span>
-          <span className="docs-nav-title">Quick Start →</span>
-        </Link>
+        <Link href="/docs/getting-started/quick-start" className="docs-nav-button"><span className="docs-nav-label">Recommended next</span><span className="docs-nav-title">Quick Start →</span></Link>
+        <Link href="/docs/architecture/overview" className="docs-nav-button"><span className="docs-nav-label">Go deeper</span><span className="docs-nav-title">Architecture →</span></Link>
       </div>
     </div>
   );

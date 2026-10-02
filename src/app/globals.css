@@ -3,6 +3,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
   --font-geist-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -21,8 +22,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  overflow-y: auto;
-  background-color: #00df81; /* Electric Mint Canvas */
+  background-color: #ffffff;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -30,6 +30,27 @@ body {
   /* Hide native scrollbars completely */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 11 */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 html::-webkit-scrollbar,
@@ -52,8 +73,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
-  background-color: #00df81; /* Electric Mint Canvas */
-  color: #06190e; /* Deep Mint Ink */
+  background-color: #ffffff;
+  color: #000000;
   min-height: 100vh;
 }
 
@@ -64,7 +85,7 @@ body {
 }
 
 #__next {
-  background-color: #00df81;
+  background-color: #a1fea0;
   min-height: 100vh;
 }
 
@@ -109,7 +130,7 @@ body.custom-cursor-active ::-moz-selection {
 
 .download-button:hover {
   background-color: #000 !important;
-  color: #88E755 !important;
+  color: #a1fea0 !important;
   border-radius: 20px !important;
   transform: scale(1.05) !important;
 }
@@ -207,19 +228,30 @@ body.custom-cursor-active ::-moz-selection {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Dark mode terminal colors */
+.dark {
+  --foreground: #ffffff;
+  --background: #000000;
+  --muted: #94a3b8;
+  --muted-foreground: #64748b;
+  --border: rgba(255, 255, 255, 0.1);
+  --primary: #a1fea0;
+  --primary-foreground: #000000;
+}
+
 /* ── PrismSpace High-Voltage Developer OS Design Tokens ─────────────── */
 :root {
   /* Primary - Electric Mint */
-  --prism-primary: #00df81;
+  --prism-primary: #a1fea0;
   --prism-primary-oklch: oklch(0.78 0.22 153.5);
-  --prism-primary-glow: rgba(0, 223, 129, 0.25);
+  --prism-primary-glow: rgba(161, 254, 160, 0.25);
   --prism-primary-dark: #06190e;
 
   /* Surfaces */
-  --prism-canvas: #00df81; /* Electric Mint Canvas */
+  --prism-canvas: #a1fea0; /* Electric Mint Canvas */
   --prism-board: #090c12; /* Obsidian Hardware Board */
   --prism-card: rgba(255, 255, 255, 0.03);
-  --prism-card-active: rgba(0, 223, 129, 0.08);
+  --prism-card-active: rgba(161, 254, 160, 0.08);
   --prism-cutout: #000000; /* Solid Black Cutouts */
   --prism-terminal: #000000;
   --prism-hud: rgba(0, 0, 0, 0.92);
@@ -231,14 +263,14 @@ body.custom-cursor-active ::-moz-selection {
   --prism-white: #ffffff;
   --prism-code: #cbd5e1; /* Slate for technical specs */
   --prism-muted: #94a3b8; /* Muted Gray for telemetry labels */
-  --prism-accent: #00df81; /* Electric Mint for live metrics */
+  --prism-accent: #a1fea0; /* Electric Mint for live metrics */
 
   /* Borders */
   --prism-border-board: rgba(0, 0, 0, 0.25);
   --prism-border-inner: rgba(255, 255, 255, 0.08);
   --prism-border-card: rgba(255, 255, 255, 0.08);
-  --prism-border-active: #00df81;
-  --prism-border-hud: rgba(0, 223, 129, 0.6);
+  --prism-border-active: #a1fea0;
+  --prism-border-hud: rgba(161, 254, 160, 0.6);
 
   /* Shadows */
   --prism-shadow-cutout: 0 10px 25px rgba(0, 0, 0, 0.25);
@@ -285,20 +317,20 @@ body.custom-cursor-active ::-moz-selection {
   --destructive: oklch(0.577 0.245 27.325);
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.15);
-  --ring: rgba(0, 223, 129, 0.6);
+  --ring: rgba(161, 254, 160, 0.6);
 
   /* Sidebar */
   --sidebar: #090c12;
   --sidebar-foreground: #ffffff;
-  --sidebar-primary: #00df81;
+  --sidebar-primary: #a1fea0;
   --sidebar-primary-foreground: #000000;
-  --sidebar-accent: rgba(0, 223, 129, 0.08);
+  --sidebar-accent: rgba(161, 254, 160, 0.08);
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: rgba(0, 223, 129, 0.6);
+  --sidebar-ring: rgba(161, 254, 160, 0.6);
 
   /* Chart Colors */
-  --chart-1: #00df81;
+  --chart-1: #a1fea0;
   --chart-2: #cbd5e1;
   --chart-3: #94a3b8;
   --chart-4: #090c12;
@@ -312,7 +344,21 @@ body.custom-cursor-active ::-moz-selection {
   body {
     @apply bg-background text-foreground;
   }
+  .animate-caret-blink {
+    animation: caret-blink 1s step-end infinite;
+  }
 }
+
+@keyframes cosmic-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cosmic-spin-slow {
+  to { transform: rotate(-360deg); }
+}
+
+.animate-cosmic-spin { animation: cosmic-spin 3.8s linear infinite; }
+.animate-cosmic-spin-slow { animation: cosmic-spin-slow 7s linear infinite; }
 
 /* ── PrismSpace High-Voltage UI Component Classes ─────────────────────── */
 
@@ -372,6 +418,35 @@ body.custom-cursor-active ::-moz-selection {
     font-weight: 700;
   }
 
+  .prismspace-logo-badge {
+    min-height: 40px;
+    padding: 7px 14px;
+    background: #050708;
+  }
+
+  .prismspace-logo-badge img {
+    display: block;
+    object-fit: contain;
+  }
+
+  .open-source-commands {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: min(92vw, 640px);
+  }
+
+  .open-source-commands .terminal-pill {
+    max-width: 100%;
+  }
+
+  .open-source-commands code {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   /* Architecture Telemetry Board */
   .architecture-board {
     background: var(--prism-board);
@@ -423,8 +498,8 @@ body.custom-cursor-active ::-moz-selection {
     left: -1px;
     width: 5px;
     height: 70px;
-    background: linear-gradient(180deg, transparent, #00df81 50%, #ffffff 80%, #00df81);
-    box-shadow: 0 0 10px #00df81;
+    background: linear-gradient(180deg, transparent, #a1fea0 50%, #ffffff 80%, #a1fea0);
+    box-shadow: 0 0 10px #a1fea0;
     border-radius: 999px;
     opacity: 0.95;
     animation: flowBeamTravel 3s linear infinite;
@@ -437,8 +512,8 @@ body.custom-cursor-active ::-moz-selection {
     gap: 6px;
     padding: 3px 10px;
     border-radius: var(--prism-radius-full);
-    background: rgba(0, 223, 129, 0.12);
-    border: 1px solid rgba(0, 223, 129, 0.3);
+    background: rgba(161, 254, 160, 0.12);
+    border: 1px solid rgba(161, 254, 160, 0.3);
     font-size: 10px;
     font-weight: 700;
     color: var(--prism-primary);
@@ -544,6 +619,17 @@ body.custom-cursor-active ::-moz-selection {
   }
 }
 
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes flowBeamTravel {
   0% {
     top: 0%;
@@ -566,7 +652,7 @@ body.custom-cursor-active ::-moz-selection {
     box-shadow: 0 0 8px var(--prism-primary-glow);
   }
   50% {
-    box-shadow: 0 0 20px var(--prism-primary-glow), 0 0 40px rgba(0, 223, 129, 0.1);
+    box-shadow: 0 0 20px var(--prism-primary-glow), 0 0 40px rgba(161, 254, 160, 0.1);
   }
 }
 
@@ -611,7 +697,7 @@ body.custom-cursor-active ::-moz-selection {
   position: absolute;
   inset: 0;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(0, 223, 129, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(161, 254, 160, 0.1), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -622,7 +708,7 @@ body.custom-cursor-active ::-moz-selection {
 
 .api-card:hover {
   transform: translateY(-8px) scale(1.02) !important;
-  box-shadow: 0 0 40px rgba(0, 223, 129, 0.5), 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 40px rgba(161, 254, 160, 0.5), 0 10px 30px rgba(0, 0, 0, 0.3) !important;
 }
 
 .api-card:hover h4 {
@@ -668,6 +754,25 @@ body.custom-cursor-active ::-moz-selection {
   75% {
     transform: translate(40px, -40px) scale(1.1);
     opacity: 0.7;
+  }
+}
+
+
+@keyframes shimmer {
+  0%, 100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes scan {
+  0%, 100% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(100%);
   }
 }
 

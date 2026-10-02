@@ -51,8 +51,6 @@ body::-webkit-scrollbar {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-left: 1px solid rgba(136, 231, 85, 0.1);
   overflow: hidden;
 }
@@ -74,8 +72,7 @@ body::-webkit-scrollbar {
   box-shadow: 
     inset 0 0 20px rgba(136, 231, 85, 0.3),
     0 0 20px rgba(136, 231, 85, 0.2);
-  transition: height 0.1s ease-out;
-  animation: progressGlow 2s ease-in-out infinite alternate;
+  transition: none;
 }
 
 .scrollbar-thumb {
@@ -85,17 +82,15 @@ body::-webkit-scrollbar {
   width: 100%;
   height: var(--thumb-height);
   background: rgba(136, 231, 85, 0.8);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
   border-radius: 6px;
   border: 1px solid rgba(136, 231, 85, 0.6);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: none;
   box-shadow: 
     0 0 15px rgba(136, 231, 85, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.2),
     inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  animation: thumbPulse 3s ease-in-out infinite alternate;
+  animation: none;
 }
 
 .scrollbar-thumb:hover {
@@ -163,7 +158,7 @@ body::-webkit-scrollbar {
     transparent 100%
   );
   opacity: 0.7;
-  animation: trackGlow 1.5s ease-in-out infinite alternate;
+  animation: none;
 }
 
 @keyframes trackGlow {
@@ -186,10 +181,3 @@ body::-webkit-scrollbar {
   }
 }
 
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .scrollbar-track {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-}

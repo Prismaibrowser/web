@@ -135,7 +135,7 @@ const CustomScrollbar = () => {
         scrollbarElement.removeEventListener('mousedown', handleMouseDown);
       }
     };
-  }, [handleScroll, scrollProgress, isDragging]);
+  }, [handleScroll, isDragging]);
 
   // Don't render if not visible or no scrollable content
   if (!isVisible) {

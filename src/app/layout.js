@@ -1,5 +1,7 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import SmoothScrollProvider from "@/components/smooth-scroll-provider";
+import PrismLoader from "@/components/PrismLoader";
 
 // Define metadata for the entire site
 export const metadata = {
@@ -174,8 +176,11 @@ export default function RootLayout({ children }) {
         </script>
       </head>
       <body>
-        {children}
-        <Analytics />
+        <SmoothScrollProvider>
+          <PrismLoader />
+          {children}
+          <Analytics />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

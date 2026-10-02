@@ -14,7 +14,7 @@ export default function NotFound() {
       }}
     >
       <div style={{ textAlign: 'center', maxWidth: '680px' }}>
-        <h1 style={{ color: '#88E755', fontSize: '3rem', margin: 0, fontWeight: 800 }}>
+        <h1 style={{ color: '#a1fea0', fontSize: '3rem', margin: 0, fontWeight: 800 }}>
           Page not found
         </h1>
         <p style={{ color: 'rgba(255,255,255,0.75)', marginTop: '0.75rem', lineHeight: 1.6 }}>
@@ -25,7 +25,7 @@ export default function NotFound() {
           style={{
             display: 'inline-block',
             marginTop: '1.25rem',
-            background: '#88E755',
+            background: '#a1fea0',
             border: '1px solid rgba(136, 231, 85, 0.35)',
             borderRadius: '12px',
             padding: '12px 14px',
@@ -40,3 +40,4 @@ export default function NotFound() {
     </div>
   );
 }
+

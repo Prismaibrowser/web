@@ -38,7 +38,7 @@ export default function SettingsGuidePage() {
       <h3>change clock color</h3>
       <ol>
         <li>Go to <strong>Clock</strong> section → <strong>Clock Color</strong></li>
-        <li>Use color picker or enter hex code (e.g., <code>#00df81</code>)</li>
+        <li>Use color picker or enter hex code (e.g., <code>#a1fea0</code>)</li>
         <li>Recent colors are saved for quick access (up to 10 colors)</li>
         <li>Click <strong>Reset</strong> to restore white</li>
         <li>Click <strong>Clear History</strong> to remove saved colors</li>
@@ -279,3 +279,4 @@ location.reload();</code></pre>
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect, useState, useMemo } from "react"
 import { animate, useMotionValue } from "motion/react"
 import * as motion from "motion/react-client"
@@ -20,9 +20,9 @@ const themes = {
     wellBg: "#0a0a0b",
     innerRingBg: "#0c0c0d",
     buttonBg: "#111113",
-    textActive: "text-[#00df81]",
-    textInactive: "text-[#00df81]/65 hover:text-[#00df81]",
-    iconColor: "text-[#00df81] hover:text-[#8affc5]",
+    textActive: "text-[#a1fea0]",
+    textInactive: "text-[#a1fea0]/65 hover:text-[#a1fea0]",
+    iconColor: "text-[#a1fea0] hover:text-[#a1fea0]",
   },
   light: {
     bg: "#f5f5f7",
@@ -34,9 +34,9 @@ const themes = {
     wellBg: "#e0e0e3",
     innerRingBg: "#d8d8db",
     buttonBg: "#f0f0f2",
-    textActive: "text-[#00b86b]",
-    textInactive: "text-[#00b86b]/65 hover:text-[#00b86b]",
-    iconColor: "text-[#00b86b] hover:text-[#008f56]",
+    textActive: "text-[#a1fea0]",
+    textInactive: "text-[#a1fea0]/65 hover:text-[#a1fea0]",
+    iconColor: "text-[#a1fea0] hover:text-[#008f56]",
   },
 }
 
@@ -394,7 +394,7 @@ export function GradientButtonGroup() {
                             stiffness: 500,
                             damping: 32,
                           }}
-                          className="whitespace-nowrap text-[11px] font-semibold tracking-[0.04em]"
+                          className="whitespace-nowrap text-[13px] font-semibold tracking-[0.04em]"
                         >
                           {item.label}
                         </motion.span>
@@ -437,7 +437,7 @@ export function GradientButtonGroup() {
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   className="shrink-0"
-                  style={{ color: isDarkMode ? "#00df81" : "#00b86b", fill: "currentColor" }}
+                  style={{ color: isDarkMode ? "#a1fea0" : "#a1fea0", fill: "currentColor" }}
                   aria-hidden="true"
                   focusable="false"
                 >
@@ -487,3 +487,4 @@ export function GradientButtonGroup() {
     </div>
   )
 }
+
