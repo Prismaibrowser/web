@@ -1,3 +1,13 @@
+/* PrismSpace High-Voltage UI Design System */
+/* Copyright 2026 Nobin Sijo (NobinSijo7T). SPDX-License-Identifier: Apache-2.0 */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-geist-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-geist-mono: 'JetBrains Mono', monospace;
+}
 
 @plugin "tailwindcss-animate";
 
@@ -12,11 +22,11 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   overflow-y: auto;
-  scroll-behavior: smooth;
-  background-color: #030A15;
+  background-color: #00df81; /* Electric Mint Canvas */
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  font-family: 'Space Grotesk', sans-serif;
   /* Hide native scrollbars completely */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 11 */
@@ -42,7 +52,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
-  background-color: #030A15;
+  background-color: #00df81; /* Electric Mint Canvas */
+  color: #06190e; /* Deep Mint Ink */
   min-height: 100vh;
 }
 
@@ -53,7 +64,7 @@ body {
 }
 
 #__next {
-  background-color: #030A15;
+  background-color: #00df81;
   min-height: 100vh;
 }
 
@@ -159,10 +170,10 @@ body.custom-cursor-active ::-moz-selection {
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--prism-radius-sm));
+  --radius-md: calc(var(--prism-radius-md));
+  --radius-lg: calc(var(--prism-radius-lg));
+  --radius-xl: calc(var(--prism-radius-xl));
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -196,73 +207,102 @@ body.custom-cursor-active ::-moz-selection {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ── PrismSpace High-Voltage Developer OS Design Tokens ─────────────── */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  /* Primary - Electric Mint */
+  --prism-primary: #00df81;
+  --prism-primary-oklch: oklch(0.78 0.22 153.5);
+  --prism-primary-glow: rgba(0, 223, 129, 0.25);
+  --prism-primary-dark: #06190e;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Surfaces */
+  --prism-canvas: #00df81; /* Electric Mint Canvas */
+  --prism-board: #090c12; /* Obsidian Hardware Board */
+  --prism-card: rgba(255, 255, 255, 0.03);
+  --prism-card-active: rgba(0, 223, 129, 0.08);
+  --prism-cutout: #000000; /* Solid Black Cutouts */
+  --prism-terminal: #000000;
+  --prism-hud: rgba(0, 0, 0, 0.92);
+
+  /* Typography & Ink */
+  --prism-ink: #06190e; /* Deep Mint Ink */
+  --prism-ink-strong: #000000;
+  --prism-highlight-bg: rgba(255, 255, 255, 0.4);
+  --prism-white: #ffffff;
+  --prism-code: #cbd5e1; /* Slate for technical specs */
+  --prism-muted: #94a3b8; /* Muted Gray for telemetry labels */
+  --prism-accent: #00df81; /* Electric Mint for live metrics */
+
+  /* Borders */
+  --prism-border-board: rgba(0, 0, 0, 0.25);
+  --prism-border-inner: rgba(255, 255, 255, 0.08);
+  --prism-border-card: rgba(255, 255, 255, 0.08);
+  --prism-border-active: #00df81;
+  --prism-border-hud: rgba(0, 223, 129, 0.6);
+
+  /* Shadows */
+  --prism-shadow-cutout: 0 10px 25px rgba(0, 0, 0, 0.25);
+  --prism-shadow-board: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
+  --prism-shadow-hud: 0 10px 30px rgba(0, 0, 0, 0.7);
+
+  /* Radii */
+  --prism-radius-xs: 3px;
+  --prism-radius-sm: 4px;
+  --prism-radius-md: 6px;
+  --prism-radius-lg: 10px;
+  --prism-radius-xl: 20px;
+  --prism-radius-full: 9999px;
+
+  /* Spacing */
+  --prism-space-xs: 4px;
+  --prism-space-sm: 8px;
+  --prism-space-md: 12px;
+  --prism-space-lg: 18px;
+  --prism-space-xl: 24px;
+  --prism-space-2xl: 44px;
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Legacy tokens (shadcn/ui compatibility) */
+  --radius: 0.625rem;
+  --background: oklch(0.78 0.22 153.5); /* Electric Mint */
+  --foreground: #06190e; /* Deep Mint Ink */
+  --card: #090c12; /* Obsidian Board */
+  --card-foreground: #ffffff;
+  --popover: #090c12;
+  --popover-foreground: #ffffff;
+  --primary: oklch(0.78 0.22 153.5); /* Electric Mint */
+  --primary-foreground: #000000;
+  --secondary: #090c12;
+  --secondary-foreground: #ffffff;
+  --muted: #94a3b8;
+  --muted-foreground: #cbd5e1;
+  --accent: oklch(0.78 0.22 153.5);
+  --accent-foreground: #000000;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: rgba(0, 223, 129, 0.6);
+
+  /* Sidebar */
+  --sidebar: #090c12;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #00df81;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: rgba(0, 223, 129, 0.08);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: rgba(0, 223, 129, 0.6);
+
+  /* Chart Colors */
+  --chart-1: #00df81;
+  --chart-2: #cbd5e1;
+  --chart-3: #94a3b8;
+  --chart-4: #090c12;
+  --chart-5: #06190e;
 }
 
 @layer base {
@@ -273,3 +313,361 @@ body.custom-cursor-active ::-moz-selection {
     @apply bg-background text-foreground;
   }
 }
+
+/* ── PrismSpace High-Voltage UI Component Classes ─────────────────────── */
+
+@layer components {
+  /* Cutout Display Title Box */
+  .cutout-box {
+    display: inline-block;
+    background-color: var(--prism-cutout);
+    padding: 3px 18px 7px 18px;
+    border-radius: var(--prism-radius-sm);
+    box-shadow: var(--prism-shadow-cutout);
+  }
+
+  .cutout-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    color: var(--prism-primary);
+    text-transform: lowercase;
+  }
+
+  /* Editorial Monospace Badge */
+  .editorial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--prism-cutout);
+    color: var(--prism-primary);
+    border-radius: var(--prism-radius-md);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Terminal Command Pill */
+  .terminal-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--prism-terminal);
+    color: var(--prism-white);
+    padding: 9px 16px;
+    border-radius: var(--prism-radius-lg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .terminal-prompt-char {
+    color: var(--prism-primary);
+    font-weight: 700;
+  }
+
+  /* Architecture Telemetry Board */
+  .architecture-board {
+    background: var(--prism-board);
+    border-radius: var(--prism-radius-xl);
+    border: 2px solid var(--prism-border-board);
+    box-shadow: var(--prism-shadow-board), 0 0 0 1px var(--prism-border-inner);
+    padding: 18px 22px;
+    position: relative;
+  }
+
+  /* Micro-grid texture overlay (24px x 24px hardware grid) */
+  .micro-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Layer Row */
+  .layer-row {
+    background: var(--prism-card);
+    border: 1px solid var(--prism-border-card);
+    border-radius: var(--prism-radius-lg);
+    padding: 10px 14px;
+    transition: background-color 120ms ease, border-color 120ms ease, box-shadow 200ms ease;
+  }
+
+  .layer-row:hover,
+  .layer-row.highlighted {
+    background: var(--prism-card-active);
+    border-color: var(--prism-border-active);
+    box-shadow: 0 0 20px var(--prism-primary-glow);
+  }
+
+  /* Flow Rail & Energy Beam */
+  .flow-rail {
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background: var(--prism-border-inner);
+    border-radius: 999px;
+  }
+
+  .flow-beam {
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: 5px;
+    height: 70px;
+    background: linear-gradient(180deg, transparent, #00df81 50%, #ffffff 80%, #00df81);
+    box-shadow: 0 0 10px #00df81;
+    border-radius: 999px;
+    opacity: 0.95;
+    animation: flowBeamTravel 3s linear infinite;
+  }
+
+  /* Live Status Radar Badge */
+  .live-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: var(--prism-radius-full);
+    background: rgba(0, 223, 129, 0.12);
+    border: 1px solid rgba(0, 223, 129, 0.3);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--prism-primary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .status-dot-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--prism-primary);
+    box-shadow: 0 0 8px var(--prism-primary);
+    animation: pulseDot 1.4s infinite;
+  }
+
+  /* Floating HUD Capsule */
+  .hud-capsule {
+    background: var(--prism-hud);
+    border: 1px solid var(--prism-border-hud);
+    border-radius: var(--prism-radius-full);
+    box-shadow: var(--prism-shadow-hud);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  }
+
+  /* Obsidian Glass Surface */
+  .obsidian-glass {
+    background: rgba(9, 12, 18, 0.92);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid var(--prism-border-inner);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* High-Voltage Button Base */
+  .prism-btn {
+    background: var(--prism-board);
+    border: 1px solid var(--prism-border-inner);
+    border-radius: var(--prism-radius-lg);
+    color: var(--prism-white);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 12px;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  }
+
+  .prism-btn:hover {
+    border-color: var(--prism-primary);
+    box-shadow: 0 0 20px var(--prism-primary-glow);
+    background: var(--prism-card-active);
+  }
+
+  .prism-btn:active {
+    transform: scale(0.96);
+    transition: transform 80ms ease-out, border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  }
+
+  /* Prose Highlight Span (inline text highlight on mint canvas) */
+  .prose-highlight {
+    background: var(--prism-highlight-bg);
+    padding: 0 4px;
+    border-radius: 2px;
+  }
+
+  /* Display Heading (all-lowercase Space Grotesk 900) */
+  .display-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    text-transform: lowercase;
+  }
+
+  /* Technical Label (uppercase JetBrains Mono for telemetry) */
+  .tech-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--prism-muted);
+  }
+
+  /* Live Metric (electric mint monospace value) */
+  .live-metric {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--prism-accent);
+  }
+}
+
+/* ── Keyframe Animations ──────────────────────────────────────────────── */
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes flowBeamTravel {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  92% {
+    opacity: 0.95;
+  }
+  100% {
+    top: calc(100% - 70px);
+    opacity: 0;
+  }
+}
+
+@keyframes statusGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px var(--prism-primary-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--prism-primary-glow), 0 0 40px rgba(0, 223, 129, 0.1);
+  }
+}
+
+/* ── Reduced Motion & Accessibility ───────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot-pulse {
+    animation: none;
+    opacity: 1;
+  }
+
+  .flow-beam {
+    animation: none;
+    top: 30%;
+    opacity: 0.6;
+  }
+
+  [data-motion-sensitive] {
+    transition: opacity 200ms ease !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .obsidian-glass,
+  .hud-capsule {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #090c12 !important;
+  }
+}
+
+
+/* API Card Hover Effects */
+.api-card {
+  position: relative;
+}
+
+.api-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0, 223, 129, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.api-card:hover::before {
+  opacity: 1;
+}
+
+.api-card:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: 0 0 40px rgba(0, 223, 129, 0.5), 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.api-card:hover h4 {
+  text-shadow: 0 0 16px currentColor, 0 0 32px currentColor;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+/* Circuit Board Animation Container */
+.circuit-board-container {
+  animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+}
+
+/* Grid Flow Animation */
+@keyframes grid-flow {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+/* Floating Particles Animation */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.2);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-20px, -60px) scale(0.8);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(40px, -40px) scale(1.1);
+    opacity: 0.7;
+  }
+}
+

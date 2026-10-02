@@ -12,19 +12,25 @@
   "categories": ["productivity", "utilities", "developer"],
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "16x16 32x32",
-      "type": "image/x-icon"
+      "src": "/prism-icon.png",
+      "sizes": "16x16 32x32 48x48 64x64 128x128 256x256 512x512",
+      "type": "image/png"
     },
     {
-      "src": "/favicon-16x16.png",
+      "src": "/prism-icon.png",
       "sizes": "16x16",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/favicon-32x32.png",
+      "src": "/prism-icon.png",
       "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/prism-icon.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }

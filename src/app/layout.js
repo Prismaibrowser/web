@@ -1,15 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { Analytics } from "@vercel/analytics/react";
 
 // Define metadata for the entire site
 export const metadata = {
@@ -83,22 +73,22 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: '/favicon.ico',
+        url: '/prism-icon.png',
         sizes: 'any',
       },
       {
-        url: '/favicon-16x16.png',
+        url: '/prism-icon.png',
         sizes: '16x16',
         type: 'image/png',
       },
       {
-        url: '/favicon-32x32.png',
+        url: '/prism-icon.png',
         sizes: '32x32',
         type: 'image/png',
       },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/favicon-32x32.png',
+    shortcut: '/prism-icon.png',
+    apple: '/prism-icon.png',
   },
   
   // Manifest for PWA support
@@ -121,11 +111,11 @@ export default function RootLayout({ children }) {
         <meta name="google-site-verification" content="msoo0pyLyvehcd-VVsa0Zs9WbBO9N1d1Y0TvyUXD9Qo" />
         
         {/* Favicon links with cache busting */}
-        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
-        <link rel="shortcut icon" href="/favicon.ico?v=2" />
-        <link rel="apple-touch-icon" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="apple-touch-icon" sizes="32x32" href="/favicon-32x32.png?v=3" />
         
         {/* Additional meta tags for better social sharing */}
         <meta property="og:image:width" content="1200" />
@@ -177,14 +167,15 @@ export default function RootLayout({ children }) {
               "name": "Prism Browser",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://prismbrowser.tech/favicon-32x32.png"
+                "url": "https://prismbrowser.tech/prism-icon.png"
               }
             }
           })}
         </script>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         {children}
+        <Analytics />
       </body>
     </html>
   );

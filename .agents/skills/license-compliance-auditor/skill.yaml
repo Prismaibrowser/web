@@ -1,0 +1,61 @@
+name: license-compliance-auditor
+version: 1.0.0
+description: Scans project dependencies and verifies licenses against a whitelist of approved open-source licenses. Use to ensure legal compliance in software projects and prevent the introduction of restricted licenses.
+inputs:
+  project_path:
+    type: string
+    description: The root directory of the project containing dependency manifests.
+    required: true
+  allowed_licenses:
+    type: array
+    items:
+      type: string
+    description: List of approved license identifiers (e.g., MIT, Apache-2.0).
+    required: true
+  ecosystem:
+    type: string
+    enum: [npm, pip, go, cargo, maven]
+    description: The package management ecosystem to audit.
+outputs:
+  compliance_report:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [pass, fail]
+      violations:
+        type: array
+        items:
+          type: object
+          properties:
+            package:
+              type: string
+            version:
+              type: string
+            license:
+              type: string
+            reason:
+              type: string
+capabilities:
+  - Detection of package manifests (package.json, requirements.txt, etc.).
+  - Transitive dependency resolution.
+  - SPDX license identifier matching.
+constraints:
+  - Accuracy depends on package metadata quality.
+  - Transitive auditing requires internet access for registry checks.
+security:
+  - Does not execute third-party code.
+  - Reads public manifest files only.
+examples:
+  - input:
+      project_path: "."
+      allowed_licenses: ["MIT", "Apache-2.0"]
+      ecosystem: "npm"
+    output:
+      compliance_report:
+        status: "fail"
+        violations:
+          - package: "some-viral-library"
+            version: "1.2.3"
+            license: "GPL-3.0"
+            reason: "GPL-3.0 is not in the allowed_licenses whitelist."
