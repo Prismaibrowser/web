@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Documentation | PrismSpace',
+  title: 'Documentation',
   description: 'The PrismSpace technical handbook: setup, architecture, tools, and privacy boundaries.',
+  alternates: { canonical: '/docs' },
 };
 
 const routes = [
@@ -100,6 +101,17 @@ export default function DocsHome() {
         <Link href="/docs/getting-started/quick-start" className="docs-nav-button"><span className="docs-nav-label">Recommended next</span><span className="docs-nav-title">Quick Start →</span></Link>
         <Link href="/docs/architecture/overview" className="docs-nav-button"><span className="docs-nav-label">Go deeper</span><span className="docs-nav-title">Architecture →</span></Link>
       </div>
+
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'PrismSpace', item: 'https://prismbrowser.tech/' },
+            { '@type': 'ListItem', position: 2, name: 'Documentation', item: 'https://prismbrowser.tech/docs' },
+          ],
+        })}
+      </script>
     </div>
   );
 }

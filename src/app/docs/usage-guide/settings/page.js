@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Settings & Customization', description: 'Configure PrismSpace themes, clocks, backgrounds, greetings, shortcuts, and browser-local settings.', alternates: { canonical: '/docs/usage-guide/settings' } };
+
 export default function SettingsGuidePage() {
   return (
     <div className="docs-page">

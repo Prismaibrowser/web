@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Prerequisites', description: 'Review the hardware, software, runtime, and service prerequisites for PrismSpace.', alternates: { canonical: '/docs/getting-started/prerequisites' } };
+
 export default function PrerequisitesPage() {
   return (
     <div className="docs-page">

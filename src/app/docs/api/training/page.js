@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Training ML Models', description: 'Learn how PrismSpace prepares, trains, evaluates, and uses machine-learning models.', alternates: { canonical: '/docs/api/training' } };
+
 export default function TrainingPage() {
   return (
     <div className="docs-page">
@@ -202,13 +204,13 @@ pip install -r model/requirements.txt --force-reinstall</code></pre>
 
       <h2>next steps</h2>
       <div className="quick-links-grid">
-        <Link href="/docs/api/testing" className="quick-link-card">
+        <Link href="/docs/architecture/ml-models" className="quick-link-card">
           <span className="quick-link-icon">🧪</span>
           <span className="quick-link-title">Model Testing</span>
           <span className="quick-link-desc">Test trained models with sample inputs</span>
         </Link>
 
-        <Link href="/docs/api/evaluation" className="quick-link-card">
+        <Link href="/docs/architecture/ml-models" className="quick-link-card">
           <span className="quick-link-icon">📊</span>
           <span className="quick-link-title">Model Evaluation</span>
           <span className="quick-link-desc">Evaluate model performance and metrics</span>
@@ -226,7 +228,7 @@ pip install -r model/requirements.txt --force-reinstall</code></pre>
           <span className="docs-nav-label">Previous</span>
           <span className="docs-nav-title">← Troubleshooting</span>
         </Link>
-        <Link href="/docs/api/testing" className="docs-nav-button">
+        <Link href="/docs/architecture/ml-models" className="docs-nav-button">
           <span className="docs-nav-label">Next</span>
           <span className="docs-nav-title">Model Testing →</span>
         </Link>

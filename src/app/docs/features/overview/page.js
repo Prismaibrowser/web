@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Features Overview', description: 'See the complete PrismSpace feature set, including developer tools, customization, agent tooling, and browser support.', alternates: { canonical: '/docs/features/overview' } };
+
 export default function FeaturesOverviewPage() {
   return (
     <div className="docs-page">
@@ -28,7 +30,7 @@ export default function FeaturesOverviewPage() {
           </span>
         </Link>
 
-        <Link href="/docs/features/ui-components" className="quick-link-card">
+        <Link href="/docs/features/dev-tools" className="quick-link-card">
           <span className="quick-link-icon">🎨</span>
           <span className="quick-link-title">UI Components</span>
           <span className="quick-link-desc">
@@ -36,7 +38,7 @@ export default function FeaturesOverviewPage() {
           </span>
         </Link>
 
-        <Link href="/docs/features/agent-os" className="quick-link-card">
+        <Link href="/docs/architecture/overview" className="quick-link-card">
           <span className="quick-link-icon">🤖</span>
           <span className="quick-link-title">Agent OS Tooling</span>
           <span className="quick-link-desc">

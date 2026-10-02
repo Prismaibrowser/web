@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Contributing to PrismSpace', description: 'Learn how to contribute to PrismSpace, from code quality and licensing to pull requests and review.', alternates: { canonical: '/docs/license/contributing' } };
+
 export default function ContributingPage() {
   return (
     <div className="docs-page">

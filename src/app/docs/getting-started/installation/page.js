@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Installation Guide', description: 'Install and launch PrismSpace with the recommended setup for your development environment.', alternates: { canonical: '/docs/getting-started/installation' } };
+
 export default function InstallationPage() {
   return (
     <div className="docs-page">
@@ -235,7 +237,7 @@ kill -9 <PID>`}</code></pre>
           <span className="quick-link-desc">Train ML models with your datasets</span>
         </Link>
 
-        <Link href="/docs/api/deployment" className="quick-link-card">
+        <Link href="/docs/architecture/overview" className="quick-link-card">
           <span className="quick-link-icon">🚀</span>
           <span className="quick-link-title">Deployment</span>
           <span className="quick-link-desc">Deploy to Vercel, AWS, or self-hosted servers</span>

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
+import Image from 'next/image';
 import './PrismLoader.css';
 
 const PrismLoader = ({ onLoadComplete }) => {
@@ -143,12 +144,13 @@ const PrismLoader = ({ onLoadComplete }) => {
 
   return (
     <div ref={loaderRef} className="modern-loader" role="status" aria-live="polite" aria-label="Loading PrismSpace">
+      <div className="loader-signal-band" aria-hidden="true" />
       <div className="loader-ambient loader-ambient-one" aria-hidden="true" />
       <div className="loader-ambient loader-ambient-two" aria-hidden="true" />
       <div className="modern-loader-content">
         <div className="loader-topline" data-loader-enter>
-          <span className="loader-kicker"><i /> PRISMSPACE / SYSTEM</span>
-          <span className="loader-version">V.01</span>
+          <span className="loader-kicker"><i /> PRISMSPACE</span>
+          <span className="loader-version">AI BROWSER / 2026</span>
         </div>
 
         <div className="loader-brand-lockup" data-loader-enter>
@@ -156,18 +158,21 @@ const PrismLoader = ({ onLoadComplete }) => {
             <div className="logo-glow" />
             <span className="logo-orbit logo-orbit-one" />
             <span className="logo-orbit logo-orbit-two" />
-            <img
+            <Image
               src="/logo-icon.png"
               alt=""
+              width={553}
+              height={451}
               className="modern-logo"
             />
           </div>
-          <p className="loader-wordmark">prism<span>space</span></p>
+          <p className="loader-wordmark"><span>prism</span><b>space</b></p>
+          <p className="loader-manifesto">A sharper place to build, research, and ship.</p>
         </div>
 
         <div className="loader-readout" data-loader-enter>
           <span className="loader-state-dot" />
-          <span>{status}</span>
+          <span className="loader-status-label">{status}</span>
           <strong>{Math.round(Math.min(progress, 100))}%</strong>
         </div>
 
@@ -175,12 +180,12 @@ const PrismLoader = ({ onLoadComplete }) => {
           <div className="progress-bar">
             <div className="progress-fill" style={{ width: `${Math.min(progress, 100)}%` }} />
           </div>
-          <div className="progress-ticks"><span>00</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+          <div className="progress-ticks"><span>START</span><span>25</span><span>50</span><span>75</span><span>READY</span></div>
         </div>
 
         <div className="loader-footer" data-loader-enter>
-          <span>ALL SYSTEMS / {isReady ? 'ONLINE' : 'SYNCING'}</span>
-          <span>BUILT FOR PARALLEL THINKING</span>
+          <span><i /> ALL SYSTEMS / {isReady ? 'ONLINE' : 'SYNCING'}</span>
+          <span>ONE SPACE. MANY DIRECTIONS.</span>
         </div>
       </div>
     </div>

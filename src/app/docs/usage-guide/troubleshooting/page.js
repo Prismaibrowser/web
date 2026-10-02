@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Troubleshooting', description: 'Solve common PrismSpace settings, performance, build, browser, ML model, and connection issues.', alternates: { canonical: '/docs/usage-guide/troubleshooting' } };
+
 export default function TroubleshootingPage() {
   return (
     <div className="docs-page">

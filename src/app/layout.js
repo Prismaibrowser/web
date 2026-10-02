@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 import PrismLoader from "@/components/PrismLoader";
 
@@ -7,14 +7,13 @@ import PrismLoader from "@/components/PrismLoader";
 export const metadata = {
   metadataBase: new URL('https://prismbrowser.tech'),
   title: {
-    default: "Prism AI Browser - Next Generation Web Browser",
-    template: "%s | Prism AI Browser"
+    default: "PrismSpace | The AI browser home for builders",
+    template: "%s | PrismSpace"
   },
-  description: "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools. Built on Zen Browser with advanced AI capabilities.",
-  keywords: "AI browser, web browser, automation, voice commands, MCP integrations, Zen browser, developer tools, accessibility, AI automation, Prism Mode, browser extension, AI assistant",
-  authors: [{ name: "Prism Browser Team" }],
-  creator: "Prism Browser",
-  publisher: "Prism Browser",
+  description: "PrismSpace is an AI browser home for people who build, research, and ship with multiple models in one focused workspace.",
+  authors: [{ name: "PrismSpace team" }],
+  creator: "PrismSpace",
+  publisher: "PrismSpace",
   robots: {
     index: true,
     follow: true,
@@ -32,22 +31,22 @@ export const metadata = {
     type: "website",
     locale: "en_US",
     url: "https://prismbrowser.tech",
-    siteName: "Prism AI Browser",
-    title: "Prism AI Browser - Next Generation Web Browser",
-    description: "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools.",
+    siteName: "PrismSpace",
+    title: "PrismSpace | The AI browser home for builders",
+    description: "An AI browser home for people who build, research, and ship with multiple models in one focused workspace.",
     images: [
       {
         url: "/prism-preview.png",
         width: 1200,
         height: 630,
-        alt: "Prism Browser - AI-Powered Web Browser",
+        alt: "PrismSpace AI browser workspace",
         type: "image/png",
       },
       {
         url: "/prism-preview.webp",
         width: 1200,
         height: 630,
-        alt: "Prism Browser - AI-Powered Web Browser",
+        alt: "PrismSpace AI browser workspace",
         type: "image/webp",
       },
     ],
@@ -56,19 +55,20 @@ export const metadata = {
   // Twitter Card metadata
   twitter: {
     card: "summary_large_image",
-    site: "@PrismBrowser",
-    creator: "@PrismBrowser",
-    title: "Prism AI Browser - Next Generation Web Browser",
-    description: "Experience the future of web browsing with AI-powered automation, voice commands, and developer tools.",
+    site: "@prismaibrowser",
+    creator: "@prismaibrowser",
+    title: "PrismSpace | The AI browser home for builders",
+    description: "An AI browser home for people who build, research, and ship with multiple models in one focused workspace.",
     images: ["/prism-preview.png"],
   },
   
   // Additional metadata
-  applicationName: "Prism Browser",
+  applicationName: "PrismSpace",
   referrer: "origin-when-cross-origin",
   category: "technology",
-  alternates: {
-    canonical: "https://prismbrowser.tech"
+  alternates: { canonical: "/" },
+  verification: {
+    google: "msoo0pyLyvehcd-VVsa0Zs9WbBO9N1d1Y0TvyUXD9Qo",
   },
   
   // Favicon and icon configuration
@@ -109,69 +109,29 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Google Search Console verification */}
-        <meta name="google-site-verification" content="msoo0pyLyvehcd-VVsa0Zs9WbBO9N1d1Y0TvyUXD9Qo" />
-        
-        {/* Favicon links with cache busting */}
-        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
-        <link rel="shortcut icon" href="/favicon.ico?v=3" />
-        <link rel="apple-touch-icon" sizes="32x32" href="/favicon-32x32.png?v=3" />
-        
-        {/* Additional meta tags for better social sharing */}
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        {/* Site-wide presentation hints */}
         <meta name="theme-color" content="#060010" />
-        <meta name="msapplication-TileColor" content="#060010" />
-        <meta name="msapplication-TileImage" content="/favicon-32x32.png" />
-        
-        {/* Additional Open Graph tags */}
-        <meta property="og:site_name" content="Prism AI Browser" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://prismbrowser.tech" />
-        
-        {/* Twitter specific meta tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@PrismBrowser" />
-        <meta name="twitter:creator" content="@PrismBrowser" />
-        <meta name="twitter:domain" content="prismbrowser.tech" />
-        
-        {/* Additional SEO meta tags */}
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <meta name="googlebot" content="index, follow" />
-        <meta name="bingbot" content="index, follow" />
-        <meta name="language" content="English" />
-        <meta name="revisit-after" content="7 days" />
-        <meta name="rating" content="general" />
-        <meta name="geo.region" content="US" />
-        <meta name="geo.placename" content="San Francisco" />
-        <meta name="distribution" content="global" />
-        
-        {/* Preload important assets */}
-        <link rel="preload" href="/prism-preview.png" as="image" />
-        <link rel="preload" href="/nav-logo.png" as="image" />
-        
-        {/* DNS prefetch for external resources */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        
-        {/* Structured data for rich results */}
+        {/* Organization and site identity for search engines */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Prism AI Browser",
-            "url": "https://prismbrowser.tech",
-            "description": "Experience the future of web browsing with Prism Browser. Features AI-powered automation, voice commands, MCP integrations, accessibility enhancements, and developer tools.",
-            "publisher": {
-              "@type": "Organization",
-              "name": "Prism Browser",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://prismbrowser.tech/prism-icon.png"
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://prismbrowser.tech/#organization",
+                "name": "PrismSpace",
+                "url": "https://prismbrowser.tech",
+                "logo": "https://prismbrowser.tech/prism-icon.png"
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://prismbrowser.tech/#website",
+                "name": "PrismSpace",
+                "url": "https://prismbrowser.tech",
+                "description": "An AI browser home for people who build, research, and ship with multiple models.",
+                "publisher": { "@id": "https://prismbrowser.tech/#organization" }
               }
-            }
+            ]
           })}
         </script>
       </head>

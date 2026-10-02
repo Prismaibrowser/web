@@ -28,16 +28,16 @@ const docSections = [
     items: [
       { title: 'Complete Features', href: '/docs/features/overview' },
       { title: 'Developer Tools', href: '/docs/features/dev-tools' },
-      { title: 'UI Components', href: '/docs/features/ui-components' },
-      { title: 'Agent OS Tooling', href: '/docs/features/agent-os' },
+      { title: 'UI Components', href: '/docs/features/dev-tools' },
+      { title: 'Agent OS Tooling', href: '/docs/architecture/overview' },
     ]
   },
   {
     title: 'Usage Guide',
     items: [
       { title: 'Settings & Customization', href: '/docs/usage-guide/settings' },
-      { title: 'Developer Tools', href: '/docs/usage-guide/tools' },
-      { title: 'Keyboard Shortcuts', href: '/docs/usage-guide/shortcuts' },
+      { title: 'Developer Tools', href: '/docs/features/dev-tools' },
+      { title: 'Keyboard Shortcuts', href: '/docs/usage-guide/settings' },
       { title: 'Troubleshooting', href: '/docs/usage-guide/troubleshooting' },
     ]
   },
@@ -45,9 +45,9 @@ const docSections = [
     title: 'API & Development',
     items: [
       { title: 'Training Models', href: '/docs/api/training' },
-      { title: 'Model Testing', href: '/docs/api/testing' },
-      { title: 'Evaluation', href: '/docs/api/evaluation' },
-      { title: 'Deployment', href: '/docs/api/deployment' },
+      { title: 'Model Testing', href: '/docs/architecture/ml-models' },
+      { title: 'Evaluation', href: '/docs/architecture/ml-models' },
+      { title: 'Deployment', href: '/docs/architecture/overview' },
     ]
   },
   {
@@ -55,7 +55,7 @@ const docSections = [
     items: [
       { title: 'Apache 2.0 License', href: '/docs/license/apache' },
       { title: 'Contributing Guide', href: '/docs/license/contributing' },
-      { title: 'Third-Party Notices', href: '/docs/license/notices' },
+      { title: 'Third-Party Notices', href: '/docs/license/apache' },
     ]
   }
 ];

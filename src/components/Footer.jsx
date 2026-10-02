@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { FaDiscord, FaGithub, FaLinkedin, FaReddit, FaShieldAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaReddit, FaShieldAlt } from 'react-icons/fa';
 import { FaArrowRightLong, FaXTwitter } from 'react-icons/fa6';
 import './Footer.css';
 
@@ -9,7 +9,6 @@ const socials = [
   { label: 'X', href: 'https://x.com/prismaibrowser', icon: FaXTwitter },
   { label: 'Reddit', href: 'https://www.reddit.com/user/Prism-Browser/', icon: FaReddit },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/prism-browser-702b08385/', icon: FaLinkedin },
-  { label: 'Discord', href: '#', icon: FaDiscord },
   { label: 'GitHub', href: 'https://github.com/Prismaibrowser', icon: FaGithub },
 ];
 
@@ -17,6 +16,7 @@ const footerGroups = [
   {
     title: 'About us',
     links: [
+      { label: 'About PrismSpace', href: '/about', description: 'What the project is and where it comes from' },
       { label: 'Privacy Policy', href: '/privacy', description: 'Your data protection matters', icon: FaShieldAlt },
       { label: 'GitHub', href: 'https://github.com/Prismaibrowser', description: 'Open source repository', icon: FaGithub },
     ],
@@ -25,7 +25,6 @@ const footerGroups = [
     title: 'Solutions',
     links: [
       { label: 'Report a Bug', href: 'https://github.com/Prismaibrowser/prismspace-web/issues', description: 'Help us improve the system', icon: FaGithub },
-      { label: 'Discord', href: '#', description: 'Join the community', icon: FaDiscord },
     ],
   },
   {

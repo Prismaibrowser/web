@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'ML Models & Alignment', description: 'Read how PrismSpace selects, evaluates, and aligns machine-learning models for agent workflows.', alternates: { canonical: '/docs/architecture/ml-models' } };
+
 export default function MLModelsPage() {
   return (
     <div className="docs-page">
@@ -478,7 +480,7 @@ python -m model.evaluate --output-dir model/artifacts
           <span className="quick-link-desc">Step-by-step model training procedures</span>
         </Link>
 
-        <Link href="/docs/api/testing" className="quick-link-card">
+        <Link href="/docs/api/training" className="quick-link-card">
           <span className="quick-link-icon">🧪</span>
           <span className="quick-link-title">Model Testing</span>
           <span className="quick-link-desc">Testing and inference workflows</span>

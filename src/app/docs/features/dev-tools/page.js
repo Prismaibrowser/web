@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Developer Tools', description: 'Explore the 23 developer, AI, productivity, and system tools included in PrismSpace.', alternates: { canonical: '/docs/features/dev-tools' } };
+
 export default function DevToolsPage() {
   return (
     <div className="docs-page">

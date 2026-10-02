@@ -207,9 +207,42 @@ export default function PrismHomepage() {
         </section>
       </main>
 
+      <script type="application/ld+json">
+        {JSON.stringify({
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'SoftwareApplication',
+              name: 'PrismSpace',
+              applicationCategory: 'BrowserApplication',
+              operatingSystem: 'Web',
+              description: 'An AI browser home for people who build, research, and ship with multiple models.',
+              url: 'https://prismbrowser.tech/',
+              publisher: { '@id': 'https://prismbrowser.tech/#organization' },
+            },
+            {
+              '@type': 'FAQPage',
+              mainEntity: faqItems.map(([question, answer]) => ({
+                '@type': 'Question',
+                name: question,
+                acceptedAnswer: { '@type': 'Answer', text: answer },
+              })),
+            },
+          ],
+        })}
+      </script>
+
       <Footer />
 
-      {showScrollTop && <button className="eclipse-scroll-top" onClick={scrollToTop} aria-label="Scroll to top">↑</button>}
+      <button
+        className={`eclipse-scroll-top ${showScrollTop ? 'is-visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        aria-hidden={!showScrollTop}
+        tabIndex={showScrollTop ? 0 : -1}
+      >
+        ↑
+      </button>
     </div>
   );
 }

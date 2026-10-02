@@ -1,5 +1,11 @@
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Page not found',
+  description: 'The requested PrismSpace page could not be found.',
+  robots: { index: false, follow: false },
+};
+
 export default function NotFound() {
   return (
     <div

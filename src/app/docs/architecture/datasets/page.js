@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Datasets & Benchmarks', description: 'Explore PrismSpace datasets, benchmark categories, file formats, preparation, and ingestion workflows.', alternates: { canonical: '/docs/architecture/datasets' } };
+
 export default function DatasetsPage() {
   return (
     <div className="docs-page">

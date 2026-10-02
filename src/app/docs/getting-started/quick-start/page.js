@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Quick Start', description: 'Get PrismSpace running quickly with the first steps for installation, configuration, and launch.', alternates: { canonical: '/docs/getting-started/quick-start' } };
+
 export default function QuickStartPage() {
   return (
     <div className="docs-page">

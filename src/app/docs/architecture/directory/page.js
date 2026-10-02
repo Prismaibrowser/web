@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Directory Structure', description: 'Understand the PrismSpace project directory, application layers, configuration, and build outputs.', alternates: { canonical: '/docs/architecture/directory' } };
+
 export default function DirectoryPage() {
   return (
     <div className="docs-page">

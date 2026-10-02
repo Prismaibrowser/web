@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'System Architecture', description: 'Explore the PrismSpace browser interface, orchestration layer, ML routing, data lake, and deployment architecture.', alternates: { canonical: '/docs/architecture/overview' } };
+
 export default function ArchitectureOverviewPage() {
   return (
     <div className="docs-page">

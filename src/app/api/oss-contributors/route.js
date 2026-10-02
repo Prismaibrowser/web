@@ -11,40 +11,53 @@ export async function POST(request) {
       return Response.json({ error: 'Name and email are required.' }, { status: 400 });
     }
 
-    const webhookUrl = process.env.OSS_CONTRIB_WEBHOOK_URL;
-    const token = process.env.OSS_CONTRIB_WEBHOOK_TOKEN;
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const recipient = process.env.CONTRIBUTION_EMAIL_TO || 'nobinsijo360t@gmail.com';
+    const sender = process.env.RESEND_FROM_EMAIL || 'PrismSpace Contributions <onboarding@resend.dev>';
 
-    if (!webhookUrl) {
-      console.error('[oss-contributors] missing OSS_CONTRIB_WEBHOOK_URL');
+    if (!resendApiKey) {
+      console.error('[oss-contributors] missing RESEND_API_KEY');
       return Response.json(
-        { error: 'Server is not configured to store submissions yet.' },
+        { error: 'Server is not configured to send submissions yet.' },
         { status: 500 }
       );
     }
 
-    const payload = {
-      name,
-      email,
-      github,
-      portfolio,
-      message,
-      submittedAt: new Date().toISOString(),
-      ...(token ? { token } : {})
-    };
+    const submittedAt = new Date().toISOString();
+    const emailText = [
+      'New PrismSpace contribution application',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `GitHub: ${github || 'Not provided'}`,
+      `Portfolio: ${portfolio || 'Not provided'}`,
+      '',
+      'How they would like to contribute:',
+      message || 'Not provided',
+      '',
+      `Submitted at: ${submittedAt}`
+    ].join('\n');
 
-    const res = await fetch(webhookUrl, {
+    const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        Authorization: `Bearer ${resendApiKey}`
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        from: sender,
+        to: [recipient],
+        reply_to: email,
+        subject: `New contribution application from ${name}`,
+        text: emailText
+      })
     });
 
     if (!res.ok) {
       const text = await res.text().catch(() => '');
-      console.error('[oss-contributors] webhook error', res.status, text);
+      console.error('[oss-contributors] Resend error', res.status, text);
       return Response.json(
-        { error: 'Could not store submission. Please try again later.' },
+        { error: 'Could not send your submission. Please try again later.' },
         { status: 502 }
       );
     }

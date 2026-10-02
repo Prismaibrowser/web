@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: 'Apache 2.0 License', description: 'Read the PrismSpace Apache 2.0 license summary, permissions, patent grant, and conditions.', alternates: { canonical: '/docs/license/apache' } };
+
 export default function ApacheLicensePage() {
   return (
     <div className="docs-page">
@@ -142,7 +144,7 @@ FOR A PARTICULAR PURPOSE, or NON-INFRINGEMENT.</code></pre>
         <li><strong>Fonts</strong> - Various licenses (see NOTICE file)</li>
       </ul>
 
-      <p>See <Link href="/docs/license/notices">Third-Party Notices</Link> for complete list.</p>
+      <p>See the project repository for the complete third-party dependency and attribution list.</p>
 
       <div className="docs-callout warning">
         <div className="docs-callout-title">⚠️ Important Note</div>
